@@ -28,9 +28,6 @@ $$\|x\|_p = \left(\sum_{i=1}^n x_i^p\right)^{1/p}$$
 $$\|x\|_A = \sqrt{x^\top Ax}$$
 """
 
-# ╔═╡ d76a3b5f-cba5-44cc-8299-048224a423c5
-
-
 # ╔═╡ 5d0ad130-0eed-4db1-b8e0-4c461b67b016
 md"Em `julia`, podemos importar o pacote `LinearAlgebra` e temos a função `norm()`"
 
@@ -97,8 +94,7 @@ version = "5.11.0+0"
 """
 
 # ╔═╡ Cell order:
-# ╠═ebdda970-fec7-11ef-04b5-e5b54dc295da
-# ╠═d76a3b5f-cba5-44cc-8299-048224a423c5
+# ╟─ebdda970-fec7-11ef-04b5-e5b54dc295da
 # ╠═b7ea71bf-3bfd-4ef4-ae16-339b52fb3b09
 # ╟─5d0ad130-0eed-4db1-b8e0-4c461b67b016
 # ╠═f9a84693-0340-45c7-907a-c3c7e7bdbeba
