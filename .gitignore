@@ -1,1 +1,5 @@
 *.pdf
+*.nav
+*.snm
+*.toc
+*.synctex.gz
