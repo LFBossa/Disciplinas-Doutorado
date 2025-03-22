@@ -1,0 +1,381 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  ignorenonframetext,
+  aspectratio=169,
+]{beamer}
+\usepackage{pgfpages}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+% Prevent slide breaks in the middle of a paragraph
+\widowpenalties 1 10000
+\raggedbottom
+\setbeamertemplate{part page}{
+  \centering
+  \begin{beamercolorbox}[sep=16pt,center]{part title}
+    \usebeamerfont{part title}\insertpart\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+  \centering
+  \begin{beamercolorbox}[sep=12pt,center]{part title}
+    \usebeamerfont{section title}\insertsection\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center]{part title}
+    \usebeamerfont{subsection title}\insertsubsection\par
+  \end{beamercolorbox}
+}
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\usetheme[]{Warsaw}
+\usecolortheme{beaver}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\newif\ifbibliography
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Distribuições Multivariadas},
+  pdfauthor={L. F. Bossa},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\usepackage[brazil]{babel}
+\title{Distribuições Multivariadas}
+\author{L. F. Bossa}
+\date{24/03/25}
+\institute{UFSC}
+
+
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\RR}{\mathbb{R}}
+\begin{document}
+
+\frame{\titlepage}
+
+\section{Variável Aleatória unidimensional}
+
+\begin{frame}{Variável Aleatória unidimensional}
+
+Uma variável aleatória $X$ é uma função que associa um número real a cada resultado de um experimento aleatório.
+Podemos caracterizar uma variável aleatória por sua função densidade de probabilidade $f(x)$, que satisfaz a propriedade
+\[\PP(X \le a) = \int_{-\infty}^{a} f(x) dx \] 
+\end{frame}
+
+\begin{frame}{Esperança}
+Também conhecido como média e denotado por \(\mu\).
+
+\[\mathbb{E}(X) = \int_{\RR} xf(x) dx\]
+\end{frame}
+
+\begin{frame}
+Em geral, dada \(g: \RR\to \RR\) temos
+
+\[\mathbb{E}(g(X)) = \int_{\RR} g(x)f(x) dx\]
+\end{frame}
+
+\begin{frame}{Variância}
+\textbf{Variância}
+
+\[\text{Var}(X) = \mathbb{E}( (X - \mu)^2)\]
+
+Mede o quão dispersos estão os dados de \(X\): quanto maior a variância,
+mais longe da média estão os dados.
+
+A raiz quadrada da variância é o desvio-padrão, geralmente denotado por
+\(\sigma\).
+\end{frame}
+
+\begin{frame}{Variáveis Gaussianas}
+São caracterizadas pela sua função de densidade
+
+\[f(x) = \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(x-\mu)^2}{2\sigma}\right)\]
+
+Uma variável aleatória \(X\) com média \(\mu\) e variância \(\sigma^2\)
+é denotada por \(X\sim N(\mu,\sigma^2)\).
+\end{frame}
+
+\begin{frame}{Z-score}
+Dada uma variável aleatória \(X\sim N(\mu,\sigma^2)\), podemos fazer uma
+transformação
+
+\[Z = \frac{X- \mu}{\sigma}\]
+
+de modo que \(Z \sim  N(0,1)\).
+\end{frame}
+
+\section{Variável Aleatória em várias dimensões}
+
+\begin{frame}{Motivação}
+\begin{itemize}
+\tightlist
+\item
+  Dificilmente uma coleta de dados vai coletar apenas um dado de cada
+  amostra estudada
+\item
+  Fazer uma análise conjunta dos dados permite usar ferramentas de
+  álgebra linear (análise de componentes principais, clustering)
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+\tightlist
+\item
+  Temos um vetor \(X = (X_1, \ldots, X_n)\) cujas componentes são
+  variáveis aleatórias.
+\item
+  Temos uma função de densidade \(f(x_1,\ldots, x_n)\) de modo que
+\end{itemize}
+
+\[\PP(X_1 \le a_a, \ldots, X_n \le a_n) = \int_{-\infty}^{a_1}\ldots\int_{-\infty}^{a_n} f(x_1,\ldots,x_n) dx_n\ldots dx_1 \]
+\end{frame}
+
+\begin{frame}{Probabilidade marginal}
+Surge quando queremos estudar a distribuição geral de uma variável só,
+"ignorando" as outras. Nesse caso, integramos a variável de interesse no
+intervalo de interesse, e as outras variáveis são integradas em todo
+\(\RR\).
+
+\[\PP(X_1 \le a_1)  = \int_{-\infty}^{a_1}\ldots\int_{-\infty}^{\infty} f(x_1,\ldots,x_n) dx_n\ldots dx_1\]
+
+Podemos definir então as densidades marginais
+
+\[f_1(x) =  \int_{-\infty}^{x}\ldots\int_{-\infty}^{\infty} f(x_1,\ldots,x_n) dx_n\ldots dx_1\]
+\end{frame}
+
+\begin{frame}{Esperança}
+No caso vetorial, o operador esperança atua entrada-a-entrada
+
+\[\EE(X) = (\EE(X_1), \EE(X_2),\ldots, \EE(X_n))\]
+
+em que cada esperança é calculada com respeito à distribuição marginal
+de cada variável.
+\end{frame}
+
+\begin{frame}
+\textbf{Propriedades}
+
+\[\EE(c^\top X) = c^\top\mu\]
+\end{frame}
+
+\begin{frame}{Covariância}
+Dadas variáveis \(X\), \(Y\) unidimensionais com médias
+\(\mu_X, \mu_Y\), definimos a covariância de \(X\) e \(Y\) como
+\[\text{Cov}(X,Y) = \EE( (X - \mu_X)(Y - \mu_Y))\]
+
+Por vezes também é usada a notação \(\sigma_{XY}\) para denotar a
+covariância.
+
+A covariância indica o quanto \(X\) e \(Y\) estão \emph{linearmente}
+relacionadas.
+\end{frame}
+
+\begin{frame}
+Note que
+\[\text{Cov}(X,X) = \EE( (X - \mu_X)(X - \mu_X)) =  \EE((X-\mu_X)^2) =  \text{Var}(X)\]
+\end{frame}
+
+\begin{frame}{Independência estatística}
+Duas variáveis \(X_1\) e \(X_2\) são ditas independentes se for possível
+escrever a função de densidade como \(f(x_1,x_2) = f_1(x_1)f_2(x_2)\)
+
+\begin{block}{Teorema}
+Se \(X_1\) e \(X_2\) são independentes, então \(\text{Cov}(X,Y)=0\)
+\end{block}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Contra-exemplo}
+A recíproca não é verdadeira. Considere \(X\) uma variável aleatória com
+média zero e densidade \(f(x)\) sendo uma função par. Defina
+\(Y = X^2\). Nesse caso, claramente \(Y\) e \(X\) não são independentes,
+mas \[\text{Cov}(X,Y) = 0 \]
+\end{block}
+\end{frame}
+
+\begin{frame}{Correlação}
+É a covariância "normalizada"
+
+\[\text{Corr}(X,Y) = \frac{\text{Cov}(X,Y)}{\sigma_X\cdot\sigma_Y}\]
+
+Também denotada por \(\rho_{XY}\). Por quê é normalizada?
+\end{frame}
+
+\begin{frame}{Matriz de Variância-Covariância}
+\begin{itemize}
+\tightlist
+\item
+  Para calcular a variância de uma variável unidimensional, temos que
+  calcular \(\EE((X-\mu_X)^2)\)
+\item
+  Por causa do termo quadrático, temos que adaptar esse cálculo para o
+  caso vetorial.
+\end{itemize}
+
+Sendo \(X = (X_1,\ldots,X_n)\) uma variável aleatória e seja
+\(\EE(X) = \mu_X\) seu vetor-médio. Calculamos a variância de
+\(X\) como
+
+\[\Sigma = \EE((X-\mu_X)(X-\mu_X)^\top)\]
+
+\[Var(c^\top X) = c^\top\Sigma c\]
+\end{frame}
+
+\begin{frame}
+\[\Sigma = \EE\begin{pmatrix}  
+(X_1 -\mu_{X_1})(X_1 -\mu_{X_1}) & (X_1 -\mu_{X_1})(X_2 -\mu_{X_2}) & \ldots &  (X_1 -\mu_{X_1})(X_n -\mu_{X_n}) \\
+(X_2 -\mu_{X_2})(X_1 -\mu_{X_1}) & (X_2 -\mu_{X_2})(X_2 -\mu_{X_2}) & \ldots &  (X_2 -\mu_{X_2})(X_n -\mu_{X_n}) \\
+\vdots & \vdots  & \ddots & \vdots \\
+(X_n -\mu_{X_n})(X_1 -\mu_{X_1}) & (X_n -\mu_{X_n})(X_2 -\mu_{X_2}) & \ldots & (X_n -\mu_{X_n})(X_n -\mu_{X_n})
+\end{pmatrix}\]
+\end{frame}
+
+\begin{frame}
+\[\Sigma = \begin{pmatrix}  
+\text{Var}(X_1) & \text{Cov}(X_1,X_2) & \ldots & \text{Cov}(X_1,X_n)\\
+\text{Cov}(X_1,X_2) & \text{Var}(X_2) & \ldots & \text{Cov}(X_2,X_n)\\
+\vdots & \vdots  & \ddots & \vdots \\
+\text{Cov}(X_n,X_1) & \text{Cov}(X_n,X_2) & \ldots & \text{Var}(X_n)\\
+\end{pmatrix}\]
+\end{frame}
+
+\begin{frame}
+\begin{block}{Teorema}
+A matriz de variância-covariância é definida positiva.
+\end{block}
+
+Dado um vetor \(w\) qualquer, note que
+
+\[w^\top \Sigma w = w^\top\EE(XX^\top)w = \EE((Xw)^\top Xw)\]
+\end{frame}
+
+\begin{frame}{Como resumir a variância?}
+Por vezes, não queremos apresentar a variância como uma matriz, mas como
+um número que resuma o quão dispersos estão nossos dados.
+
+Para isso, temos a
+
+\begin{block}{Variância Total}
+\[\text{tr}(\Sigma) = \sum_{i=1}^n \text{Var}(X_i)\]
+\end{block}
+
+\begin{block}{Variância Generalizada}
+\[\text{det}(\Sigma)\]
+\end{block}
+\end{frame}
+
+\begin{frame}{Distância Mahalanobis}
+Dados vetores \(X\) e \(Y\) que pertençam a uma distribuição
+multivariada descrita por uma matriz \(\Sigma\), definimos a distância
+Mahalanobi entre eles como
+
+\[d_{XY}^2 = (X-Y)^\top\Sigma^{-1}(X-Y)\]
+
+Essa é a generalização do Z-score.
+\end{frame}
+
+\begin{frame}{Variáveis gaussianas multivariadas}
+Finalmente estamos aptos a entender a fórmula para a distribuição
+gaussiana multivariada.
+
+Para tal, vamos reinterpretar a fórmula da gaussiana em 1 dimensão
+\end{frame}
+
+\begin{frame}
+A gaussiana padrão é dada por
+
+\[f(x) = \frac{1}{\sqrt{2\pi}}\exp\left(-\frac{1}{2}x^2\right)\]
+\end{frame}
+
+\begin{frame}
+Podemos aplicar uma mudança de variáveis para alterar seu centro e
+dispersão, lembrando fazer uma escala para que a integral sobre
+\(\mathbb
+{R}\) continue sendo \(1\).
+
+\[\frac{1}{\sigma}f\left(\frac{x-\mu}{\sigma}\right) = \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2\right)\]
+\end{frame}
+
+\begin{frame}
+Mas note que termos quadráticos não generalizam bem para vetores. Para
+tanto, vamos reescrever o lado fireito como
+
+\[\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{1}{2}\frac{(x-\mu)^2}{\sigma^2}\right) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{1}{2}(x-\mu)(\sigma^2)^{-1}(x-\mu)\right) \]
+\end{frame}
+
+\begin{frame}
+Nessa expressão fica mais claro que podemos substituir \(\sigma^2\) pela
+matriz de covariância, \(x-\mu\) por vetores, e o termo de escala por um
+determinante.
+
+Nesse caso, temos a distribuição gaussiana multivariada com média
+\(\vec \mu\) e matriz de variância-covariância \(\Sigma\), cuja
+expressão é dada por
+
+\[f(X) = \frac{1}{\sqrt{|2\pi\Sigma|}}\exp\left(-\frac{1}{2}\left(X-\vec\mu\right)\Sigma^{-1}(X-\vec\mu)\right) \]
+
+\begin{itemize}
+\tightlist
+\item
+  falar um pouco de principal component analisys
+\end{itemize}
+\end{frame} 
+ 
+
+\end{document}
