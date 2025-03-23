@@ -104,6 +104,9 @@
 \newcommand{\PP}{\mathbb{P}}
 \newcommand{\EE}{\mathbb{E}}
 \newcommand{\RR}{\mathbb{R}}
+\newcommand{\vX}{\vec{X}}
+\newcommand{\vY}{\vec{Y}}
+\newcommand{\vmu}{\vec{\mu}}
 \begin{document}
 
 \frame{\titlepage}
@@ -130,14 +133,13 @@ Em geral, dada \(g: \RR\to \RR\) temos
 \end{frame}
 
 \begin{frame}{Variância}
-\textbf{Variância}
 
 \[\text{Var}(X) = \mathbb{E}( (X - \mu)^2)\]
 
 Mede o quão dispersos estão os dados de \(X\): quanto maior a variância,
 mais longe da média estão os dados.
 
-A raiz quadrada da variância é o desvio-padrão, geralmente denotado por
+A raiz quadrada da variância é o \emph{desvio-padrão}, geralmente denotado por
 \(\sigma\).
 \end{frame}
 
@@ -177,7 +179,7 @@ de modo que \(Z \sim  N(0,1)\).
 \begin{itemize}
 \tightlist
 \item
-  Temos um vetor \(X = (X_1, \ldots, X_n)\) cujas componentes são
+  Temos um vetor \(\vX = (X_1, \ldots, X_n)\) cujas componentes são
   variáveis aleatórias.
 \item
   Temos uma função de densidade \(f(x_1,\ldots, x_n)\) de modo que
@@ -202,16 +204,21 @@ Podemos definir então as densidades marginais
 \begin{frame}{Esperança}
 No caso vetorial, o operador esperança atua entrada-a-entrada
 
-\[\EE(X) = (\EE(X_1), \EE(X_2),\ldots, \EE(X_n))\]
+\[\EE(\vX) = (\EE(X_1), \EE(X_2),\ldots, \EE(X_n))\]
 
 em que cada esperança é calculada com respeito à distribuição marginal
 de cada variável.
 \end{frame}
 
-\begin{frame}
-\textbf{Propriedades}
+\begin{frame}{Propriedades da esperança} 
 
-\[\EE(c^\top X) = c^\top\mu\]
+\begin{itemize}
+  \item Sendo $c$ um vetor de constantes, 
+\[\EE(c^\top \vX) = c^\top\vmu\]
+  \item Sendo $A$ uma matriz de constantes,
+   \[\EE(A\vX) = A\vmu\]
+\end{itemize}
+
 \end{frame}
 
 \begin{frame}{Covariância}
@@ -250,31 +257,32 @@ mas \[\text{Cov}(X,Y) = 0 \]
 \end{frame}
 
 \begin{frame}{Correlação}
-É a covariância "normalizada"
+É a covariância ``normalizada''
 
-\[\text{Corr}(X,Y) = \frac{\text{Cov}(X,Y)}{\sigma_X\cdot\sigma_Y}\]
+\[\text{Corr}(X,Y) = \frac{\text{Cov}(X,Y)}{\sigma_X\cdot\sigma_Y},\]
+com \(\sigma_X\) e \(\sigma_Y\) sendo os desvios-padrão de \(X\) e \(Y\). 
 
-Também denotada por \(\rho_{XY}\). Por quê é normalizada?
+A correlação é também denotada por \(\rho_{XY}\).
+
+\begin{itemize}
+  \item Por quê é normalizada?
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Matriz de Variância-Covariância}
-\begin{itemize}
-\tightlist
-\item
+
   Para calcular a variância de uma variável unidimensional, temos que
-  calcular \(\EE((X-\mu_X)^2)\)
-\item
+  calcular \[\EE((X-\mu_X)^2)\]
+
   Por causa do termo quadrático, temos que adaptar esse cálculo para o
   caso vetorial.
-\end{itemize}
 
-Sendo \(X = (X_1,\ldots,X_n)\) uma variável aleatória e seja
-\(\EE(X) = \mu_X\) seu vetor-médio. Calculamos a variância de
-\(X\) como
+Sendo \(\vX = (X_1,\ldots,X_n)\) uma variável aleatória e seja
+\(\EE(\vX) = \vmu_X\) seu vetor-médio. Calculamos a variância de
+\(\vX\) como
 
-\[\Sigma = \EE((X-\mu_X)(X-\mu_X)^\top)\]
+\[\Sigma = \EE((\vX-\vmu_X)(\vX-\vmu_X)^\top)\]
 
-\[Var(c^\top X) = c^\top\Sigma c\]
 \end{frame}
 
 \begin{frame}
@@ -297,12 +305,50 @@ Sendo \(X = (X_1,\ldots,X_n)\) uma variável aleatória e seja
 
 \begin{frame}
 \begin{block}{Teorema}
-A matriz de variância-covariância é definida positiva.
+A matriz de variância-covariância é simétrica definida positiva.
 \end{block}
 
-Dado um vetor \(w\) qualquer, note que
+\pause
 
-\[w^\top \Sigma w = w^\top\EE(XX^\top)w = \EE((Xw)^\top Xw)\]
+Para simplificar os cálculos, seja $\vec W = \vX - \vmu_X$. A matriz de variância-covariância pode ser reescrita como
+\[\Sigma = \EE(\vec W\vec W^\top)\]
+
+Dado um vetor \(x\) qualquer, note que, por linearidade da esperança,
+\[x^\top \Sigma x = x^\top\EE(\vec W\vec W^\top)x = \EE((\vec Wx)^\top \vec Wx) = \EE(\|\vec W x\|) \ge 0.\]
+\end{frame}
+
+\begin{frame}
+\begin{block}{Teorema}
+ Dada uma matriz $\Sigma$ simétrica definida positiva, existe um vetor aleatório $\vX$ tal que $\Sigma$ é sua matriz de variância-covariância.
+\end{block}
+
+\pause 
+
+Da teoria de diagonalização, sabemos que toda matriz simétrica definida positiva pode ser diagonalizada por uma matriz ortogonal. Assim, podemos escrever
+\[\Sigma = QDQ^\top\]
+em que $Q$ é uma matriz ortogonal ($Q^\top Q = I$) e $D$ é uma matriz diagonal $D = \text{diag}(\lambda_1,\ldots,\lambda_n)$
+% \[D = \begin{pmatrix}
+% \lambda_1 & 0 & \ldots & 0 \\
+% 0 & \lambda_2 & \ldots & 0 \\
+% \vdots & \vdots & \ddots & \vdots \\
+% 0 & 0 & \ldots & \lambda_n
+% \end{pmatrix}\]
+com $\lambda_i$ sendo os autovalores de $\Sigma$.
+\end{frame}
+
+\begin{frame}
+  Escreva $\sqrt{D} = \text{diag}(\sqrt{\lambda_1},\ldots,\sqrt{\lambda_n})$. Note então que $\sqrt{D}$ é simétrica e 
+  $$\Sigma = Q\sqrt{D}\sqrt{D}Q^\top = (Q\sqrt{D}) (Q\sqrt{D})^\top$$
+
+  Sejam $Y_i \sim N(0,1)$ variáveis aleatórias independentes, para $i\in\{1,\ldots n\}$, e forme $\vY = (Y_1,\ldots,Y_n)$. 
+  Finalmente, faça $\vX = Q\sqrt{D}\vY$, e vamos mostrar que $\vX$ tem matriz de variância-covariância $\Sigma$.
+\end{frame}
+
+\begin{frame}
+  \begin{align*}
+    \EE(\vX\vX^\top) &= \EE(Q\sqrt{D}\vY (Q\sqrt{D}\vY)^\top) = \EE(Q\sqrt{D} \vY\vY^\top (Q\sqrt{D})^\top) \\
+    &= Q\sqrt{D}\EE(\vY \vY^\top)\sqrt{D}Q^\top = Q\sqrt{D}\sqrt{D}Q^\top = \Sigma
+  \end{align*}
 \end{frame}
 
 \begin{frame}{Como resumir a variância?}
@@ -311,18 +357,18 @@ um número que resuma o quão dispersos estão nossos dados.
 
 Para isso, temos a
 
-\begin{block}{Variância Total}
-\[\text{tr}(\Sigma) = \sum_{i=1}^n \text{Var}(X_i)\]
+\begin{block}{Variância Total} % Soma dos autovalores
+\[\text{tr}(\Sigma) = \sum_{i=1}^n \text{Var}(X_i) \]
 \end{block}
 
-\begin{block}{Variância Generalizada}
+\begin{block}{Variância Generalizada} % produto dos autovalores
 \[\text{det}(\Sigma)\]
 \end{block}
 \end{frame}
 
 \begin{frame}{Distância Mahalanobis}
 Dados vetores \(X\) e \(Y\) que pertençam a uma distribuição
-multivariada descrita por uma matriz \(\Sigma\), definimos a distância
+multivariada com matriz de variância-covariância \(\Sigma\), definimos a distância
 Mahalanobi entre eles como
 
 \[d_{XY}^2 = (X-Y)^\top\Sigma^{-1}(X-Y)\]
@@ -354,7 +400,7 @@ dispersão, lembrando fazer uma escala para que a integral sobre
 
 \begin{frame}
 Mas note que termos quadráticos não generalizam bem para vetores. Para
-tanto, vamos reescrever o lado fireito como
+tanto, vamos reescrever o lado direito como
 
 \[\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{1}{2}\frac{(x-\mu)^2}{\sigma^2}\right) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{1}{2}(x-\mu)(\sigma^2)^{-1}(x-\mu)\right) \]
 \end{frame}
@@ -368,14 +414,54 @@ Nesse caso, temos a distribuição gaussiana multivariada com média
 \(\vec \mu\) e matriz de variância-covariância \(\Sigma\), cuja
 expressão é dada por
 
-\[f(X) = \frac{1}{\sqrt{|2\pi\Sigma|}}\exp\left(-\frac{1}{2}\left(X-\vec\mu\right)\Sigma^{-1}(X-\vec\mu)\right) \]
+\[f(\vX) = \frac{1}{\sqrt{|2\pi\Sigma|}}\exp\left(-\frac{1}{2}\left(\vX-\vmu\right)^\top\Sigma^{-1}\left(\vX-\vmu\right)\right) \]
 
-\begin{itemize}
-\tightlist
-\item
-  falar um pouco de principal component analisys
-\end{itemize}
-\end{frame} 
  
+\end{frame} 
 
+\section{Análise de componentes principais}
+
+
+\begin{frame}{Análise de Componentes Principais}
+  \begin{itemize}
+    \item Podemos usar a matriz de variância-covariância para encontrar a direção de maior variância dos dados.
+    \item Embora tenhamos $n$ direções nas quais os dados variam, com uma mudança de coordenadas, podemos encontrar as direções que concentram boa parte da variação dos dados.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Diagonalização}
+  Lembre-se que $\Sigma$ pode ser escrita como
+  \[\Sigma = QDQ^\top\]
+  em que $Q$ é uma matriz ortogonal e $D$ é uma matriz diagonal.
+
+  Faça então a transformação $\vY = Q^\top\vX$.
+\end{frame}
+\begin{frame}
+  
+  Note que a matriz de variância-covariância de $\vY$ é dada por 
+  \begin{align*}
+    \EE(\vY\vY^\top) &= \EE(Q^\top\vX\vX^\top Q) = Q^\top\EE(\vX\vX^\top)Q = Q^\top\Sigma Q \\
+    &= Q^\top QDQ^\top Q = D
+  \end{align*}
+
+  Veja que $\vY$ é uma variável aleatória com covariâncias zeradas.  
+  
+\end{frame}
+
+\begin{frame}
+  Note que a matriz de variância-covariância de $\vY$ e de $\vX$ são similares, então podemos usar a propriedade de invariância do traço e do determinante e obtemos
+  \[\text{tr}(\Sigma) = \text{tr}(D) = \sum_{i=1}^n \lambda_i \qquad (\text{soma dos aulovalores})\]
+  \[\text{det}(\Sigma) = \text{det}(D) = \prod_{i=1}^n \lambda_i \qquad (\text{produto dos autovalores})\]
+  Ou seja, a variância total e a variância generalizada se mantém inalteradas quando mudamos nossa análise de $\vX$ para $\vY$.
+\end{frame}
+ 
+\begin{frame}{Exemplos interativos}
+  \href{https://www.geogebra.org/m/vsn2qpec}{$\nearrow$ Aplicação no Geogebra}
+\end{frame}
+% \begin{frame}{Referências}
+%   \bibliographystyle{apalike}
+% \bibliography{./referencias.bib}
+% \nocite{sirjaev_probability_1996}
+% \nocite{JohnsonWichern2007}
+% \end{frame}
 \end{document}
