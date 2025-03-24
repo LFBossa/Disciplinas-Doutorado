@@ -314,7 +314,7 @@ Para simplificar os cálculos, seja $\vec W = \vX - \vmu_X$. A matriz de variân
 \[\Sigma = \EE(\vec W\vec W^\top)\]
 
 Dado um vetor \(x\) qualquer, note que, por linearidade da esperança,
-\[x^\top \Sigma x = x^\top\EE(\vec W\vec W^\top)x = \EE((\vec Wx)^\top \vec Wx) = \EE(\|\vec W x\|) \ge 0.\]
+\[x^\top \Sigma x = x^\top\EE(\vec W\vec W^\top)x = \EE((\vec W^\top x)^\top \vec W^\top x) = \EE(\|\vec W x\|^2) \ge 0.\]
 \end{frame}
 
 \begin{frame}
@@ -459,10 +459,10 @@ expressão é dada por
 \begin{frame}{Exemplos interativos}
   \href{https://www.geogebra.org/m/vsn2qpec}{$\nearrow$ Aplicação no Geogebra}
 \end{frame}
-% \begin{frame}{Referências}
-%   \bibliographystyle{apalike}
-% \bibliography{./referencias.bib}
-% \nocite{sirjaev_probability_1996}
-% \nocite{JohnsonWichern2007}
-% \end{frame}
+\begin{frame}{Referências}
+  \bibliographystyle{apalike}
+\bibliography{./referencias.bib}
+\nocite{sirjaev_probability_1996}
+\nocite{JohnsonWichern2007}
+\end{frame}
 \end{document}
