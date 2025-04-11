@@ -2,6 +2,8 @@
 
 Livro texto: [The Principles of Deep Learning Theory](https://arxiv.org/abs/2106.10165) (Daniel A. Roberts, Sho Yaida, Boris Hanin)
 
+[Elementos da Teoria de Aprendizagem de Máquina Supervisionada - Vladimir G. Pestov](https://impa.br/wp-content/uploads/2022/03/32CBM07_eBook.pdf)
+
 
 
 # Distribuições multivariadas
@@ -35,5 +37,12 @@ Livro texto: [The Principles of Deep Learning Theory](https://arxiv.org/abs/2106
 - [Introduction to Online Convex Optimization](https://arxiv.org/pdf/1909.05207)
 - [ECE 598MR: Statistical Learning Theory (Fall 2014)](https://maxim.ece.illinois.edu/teaching/fall14/schedule.html)
 - [Sasha Rakhlin - Professor @ MIT | Statistics and Data Science Center, IDSS](https://www.mit.edu/~rakhlin/)
-- [benign overfitting in overparametrized models](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/7BCB89D860CEDDD5726088FAD64F2A5A/S0962492921000027a.pdf/deep-learning-a-statistical-viewpoint.pdf)
+- [Benign overfitting in overparametrized models](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/7BCB89D860CEDDD5726088FAD64F2A5A/S0962492921000027a.pdf/deep-learning-a-statistical-viewpoint.pdf)
 - [Mathematics of Machine Learning](https://ocw.mit.edu/courses/18-657-mathematics-of-machine-learning-fall-2015/pages/readings/)
+
+# Neural Nets
+
+- [Neural Nets from Scratch in Julia [PART 1]: Introduction](https://www.youtube.com/watch?v=Kybn21KA96g)
+
+1) Artigo de Lin, Tegmark e Rolnik [“Why does deep and cheap learning work so well?”](https://arxiv.org/abs/1608.08225)
+2) Artigo de Tegmark e Rolnick [“The power of deeper networks for expressing natural functions”](https://arxiv.org/abs/1705.05502)
