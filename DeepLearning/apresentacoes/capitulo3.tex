@@ -1,0 +1,355 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{positioning,calc}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{fontawesome}
+
+%https://github.com/battlesnake/neural
+%
+\usepackage{neuralnetwork}
+%https://pt.overleaf.com/latex/templates/template-departamento-de-mtm-ufsc/jxjxqttwjrws
+\usetheme{mtmufsc} %%%%%%%%Use this template
+\renewcommand{\qedsymbol}{$\blacksquare$}
+% This is a beamer template inspired by unofficial Oxford University Beamer Template, made by Clara Eleonore Pavillet.
+\title{Effective Theory of Deep Linear Networks at Initialization}
+\author{Luiz Fernando Bossa}
+\date{\today}
+\institute{Universidade Federal de Santa Catarina}
+
+
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\RR}{\mathbb{R}}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Var}{Var}
+\newcommand{\vX}{\vec{X}}
+\newcommand{\vY}{\vec{Y}}
+\newcommand{\vmu}{\vec{\mu}}
+\newcommand{\WW}{\mathcal{W}}
+\newcommand{\aaA}{\alpha}
+\newcommand{\aaB}{\beta}
+
+\begin{document}
+
+{\setbeamertemplate{footline}{} 
+\frame{\titlepage}}
+\frame{\tableofcontents}
+
+
+\section{Notações e Definições}    
+%Sempre que iniciar uma nova sessão, você pode fazer um slide de transição com o índice.
+\begin{frame}
+\tableofcontents[currentsection]
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%A partir daqui, faça seus slides%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{2.1 Function Approximation}
+Uma rede neural com $L$ camadas, cada camada tendo $n_\ell$ neurônios e dados de entrada $x_\alpha$ é dada por:
+\begin{align*}
+	z^{(1)} &= W^{(1)} x_\alpha + b^{(1)}  \\\tag{2.5}\label{eq:NN}
+	z^{(\ell+1)} &= W^{(\ell+1)} \sigma\big(z^{(\ell)}\big) + b^{(\ell)}, \qquad \ell = 1, \ldots, L-1 \\
+\end{align*}
+\begin{itemize}
+	\item $z^{(\ell)}$ é um vetor de tamanho $n_\ell$ 
+	\item $W^{(\ell)}$ é uma matriz de tamanho $n_\ell \times n_{\ell-1}$
+\end{itemize}
+
+%Pré-ativação na camada $\ell+1$ é dada pela aplicação da matriz de pesos $W^{(\ell+1)}$ e a soma do vetor de bias $b^{(\ell)}$ na ativação da camada $\ell$.
+
+\end{frame}
+ 
+\begin{frame}{2.3 Ensembles}
+	\framesubtitle{Initialization distribuitions}
+	Distribuição inicial: médias zero e variâncias dadas por
+	\begin{align*}
+		\EE\left(b^{(\ell)}_{i}b^{(\ell)}_j\right) &= \delta_{ij}C_b^{(\ell)}  \tag{2.19}\\
+		\EE\left(W^{(\ell)}_{ij}W^{(\ell)}_{kl}\right) &= \delta_{ik}\delta_{jl}\frac{C_W^{(\ell)}}{n_{\ell-1}} \tag{2.20}	\end{align*}
+\end{frame}
+
+
+\begin{frame}{2.3 Ensembles}
+	Para duas variáveis aleatórias $X$ e $Y$ com médias zero, temos 
+	$$\Cov(X,Y) = \EE((X-0)(Y-0)) = \EE(XY)$$
+	E em particular, 
+	$$\Cov(X,X) = \EE(X^2) = \Var(X)$$
+\end{frame}
+
+\begin{frame}
+	Se $A$ é uma matriz, utilizaremos a notação 
+	\begin{itemize}
+		\item $A_{ij}$ para o elemento da linha $i$ e coluna $j$.
+		\item $A_{i*}$ para a linha $i$.	
+		\item $A_{*j}$ para a coluna $j$.
+		\item O produto interno dos vetores $u$ e $v$ será denotado por $u\cdot v$.
+	\end{itemize}
+\end{frame}
+\begin{frame}{2.3 Ensembles}
+	
+	Assim, podemos escrever as equações (2.19) e (2.20) como
+	\begin{align*}
+		(2.19) &= \begin{cases}
+		\Cov\left(b^{(\ell)}_{i},b^{(\ell)}_j\right) = 0, \quad i\neq j\\[1ex]
+		\Var\left(b^{(\ell)}_{i}\right) = C_b^{(\ell)} \\
+		\end{cases}  \tag{2.19'}\\[2ex] 
+		(2.20) &= \begin{cases}
+		\Cov\left(W^{(\ell)}_{ij},W^{(\ell)}_{kl}\right) = 0, \quad (i,j)\neq (k,l)\\[1ex]
+		\Var\left(W^{(\ell)}_{ij}\right) = \frac{C_W^{(\ell)}}{n_{\ell-1}} \\
+		\end{cases} \tag{2.20'}
+	\end{align*}
+\end{frame}
+
+\begin{frame}{2.3 Ensembles}
+	Embora não valha para todas as distribuições\footnote{\href{https://almostsuremath.com/2021/03/24/independence-of-normals/}{Independence of Normals}}, se $X$ e $Y$ são variáveis aleatórias gaussianas, então $X$ e $Y$ são independentes se e somente se $\Cov(X,Y) = 0$.  
+
+	\medskip
+
+	Segue que as $b^{(\ell)}_i$ e $W^{(\ell)}_{ij}$ são variáveis gaussianas independentes, com médias zero e variâncias dadas por $C_b^{(\ell)}$ e $\frac{C_W^{(\ell)}}{n_{\ell-1}}$.
+\end{frame}
+
+\section{Effective Theory of Deep Linear Networks at Initialization}
+
+\begin{frame}
+	\tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}{Outline}
+	\begin{enumerate}[\S 3.1]
+		\item Redes Neurais Lineares
+		\item Criticalidade: cálculo do correlator de 2 pontos
+		\item Flutuações: cálculo do correlator de 4 pontos
+		\item Caos: cálculo do correlator de 6 pontos
+	\end{enumerate}
+	
+\end{frame}
+
+\subsection{Deep Linear Networks}
+\begin{frame}{Deep Linear Network}
+	\begin{itemize}
+		\item São redes neurais com funções de ativação identidade $\sigma(x) = x$.
+		\item Para simplificar a análise, zeramos os vieses $b^{(\ell)} \equiv \vec{0}$.
+		\item A equação \eqref{eq:NN} se torna
+		\begin{align*}
+			z^{(1)} &= W^{(1)} x_\alpha \\ 	
+			z^{(\ell+1)} &= W^{(\ell+1)}\big(z^{(\ell)}\big), \qquad \ell = 1, \ldots, L-1 
+		\end{align*}
+	\end{itemize}
+\end{frame}
+\begin{frame}
+	\begin{equation*}\tag{3.2}
+		z^{(\ell)}_\alpha = W^{(\ell)}W^{(\ell-1)}\cdots W^{(1)} x_\alpha
+	\end{equation*}
+Introduzimos a notação 
+	\begin{equation*}\tag{3.3}
+		\WW^{(\ell)} = W^{(\ell)}W^{(\ell-1)}\cdots W^{(1)}
+	\end{equation*}
+
+Fazemos todas as variâncias constantes e independentes da camada $C_W^{(\ell)} \equiv C_W$. 
+\end{frame}
+
+
+\begin{frame}
+	\includegraphics{redeneural.pdf}
+\end{frame}
+
+
+\begin{frame}
+	Queremos calcular 
+	$$p\big(z^{(\ell)}_\alpha\mid \mathcal{D}\big) $$ 
+\begin{itemize}
+	\item 
+	Uma distribuição é completamente determinada pelos seus momentos, que são dados por seus correlatores de M pontos.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Esperança}
+	\begin{itemize}
+		\item Note que pela equação (3.2), temos que 
+		\begin{equation*}\tag{3.2'}
+		z^{(\ell)}_{\alpha} = W^{(\ell)} z^{(\ell -1)}_\alpha
+		\end{equation*}
+		\item Podemos calcular a esperança de $z^{(\ell)}_{\alpha}$ componente a componente, lembrando que é o produto interno da $i$-ésima linha da matriz $W^{(\ell)}$ com o vetor $z^{(\ell -1)}_\alpha$.
+	\end{itemize}
+\end{frame}
+\begin{frame}
+	
+	\begin{align*}
+		\EE\big(z^{(\ell)}_{i;\alpha}\big) &= \EE\left(W_{i*}^{(\ell)} \cdot z^{(\ell -1)}_\alpha\right) \\% & (\text{coordenada $i$ de  $z^{(\ell)}_{\alpha}$})\\
+		&= \EE\left(\sum_{j=1}^{n_{\ell-1}} W_{ij}^{(\ell)}z^{(\ell -1)}_{j;\alpha}\right) \\% & \text{(abre como somatório)}  \\
+		&=\sum_{j=1}^{n_{\ell-1}}\EE\left( W_{ij}^{(\ell)}z^{(\ell -1)}_{j;\alpha}\right) \\%& \text{(linearidade da esperança)}\\
+		&= \sum_{j=1}^{n_{\ell-1}} \underset{0}{\underbrace{\EE\left(W_{ij}^{(\ell)}\right)}} \EE\left(z^{(\ell -1)}_{j;\alpha}\right) = 0 \tag{3.6} %& \text{(independencia camadas)}
+	\end{align*} 
+\end{frame}
+
+\subsection{Criticalidade}
+\begin{frame}{Criticalidade}
+	\begin{itemize}
+		\item Vamos calcular o correlator de 2 pontos na primeira camada, coordenada a coordenada
+	\end{itemize}
+		\begin{align*}
+			\EE\big(z^{(1)}_{i;\aaA} z^{(1)}_{j;\aaB}\big) &= \EE\left(W^{(1)}_{i*}\cdot x_{\aaA}W^{(1)}_{j*}\cdot x_{\aaB} \right)\\
+		&= \EE\left( \left(\sum_{k=1}^{n_0} W^{(1)}_{ik}x_{k;\aaA}\right)
+		\left(\sum_{l=1}^{n_0} W^{(1)}_{il}x_{l;\aaA}\right) \right)\\
+		&= \EE\left(\sum_{k=1}^{n_0}\sum_{l=1}^{n_0}W^{(1)}_{ik}x_{k;\aaA}W^{(1)}_{il}x_{l;\aaB} \right) \\
+		\end{align*}
+	 
+\end{frame}
+\begin{frame}{Correlator camada 1}
+	\begin{align*}
+		&=\EE\left(\sum_{k=1}^{n_0}\sum_{l=1}^{n_0}W^{(1)}_{ik}x_{k;\aaA}W^{(1)}_{il}x_{l;\aaB} \right) = \sum_{k,l=1}^{n_0} \EE\left(W^{(1)}_{ik}W^{(1)}_{jl}\right) x_{k;\aaA}x_{l;\aaB} \\
+		&= \sum_{k,l=1}^{n_0} \delta_{ij}\delta_{kl}\frac{C_W}{n_0} x_{k;\aaA}x_{l;\aaB} =\delta_{ij}\frac{C_W}{n_0} \sum_{k,l=1}^{n_0}\delta_{kl}x_{k;\aaA}x_{l;\aaB} =  ^{\dagger}\\
+		&= \delta_{ij}\frac{C_W}{n_0} \sum_{\nu=1}^{n_0} x_{\nu;\aaA}x_{\nu;\aaB} =  \delta_{ij}\frac{C_W}{n_0}  x_{\aaA} \cdot x_{\aaB} \tag{3.8}
+	\end{align*}
+	Na passagem $\dagger$, note que as parcelas somem quando $k\neq l$, então fazemos uma mudança de variáveis $\nu = k = l$.
+\end{frame}
+
+\begin{frame}{Correlator camada 1}
+	Criamos a notação 
+	\begin{equation*}\tag{3.9}
+		G_{\aaA\aaB}^{(0)} = \frac{1}{n_0} x_{\aaA}\cdot x_{\aaB}
+	\end{equation*}
+	Assim 
+	\begin{equation*}\tag{3.10}
+		\EE\big(z^{(1)}_{i;\aaA} z^{(1)}_{j;\aaB}\big) = \delta_{ij}C_WG_{\aaA\aaB}^{(0)}
+	\end{equation*}
+	\begin{itemize}
+		\item Note que no lado direito da equação acima, o único termo que depende das coordenadas $i,j$ é $\delta_{ij}$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Correlator camada $\ell$}
+	\begin{itemize}
+		\item Vamos calcular o correlator de 2 pontos na camada $\ell$ de maneira recursiva, utilizando a equação ($3.2'$)
+		\begin{equation*}\tag{3.2'}
+			z^{(\ell)}_{\alpha} = W^{(\ell)} z^{(\ell -1)}_\alpha
+		\end{equation*}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Correlator camada $\ell$}
+	\begin{align*}
+		\EE\big(z^{(\ell +1)}_{i;\aaA} z^{(\ell +1)}_{j;\aaB}\big) &= 
+		\EE\left(W^{(\ell+1)}_{i*}\cdot z^{(\ell)}_{\aaA}W^{(\ell+1)}_{j*}\cdot z^{(\ell)}_{\aaB} \right)  \\
+		&=\EE\left( \left(\sum_{k=1}^{n_\ell} W^{(\ell +1)}_{ik}z^{(\ell)}_{k;\aaA}\right)
+		\left(\sum_{l=1}^{n_\ell} W^{(\ell +1)}_{il}z^{(\ell)}_{l;\aaA}\right) \right)\\
+		&=\sum_{k,l=1}^{n_\ell} \EE\left(W^{(\ell+1)}_{ik}W^{(\ell+1)}_{jl}z^{(\ell)}_{k;\aaA}z^{(\ell)}_{l;\aaB} \right)\\
+		&=\sum_{k,l=1}^{n_\ell} \EE\left(W^{(\ell+1)}_{ik}W^{(\ell+1)}_{jl}\right) \EE\left(z^{(\ell)}_{k;\aaA}z^{(\ell)}_{l;\aaB} \right)\\
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Correlator camada $\ell$}
+	\begin{align*}
+		&=\sum_{k,l=1}^{n_\ell} \EE\left(W^{(\ell+1)}_{ik}W^{(\ell+1)}_{jl}\right) \EE\left(z^{(\ell)}_{k;\aaA}z^{(\ell)}_{l;\aaB} \right)\\
+		&=\sum_{k,l=1}^{n_\ell} \delta_{ij}\delta_{kl}\frac{C_W}{n_\ell} \EE\left(z^{(\ell)}_{k;\aaA}z^{(\ell)}_{l;\aaB} \right) 
+		=\delta_{ij}\frac{C_W}{n_\ell}\sum_{k,l=1}^{n_\ell} \delta_{kl} \EE\left(z^{(\ell)}_{k;\aaA}z^{(\ell)}_{l;\aaB} \right) \\
+		&= \delta_{ij}\frac{C_W}{n_\ell} \sum_{\nu=1}^{n_\ell} \EE\left(z^{(\ell)}_{\nu;\aaA}z^{(\ell)}_{\nu;\aaB} \right) \\
+		&= \delta_{ij}\frac{C_W}{n_\ell}\EE\left( \sum_{\nu=1}^{n_\ell}z^{(\ell)}_{\nu;\aaA}z^{(\ell)}_{\nu;\aaB} \right) 
+		= \delta_{ij}\frac{C_W}{n_\ell} \EE\big(z^{(\ell)}_{\aaA}\cdot  z^{(\ell)}_{\aaB}\big)\tag{3.11}
+	\end{align*}
+\end{frame}
+	 
+
+\begin{frame}{Correlator camada $\ell$}
+	\begin{itemize}
+		\item Em suma, a equação (3.11) vira 
+		 $$\EE\big(z^{(\ell +1)}_{i;\aaA} z^{(\ell +1)}_{j;\aaB}\big) = \delta_{ij}\frac{C_W}{n_\ell} \EE\big(z^{(\ell)}_{\aaA}\cdot  z^{(\ell)}_{\aaB}\big)$$
+		 %\item Note que, novamente, no lado direito da equação acima, o único termo que depende das coordenadas $i,j$ é $\delta_{ij}$.
+		 \item Em qualquer camada, o correlator das coordenadas $i,j$ é sempre o delta de Kronecker vezes um número que não depende das coordenadas, permitindo assim introduzir a notação 
+		 \begin{equation*}\tag{3.12}
+			\EE\big(z^{(\ell)}_{i;\aaA}\cdot z^{(\ell)}_{j;\aaB}\big) = \delta_{ij} G^{(\ell)}_{\aaA\aaB}  
+		 \end{equation*}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Recursão}
+	\begin{itemize}
+		\item Para isolar $G^{(\ell)}_{\aaA\aaB}$, vamos somar a equação (3.12) sobre todos os possíveis $i$ e $j$.
+	\end{itemize}
+	\begin{align*}
+		\sum_{i,j=1}^{n_\ell} \EE\big(z^{(\ell)}_{i;\aaA}\cdot z^{(\ell)}_{j;\aaB}\big) &= \sum_{i,j=1}^{n_\ell} \delta_{ij} G^{(\ell)}_{\aaA\aaB} \\
+		\sum_{\nu=1}^{n_\ell} \EE\big(z^{(\ell)}_{\nu;\aaA}\cdot z^{(\ell)}_{\nu;\aaB}\big) &= \sum_{\nu=1}^{n_\ell} \delta_{\nu\nu}G^{(\ell)}_{\aaA\aaB} \\
+		\EE\left(\sum_{\nu=1}^{n_\ell}z^{(\ell)}_{\nu;\aaA}\cdot z^{(\ell)}_{\nu;\aaB}\right) &= \sum_{\nu=1}^{n_\ell} G^{(\ell)}_{\aaA\aaB} \\
+		\EE(z^{(\ell)}_{\aaA}\cdot z^{(\ell)}_{\aaB}) &= n_\ell G^{(\ell)}_{\aaA\aaB} \\
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Recursão}
+	\begin{equation*}\tag{3.13}
+		G^{(\ell)}_{\aaA\aaB} = \frac{1}{n_\ell}\EE(z^{(\ell)}_{\aaA}\cdot z^{(\ell)}_{\aaB})		
+	\end{equation*}
+	Assim (3.11) se torna
+	\begin{equation*}\tag{3.11'}\label{eq:correlatorGl}
+		\EE\big(z^{(\ell +1)}_{i;\aaA} z^{(\ell +1)}_{j;\aaB}\big) = \delta_{ij}C_WG^{(\ell)}_{\aaA\aaB}
+	\end{equation*}
+	Usando \eqref{eq:correlatorGl}, podemos encontrar a recursão para $G^{(\ell+1)}_{\aaA\aaB}$.
+\end{frame}
+
+\begin{frame}{Recursão}
+	\begin{align*}\tag{3.14}
+		G^{(\ell+1)}_{\aaA\aaB} &= \frac{1}{n_{\ell+1}}\EE\big(z^{(\ell+1)}_{\aaA}\cdot z^{(\ell+1)}_{\aaB}\big) \\
+		&= \frac{1}{n_{\ell+1}}\EE\left(\sum_{\nu=1}^{n_{\ell+1}}z^{(\ell+1)}_{\nu;\aaA} z^{(\ell+1)}_{\nu;\aaB}\right) \\
+		&= \frac{1}{n_{\ell+1}}\sum_{\nu=1}^{n_{\ell+1}} \EE\left(z^{(\ell+1)}_{\nu;\aaA} z^{(\ell+1)}_{\nu;\aaB}\right) \\
+		&= \frac{1}{n_{\ell+1}}\sum_{\nu=1}^{n_{\ell+1}} \delta_{\nu\nu}C_WG^{(\ell)}_{\aaA\aaB} \\
+		&= \frac{C_W}{n_{\ell+1}}\sum_{\nu=1}^{n_{\ell+1}} G^{(\ell)}_{\aaA\aaB}\frac{C_W}{n_{\ell+1}}n_{\ell+1}G^{(\ell)}_{\aaA\aaB} = C_WG^{(\ell)}_{\aaA\aaB}\\ 
+	\end{align*}
+\end{frame}
+
+\begin{frame}
+	Da equação (3.14) obtemos a recursão
+	\begin{equation*}\tag{3.15}
+		G^{(\ell)}_{\aaA\aaB} = (C_W)^{\ell}G^{(0)}_{\aaA\aaB}
+	\end{equation*}
+\end{frame}
+
+\begin{frame}{Física: Criticalidade}
+	O observável $G^{(L)}_{\aaA\aaA}$ mede o tamanho médio do output da rede neural.
+	\begin{equation*}\tag{3.16}
+		G^{(L)}_{\aaA\aaA} = \frac{1}{n_L}\EE\left(z^{(L)}_\aaA\cdot z^{(L)}_\aaA\right) =  \frac{1}{n_L}\EE\left(\big\|z^{(L)}_\aaA\big\|\right)
+	\end{equation*}
+
+	Por outro lado, note que 
+	$$G^{(L)}_{\aaA\aaA} = (C_W)^LG^{(0)}_{\aaA\aaA}$$
+\end{frame}
+
+\begin{frame}{Criticalidade}
+	Assim, dependendo do valor da variância $C_W$, podemos ter três cenários:
+	\begin{equation*}
+		\lim_{L\to\infty} G^{(L)}_{\aaA\aaA} = \lim_{L\to\infty} (C_W)^LG^{(0)}_{\aaA\aaA} =
+	\begin{cases}
+		0  &\text{ se } C_W < 1  \\
+		G^{(0)}_{\aaA\aaA}&\text{ se }  C_W = 1 \\
+		\infty &\text{ se  } C_W>1\\
+	\end{cases}
+	\end{equation*}
+\end{frame}
+
+\begin{frame}{Criticalidade}
+	\begin{itemize}
+		\item Se $C_W < 1$, a rede neural não consegue aprender, pois o output tende a zero.
+		\item Se $C_W > 1$, o valor do output diverge, o que significa instabilidade numérica.
+		\item O único caso no qual a rede neural consegue aprender é quando $C_W = 1$.
+	\end{itemize}
+\end{frame}
+% \subsection{Flutuacoes}
+% \begin{frame}{Flutuações}
+% 	\begin{itemize}
+% 		\item O correlator de 4 pontos é dado por
+% 		$$\EE(z^{(\ell)}_i z^{(\ell)}_j z^{(\ell)}_k z^{(\ell)}_l) = \Cov(z^{(\ell)}_i z^{(\ell)}_j, z^{(\ell)}_k z^{(\ell)}_l)$$
+% 		\item Vamos calcular o correlator de 4 pontos para a rede neural com $L$ camadas.
+% 	\end{itemize}
+	
+% \end{frame}
+
+\end{document}
+
