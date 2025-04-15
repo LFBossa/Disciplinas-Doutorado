@@ -1,0 +1,18 @@
+
+\documentclass{standalone}
+\usepackage{neuralnetwork}
+\begin{document}
+\begin{neuralnetwork}[height=6]
+		\newcommand{\nodetextx}[2]{$x_{#2;\alpha}$}
+		\newcommand{\nodetexty}[2]{$z^{(3)}_{#2;\alpha}$}
+		\newcommand{\camadaum}[2]{$z^{(1)}_{#2;\alpha}$}
+		\newcommand{\camadadois}[2]{$z^{(2)}_{#2;\alpha}$}
+		\inputlayer[count=4, bias=false, title=Entrada, text=\nodetextx]
+		\hiddenlayer[count=5, bias=false, title=Camada 1, text=\camadaum] \linklayers
+		\hiddenlayer[count=6, bias=false, title=Camada 2, text=\camadadois] \linklayers
+		\outputlayer[count=3, title=Saída, text=\nodetexty] \linklayers
+		\node[] at (1,-1) {$W^{(1)}_{5\times 4}$};
+		\node[] at (3.5,-0.8) {$W^{(2)}_{6\times 5}$};
+		\node[] at (6.5,-1.2) {$W^{(3)}_{6\times 3}$};
+\end{neuralnetwork}
+\end{document}
