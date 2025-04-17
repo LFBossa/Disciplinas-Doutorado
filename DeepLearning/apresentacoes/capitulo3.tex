@@ -306,9 +306,9 @@ Fazemos todas as variâncias constantes e independentes da camada $C_W^{(\ell)} 
 		\item Para isolar $G^{(\ell)}_{\aaA\aaB}$, vamos somar a equação \eqref{eq:Gldef} sobre todos os possíveis $i$ e $j$.
 	\end{itemize}
 	\begin{align*}
-		\sum_{i,j=1}^{n_\ell} \EE\big(z^{(\ell)}_{i;\aaA}\cdot z^{(\ell)}_{j;\aaB}\big) &= \sum_{i,j=1}^{n_\ell} \delta_{ij} G^{(\ell)}_{\aaA\aaB} \\
-		\sum_{\nu=1}^{n_\ell} \EE\big(z^{(\ell)}_{\nu;\aaA}\cdot z^{(\ell)}_{\nu;\aaB}\big) &= \sum_{\nu=1}^{n_\ell} \delta_{\nu\nu}G^{(\ell)}_{\aaA\aaB} \\
-		\EE\left(\sum_{\nu=1}^{n_\ell}z^{(\ell)}_{\nu;\aaA}\cdot z^{(\ell)}_{\nu;\aaB}\right) &= \sum_{\nu=1}^{n_\ell} G^{(\ell)}_{\aaA\aaB} \\
+		\sum_{i,j=1}^{n_\ell} \EE\big(z^{(\ell)}_{i;\aaA} z^{(\ell)}_{j;\aaB}\big) &= \sum_{i,j=1}^{n_\ell} \delta_{ij} G^{(\ell)}_{\aaA\aaB} \\
+		\sum_{\nu=1}^{n_\ell} \EE\big(z^{(\ell)}_{\nu;\aaA} z^{(\ell)}_{\nu;\aaB}\big) &= \sum_{\nu=1}^{n_\ell} \delta_{\nu\nu}G^{(\ell)}_{\aaA\aaB} \\
+		\EE\left(\sum_{\nu=1}^{n_\ell}z^{(\ell)}_{\nu;\aaA} z^{(\ell)}_{\nu;\aaB}\right) &= \sum_{\nu=1}^{n_\ell} G^{(\ell)}_{\aaA\aaB} \\
 		\EE(z^{(\ell)}_{\aaA}\cdot z^{(\ell)}_{\aaB}) &= n_\ell G^{(\ell)}_{\aaA\aaB} \\
 	\end{align*}
 \end{frame}
@@ -330,7 +330,7 @@ Fazemos todas as variâncias constantes e independentes da camada $C_W^{(\ell)} 
 		&= \frac{1}{n_{\ell+1}}\EE\left(\sum_{\nu=1}^{n_{\ell+1}}z^{(\ell+1)}_{\nu;\aaA} z^{(\ell+1)}_{\nu;\aaB}\right) \\
 		&= \frac{1}{n_{\ell+1}}\sum_{\nu=1}^{n_{\ell+1}} \EE\left(z^{(\ell+1)}_{\nu;\aaA} z^{(\ell+1)}_{\nu;\aaB}\right) \\
 		&= \frac{1}{n_{\ell+1}}\sum_{\nu=1}^{n_{\ell+1}} \delta_{\nu\nu}C_WG^{(\ell)}_{\aaA\aaB} \\
-		&= \frac{C_W}{n_{\ell+1}}\sum_{\nu=1}^{n_{\ell+1}} G^{(\ell)}_{\aaA\aaB}\frac{C_W}{n_{\ell+1}}n_{\ell+1}G^{(\ell)}_{\aaA\aaB} = C_WG^{(\ell)}_{\aaA\aaB}\\ 
+		&= \frac{C_W}{n_{\ell+1}}\sum_{\nu=1}^{n_{\ell+1}} G^{(\ell)}_{\aaA\aaB} = \frac{C_W}{n_{\ell+1}}n_{\ell+1}G^{(\ell)}_{\aaA\aaB} = C_WG^{(\ell)}_{\aaA\aaB}\\ 
 	\end{align*}
 \end{frame}
 
@@ -344,7 +344,7 @@ Fazemos todas as variâncias constantes e independentes da camada $C_W^{(\ell)} 
 \begin{frame}{Física: Criticalidade}
 	O observável $G^{(L)}_{\aaA\aaA}$ mede o tamanho médio do output da rede neural.
 	\begin{equation*}\tag{3.16}
-		G^{(L)}_{\aaA\aaA} = \frac{1}{n_L}\EE\left(z^{(L)}_\aaA\cdot z^{(L)}_\aaA\right) =  \frac{1}{n_L}\EE\left(\big\|z^{(L)}_\aaA\big\|\right)
+		G^{(L)}_{\aaA\aaA} = \frac{1}{n_L}\EE\left(z^{(L)}_\aaA\cdot z^{(L)}_\aaA\right) =  \frac{1}{n_L}\EE\left(\big\|z^{(L)}_\aaA\big\|^2\right)
 	\end{equation*}
 
 	Por outro lado, note que 
@@ -370,6 +370,18 @@ Fazemos todas as variâncias constantes e independentes da camada $C_W^{(\ell)} 
 		\item O único caso no qual a rede neural consegue aprender é quando $C_W = 1$.
 	\end{itemize}
 \end{frame}
+
+% \begin{frame}{Questionamentos}
+% 	\begin{itemize}
+% 		\item Se a variância depender da camada, a recursão \eqref{eq:trezquinze} na última camada vira 
+% 		\begin{equation*} 
+% 			G^{(L)}_{\aaA\aaB} = G^{(0)}_{\aaA\aaB}\prod_{\nu=1}^{L}C_W^{(\nu)}
+% 		\end{equation*}
+% 		Nesse caso, podemos ter variâncias diferentes para cada camada, desde que mantenhamos seu produto igual a 1.
+% 		\item Ficou faltando abrir o argumento para momentos de ordem ímpar.
+% 	\end{itemize}
+	
+% \end{frame}
 % \subsection{Flutuacoes}
 % \begin{frame}{Flutuações}
 % 	\begin{itemize}
