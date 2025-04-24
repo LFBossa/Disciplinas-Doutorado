@@ -39,6 +39,9 @@
 \newcommand{\WW}{\mathcal{W}}
 \newcommand{\aaA}{\alpha}
 \newcommand{\aaB}{\beta}
+\def\eell{{(\ell)}}
+\def\eellum{{(\ell+1)}}
+
 
 \begin{document}
 
@@ -60,11 +63,11 @@
 Uma rede neural com $L$ camadas, cada camada tendo $n_\ell$ neurônios e dados de entrada $x_\alpha$ é dada por:
 \begin{align*}
 	z^{(1)} &= W^{(1)} x_\alpha + b^{(1)}  \\\tag{2.5}\label{eq:NN}
-	z^{(\ell+1)} &= W^{(\ell+1)} \sigma\big(z^{(\ell)}\big) + b^{(\ell)}, \qquad \ell = 1, \ldots, L-1 \\
+	z^\eellum &= W^\eellum \sigma\big(z^\eell\big) + b^\eell, \qquad \ell = 1, \ldots, L-1 \\
 \end{align*}
 \begin{itemize}
-	\item $z^{(\ell)}$ é um vetor de tamanho $n_\ell$ 
-	\item $W^{(\ell)}$ é uma matriz de tamanho $n_\ell \times n_{\ell-1}$
+	\item $z^\eell$ é um vetor de tamanho $n_\ell$ 
+	\item $W^\eell$ é uma matriz de tamanho $n_\ell \times n_{\ell-1}$
 \end{itemize}
 
 %Pré-ativação na camada $\ell+1$ é dada pela aplicação da matriz de pesos $W^{(\ell+1)}$ e a soma do vetor de bias $b^{(\ell)}$ na ativação da camada $\ell$.
@@ -75,8 +78,8 @@ Uma rede neural com $L$ camadas, cada camada tendo $n_\ell$ neurônios e dados d
 	\framesubtitle{Initialization distribuitions}
 	Distribuição inicial: médias zero e variâncias dadas por
 	\begin{align*}
-		\EE\left(b^{(\ell)}_{i}b^{(\ell)}_j\right) &= \delta_{ij}C_b^{(\ell)}  \tag{2.19}\\
-		\EE\left(W^{(\ell)}_{ij}W^{(\ell)}_{kl}\right) &= \delta_{ik}\delta_{jl}\frac{C_W^{(\ell)}}{n_{\ell-1}} \tag{2.20}	
+		\EE\left(b^\eell_{i}b^\eell_j\right) &= \delta_{ij}C_b^\eell  \tag{2.19}\\
+		\EE\left(W^\eell_{ij}W^\eell_{kl}\right) &= \delta_{ik}\delta_{jl}\frac{C_W^\eell}{n_{\ell-1}} \tag{2.20}	
 	\end{align*}
 	Estamos trabalhando com distribuições unidimensionais.
 \end{frame}
@@ -122,12 +125,12 @@ Uma rede neural com $L$ camadas, cada camada tendo $n_\ell$ neurônios e dados d
 	Assim, podemos escrever as equações (2.19) e (2.20) como
 	\begin{align*}
 		(2.19) &= \begin{cases}
-		\Cov\left(b^{(\ell)}_{i},b^{(\ell)}_j\right) = 0, \quad i\neq j\\[1ex]
-		\Var\left(b^{(\ell)}_{i}\right) = C_b^{(\ell)} \\
+		\Cov\left(b^\eell_{i},b^\eell_j\right) = 0, \quad i\neq j\\[1ex]
+		\Var\left(b^\eell_{i}\right) = C_b^\eell \\
 		\end{cases}  \tag{2.19'}\\[2ex] 
 		(2.20) &= \begin{cases}
-		\Cov\left(W^{(\ell)}_{ij},W^{(\ell)}_{kl}\right) = 0, \quad (i,j)\neq (k,l)\\[1ex]
-		\Var\left(W^{(\ell)}_{ij}\right) = \frac{C_W^{(\ell)}}{n_{\ell-1}} \\
+		\Cov\left(W^\eell_{ij},W^\eell_{kl}\right) = 0, \quad (i,j)\neq (k,l)\\[1ex]
+		\Var\left(W^\eell_{ij}\right) = \frac{C_W^\eell}{n_{\ell-1}} \\
 		\end{cases} \tag{2.20'}
 	\end{align*}
 \end{frame}
@@ -137,7 +140,7 @@ Uma rede neural com $L$ camadas, cada camada tendo $n_\ell$ neurônios e dados d
 
 	\medskip
 
-	Segue que as $b^{(\ell)}_i$ e $W^{(\ell)}_{ij}$ são variáveis gaussianas independentes, com médias zero e variâncias dadas por $C_b^{(\ell)}$ e $\frac{C_W^{(\ell)}}{n_{\ell-1}}$.
+	Segue que as $b^\eell_i$ e $W^\eell_{ij}$ são variáveis gaussianas independentes, com médias zero e variâncias dadas por $C_b^\eell$ e $\frac{C_W^\eell}{n_{\ell-1}}$.
 \end{frame}
 
 \section{Teoria Efetiva de Redes Lineares Profundas na Inicialização}
@@ -150,7 +153,7 @@ Uma rede neural com $L$ camadas, cada camada tendo $n_\ell$ neurônios e dados d
 	\begin{enumerate}[\S 3.1]
 		\item Redes Lineares Profundas
 		\item Criticalidade: cálculo do correlator de 2 pontos
-		\item \sout{Flutuações: cálculo do correlator de 4 pontos}
+		\item Flutuações: cálculo do correlator de 4 pontos
 		\item \sout{Caos: cálculo do correlator de 6 pontos}
 	\end{enumerate}
 	
@@ -160,24 +163,24 @@ Uma rede neural com $L$ camadas, cada camada tendo $n_\ell$ neurônios e dados d
 \begin{frame}{Redes Lineares Profundas}
 	\begin{itemize}
 		\item São redes neurais com funções de ativação identidade $\sigma(x) = x$.
-		\item Para simplificar a análise, zeramos os vieses $b^{(\ell)} \equiv \vec{0}$.
+		\item Para simplificar a análise, zeramos os vieses $b^\eell \equiv \vec{0}$.
 		\item A equação \eqref{eq:NN} se torna
 		\begin{align*}
 			z^{(1)} &= W^{(1)} x_\alpha \\ 	
-			z^{(\ell+1)} &= W^{(\ell+1)}\big(z^{(\ell)}\big), \qquad \ell = 1, \ldots, L-1 
+			z^{(\ell+1)} &= W^{(\ell+1)}\big(z^\eell\big), \qquad \ell = 1, \ldots, L-1 
 		\end{align*}
 	\end{itemize}
 \end{frame}
 \begin{frame}{Redes Lineares Profundas}
 	\begin{equation*}\tag{3.2}\label{eq:zele}
-		z^{(\ell)}_\alpha = W^{(\ell)}W^{(\ell-1)}\cdots W^{(1)} x_\alpha
+		z^\eell_\alpha = W^\eell W^{(\ell-1)}\cdots W^{(1)} x_\alpha
 	\end{equation*}
 Introduzimos a notação 
 	\begin{equation*}\tag{3.3}\label{eq:Wcali}
-		\WW^{(\ell)} = W^{(\ell)}W^{(\ell-1)}\cdots W^{(1)}
+		\WW^\eell = W^\eell W^{(\ell-1)}\cdots W^{(1)}
 	\end{equation*}
 
-Fazemos todas as variâncias constantes e independentes da camada $C_W^{(\ell)} \equiv C_W$. 
+Fazemos todas as variâncias constantes e independentes da camada $C_W^\eell \equiv C_W$. 
 \end{frame}
 
 
@@ -188,7 +191,7 @@ Fazemos todas as variâncias constantes e independentes da camada $C_W^{(\ell)} 
 
 \begin{frame}{Objetivos}
 	Queremos calcular 
-	$$p\big(z^{(\ell)}_\alpha\mid \mathcal{D}\big) $$ 
+	$$p\big(z^\eell_\alpha\mid \mathcal{D}\big) $$ 
 \begin{itemize}
 	\item 
 	Uma distribuição é completamente determinada pelos seus momentos, que são dados por seus correlatores de M pontos.
@@ -199,18 +202,18 @@ Fazemos todas as variâncias constantes e independentes da camada $C_W^{(\ell)} 
 	\begin{itemize}
 		\item Note que pela equação \eqref{eq:zele}, temos que 
 		\begin{equation*}\tag{3.2'}\label{eq:zele1}
-		z^{(\ell)}_{\alpha} = W^{(\ell)} z^{(\ell -1)}_\alpha
+		z^\eell_{\alpha} = W^\eell z^{(\ell -1)}_\alpha
 		\end{equation*}
-		\item Podemos calcular a esperança de $z^{(\ell)}_{\alpha}$ componente a componente, lembrando que é o produto interno da $i$-ésima linha da matriz $W^{(\ell)}$ com o vetor $z^{(\ell -1)}_\alpha$.
+		\item Podemos calcular a esperança de $z^\eell_{\alpha}$ componente a componente, lembrando que é o produto interno da $i$-ésima linha da matriz $W^\eell$ com o vetor $z^{(\ell -1)}_\alpha$.
 	\end{itemize}
 \end{frame}
 \begin{frame}{Esperança}
 	
 	\begin{align*}
-		\EE\big(z^{(\ell)}_{i;\alpha}\big) &= \EE\left(W_{i*}^{(\ell)} \cdot z^{(\ell -1)}_\alpha\right) \\% & (\text{coordenada $i$ de  $z^{(\ell)}_{\alpha}$})\\
-		&= \EE\left(\sum_{j=1}^{n_{\ell-1}} W_{ij}^{(\ell)}z^{(\ell -1)}_{j;\alpha}\right) \\% & \text{(abre como somatório)}  \\
-		&=\sum_{j=1}^{n_{\ell-1}}\EE\left( W_{ij}^{(\ell)}z^{(\ell -1)}_{j;\alpha}\right) \\%& \text{(linearidade da esperança)}\\
-		&= \sum_{j=1}^{n_{\ell-1}} \underset{0}{\underbrace{\EE\left(W_{ij}^{(\ell)}\right)}} \EE\left(z^{(\ell -1)}_{j;\alpha}\right) = 0 \tag{3.6} \label{eq:media} %& \text{(independencia camadas)}
+		\EE\big(z^\eell_{i;\alpha}\big) &= \EE\left(W_{i*}^\eell \cdot z^{(\ell -1)}_\alpha\right) \\% & (\text{coordenada $i$ de  $z^\eell_{\alpha}$})\\
+		&= \EE\left(\sum_{j=1}^{n_{\ell-1}} W_{ij}^\eell z^{(\ell -1)}_{j;\alpha}\right) \\% & \text{(abre como somatório)}  \\
+		&=\sum_{j=1}^{n_{\ell-1}}\EE\left( W_{ij}^\eell z^{(\ell -1)}_{j;\alpha}\right) \\%& \text{(linearidade da esperança)}\\
+		&= \sum_{j=1}^{n_{\ell-1}} \underset{0}{\underbrace{\EE\left(W_{ij}^\eell\right)}} \EE\left(z^{(\ell -1)}_{j;\alpha}\right) = 0 \tag{3.6} \label{eq:media} %& \text{(independencia camadas)}
 	\end{align*} 
 \end{frame}
 
@@ -221,6 +224,11 @@ Fazemos todas as variâncias constantes e independentes da camada $C_W^{(\ell)} 
 \end{frame}
 
 \subsection{Criticalidade}
+
+\begin{frame}
+	\tableofcontents[currentsubsection]
+\end{frame}
+
 \begin{frame}{Criticalidade}
 	\begin{itemize}
 		\item Vamos calcular o correlator de 2 pontos na primeira camada, coordenada a coordenada
@@ -259,30 +267,30 @@ Fazemos todas as variâncias constantes e independentes da camada $C_W^{(\ell)} 
 	\begin{itemize}
 		\item Vamos calcular o correlator de 2 pontos na camada $\ell+1$ de maneira recursiva, utilizando a equação \eqref{eq:zele1}
 		\begin{equation*}\tag{3.2'}
-			z^{(\ell+1)}_{\alpha} = W^{(\ell+1)} z^{(\ell)}_\alpha
+			z^\eellum_{\alpha} = W^\eellum z^\eell_\alpha
 		\end{equation*}
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{Correlator camada $\ell + 1$}
 	\begin{align*}
-		\EE\big(z^{(\ell +1)}_{i;\aaA} z^{(\ell +1)}_{j;\aaB}\big) &= 
-		\EE\left(W^{(\ell+1)}_{i*}\cdot z^{(\ell)}_{\aaA}W^{(\ell+1)}_{j*}\cdot z^{(\ell)}_{\aaB} \right)  \\
-		&=\EE\left( \left(\sum_{k=1}^{n_\ell} W^{(\ell +1)}_{ik}z^{(\ell)}_{k;\aaA}\right)
-		\left(\sum_{l=1}^{n_\ell} W^{(\ell +1)}_{il}z^{(\ell)}_{l;\aaA}\right) \right)\\
-		&=\sum_{k,l=1}^{n_\ell} \EE\left(W^{(\ell+1)}_{ik}W^{(\ell+1)}_{jl}z^{(\ell)}_{k;\aaA}z^{(\ell)}_{l;\aaB} \right)\\
-		&=\sum_{k,l=1}^{n_\ell} \EE\left(W^{(\ell+1)}_{ik}W^{(\ell+1)}_{jl}\right) \EE\left(z^{(\ell)}_{k;\aaA}z^{(\ell)}_{l;\aaB} \right)\\
+		\EE\big(z^\eellum_{i;\aaA} z^\eellum_{j;\aaB}\big) &= 
+		\EE\left(W^\eellum_{i*}\cdot z^\eell_{\aaA}W^\eellum_{j*}\cdot z^\eell_{\aaB} \right)  \\
+		&=\EE\left( \left(\sum_{k=1}^{n_\ell} W^\eellum_{ik}z^\eell_{k;\aaA}\right)
+		\left(\sum_{l=1}^{n_\ell} W^\eellum_{il}z^\eell_{l;\aaA}\right) \right)\\
+		&=\sum_{k,l=1}^{n_\ell} \EE\left(W^\eellum_{ik}W^\eellum_{jl}z^\eell_{k;\aaA}z^\eell_{l;\aaB} \right)\\
+		&=\sum_{k,l=1}^{n_\ell} \EE\left(W^\eellum_{ik}W^\eellum_{jl}\right) \EE\left(z^\eell_{k;\aaA}z^\eell_{l;\aaB} \right)\\
 	\end{align*}
 \end{frame}
 
 \begin{frame}{Correlator camada $\ell+1$}
 	\begin{align*}
-		&=\sum_{k,l=1}^{n_\ell} \EE\left(W^{(\ell+1)}_{ik}W^{(\ell+1)}_{jl}\right) \EE\left(z^{(\ell)}_{k;\aaA}z^{(\ell)}_{l;\aaB} \right)\\
-		&=\sum_{k,l=1}^{n_\ell} \delta_{ij}\delta_{kl}\frac{C_W}{n_\ell} \EE\left(z^{(\ell)}_{k;\aaA}z^{(\ell)}_{l;\aaB} \right) 
-		=\delta_{ij}\frac{C_W}{n_\ell}\sum_{k,l=1}^{n_\ell} \delta_{kl} \EE\left(z^{(\ell)}_{k;\aaA}z^{(\ell)}_{l;\aaB} \right) \\
-		&= \delta_{ij}\frac{C_W}{n_\ell} \sum_{\nu=1}^{n_\ell} \EE\left(z^{(\ell)}_{\nu;\aaA}z^{(\ell)}_{\nu;\aaB} \right) \\
-		&= \delta_{ij}\frac{C_W}{n_\ell}\EE\left( \sum_{\nu=1}^{n_\ell}z^{(\ell)}_{\nu;\aaA}z^{(\ell)}_{\nu;\aaB} \right) 
-		= \delta_{ij}\frac{C_W}{n_\ell} \EE\big(z^{(\ell)}_{\aaA}\cdot  z^{(\ell)}_{\aaB}\big)\tag{3.11}\label{eq:correlatorGl}
+		&=\sum_{k,l=1}^{n_\ell} \EE\left(W^\eellum_{ik}W^\eellum_{jl}\right) \EE\left(z^\eell_{k;\aaA}z^\eell_{l;\aaB} \right)\\
+		&=\sum_{k,l=1}^{n_\ell} \delta_{ij}\delta_{kl}\frac{C_W}{n_\ell} \EE\left(z^\eell_{k;\aaA}z^\eell_{l;\aaB} \right) 
+		=\delta_{ij}\frac{C_W}{n_\ell}\sum_{k,l=1}^{n_\ell} \delta_{kl} \EE\left(z^\eell_{k;\aaA}z^\eell_{l;\aaB} \right) \\
+		&= \delta_{ij}\frac{C_W}{n_\ell} \sum_{\nu=1}^{n_\ell} \EE\left(z^\eell_{\nu;\aaA}z^\eell_{\nu;\aaB} \right) \\
+		&= \delta_{ij}\frac{C_W}{n_\ell}\EE\left( \sum_{\nu=1}^{n_\ell}z^\eell_{\nu;\aaA}z^\eell_{\nu;\aaB} \right) 
+		= \delta_{ij}\frac{C_W}{n_\ell} \EE\big(z^\eell_{\aaA}\cdot  z^\eell_{\aaB}\big)\tag{3.11}\label{eq:correlatorGl}
 	\end{align*}
 \end{frame}
 	 
@@ -291,53 +299,53 @@ Fazemos todas as variâncias constantes e independentes da camada $C_W^{(\ell)} 
 	\begin{itemize}
 		\item Em suma, a equação \eqref{eq:correlatorGl} vira 
 		 \begin{equation*}
-			\EE\big(z^{(\ell +1)}_{i;\aaA} z^{(\ell +1)}_{j;\aaB}\big) = \delta_{ij}\frac{C_W}{n_\ell} \EE\big(z^{(\ell)}_{\aaA}\cdot  z^{(\ell)}_{\aaB}\big)\tag{3.11}
+			\EE\big(z^\eellum_{i;\aaA} z^\eellum_{j;\aaB}\big) = \delta_{ij}\frac{C_W}{n_\ell} \EE\big(z^\eell_{\aaA}\cdot  z^\eell_{\aaB}\big)\tag{3.11}
 		 \end{equation*}
 		 %\item Note que, novamente, no lado direito da equação acima, o único termo que depende das coordenadas $i,j$ é $\delta_{ij}$.
 		 \item Em qualquer camada, o correlator das coordenadas $i,j$ é sempre o delta de Kronecker vezes um número que não depende das coordenadas, permitindo assim introduzir a notação 
 		 \begin{equation*}\tag{3.12}\label{eq:Gldef}
-			\EE\big(z^{(\ell)}_{i;\aaA}\cdot z^{(\ell)}_{j;\aaB}\big) = \delta_{ij} G^{(\ell)}_{\aaA\aaB}  
+			\EE\big(z^\eell_{i;\aaA}\cdot z^\eell_{j;\aaB}\big) = \delta_{ij} G^\eell_{\aaA\aaB}  
 		 \end{equation*}
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{Recursão}
 	\begin{itemize}
-		\item Para isolar $G^{(\ell)}_{\aaA\aaB}$, vamos somar a equação \eqref{eq:Gldef} sobre todos os possíveis $i$ e $j$.
+		\item Para isolar $G^\eell_{\aaA\aaB}$, vamos somar a equação \eqref{eq:Gldef} sobre todos os possíveis $i$ e $j$.
 	\end{itemize}
 	\begin{align*}
-		\sum_{i,j=1}^{n_\ell} \EE\big(z^{(\ell)}_{i;\aaA} z^{(\ell)}_{j;\aaB}\big) &= \sum_{i,j=1}^{n_\ell} \delta_{ij} G^{(\ell)}_{\aaA\aaB} \\
-		\sum_{\nu=1}^{n_\ell} \EE\big(z^{(\ell)}_{\nu;\aaA} z^{(\ell)}_{\nu;\aaB}\big) &= \sum_{\nu=1}^{n_\ell} \delta_{\nu\nu}G^{(\ell)}_{\aaA\aaB} \\
-		\EE\left(\sum_{\nu=1}^{n_\ell}z^{(\ell)}_{\nu;\aaA} z^{(\ell)}_{\nu;\aaB}\right) &= \sum_{\nu=1}^{n_\ell} G^{(\ell)}_{\aaA\aaB} \\
-		\EE(z^{(\ell)}_{\aaA}\cdot z^{(\ell)}_{\aaB}) &= n_\ell G^{(\ell)}_{\aaA\aaB} \\
+		\sum_{i,j=1}^{n_\ell} \EE\big(z^\eell_{i;\aaA} z^\eell_{j;\aaB}\big) &= \sum_{i,j=1}^{n_\ell} \delta_{ij} G^\eell_{\aaA\aaB} \\
+		\sum_{\nu=1}^{n_\ell} \EE\big(z^\eell_{\nu;\aaA} z^\eell_{\nu;\aaB}\big) &= \sum_{\nu=1}^{n_\ell} \delta_{\nu\nu}G^\eell_{\aaA\aaB} \\
+		\EE\left(\sum_{\nu=1}^{n_\ell}z^\eell_{\nu;\aaA} z^\eell_{\nu;\aaB}\right) &= \sum_{\nu=1}^{n_\ell} G^\eell_{\aaA\aaB} \\
+		\EE(z^\eell_{\aaA}\cdot z^\eell_{\aaB}) &= n_\ell G^\eell_{\aaA\aaB} \\
 	\end{align*}
 \end{frame}
 
 \begin{frame}{Recursão}
 	\begin{equation*}\tag{3.13}\label{eq:Gl}
-		G^{(\ell)}_{\aaA\aaB} = \frac{1}{n_\ell}\EE(z^{(\ell)}_{\aaA}\cdot z^{(\ell)}_{\aaB})		
+		G^\eell_{\aaA\aaB} = \frac{1}{n_\ell}\EE(z^\eell_{\aaA}\cdot z^\eell_{\aaB})		
 	\end{equation*}
 	Assim \eqref{eq:correlatorGl} se torna
 	\begin{equation*}\tag{3.11'}\label{eq:correlatorGlfull}
-		\EE\big(z^{(\ell +1)}_{i;\aaA} z^{(\ell +1)}_{j;\aaB}\big) = \delta_{ij}C_WG^{(\ell)}_{\aaA\aaB}
+		\EE\big(z^\eellum_{i;\aaA} z^\eellum_{j;\aaB}\big) = \delta_{ij}C_WG^\eell_{\aaA\aaB}
 	\end{equation*}
-	Usando \eqref{eq:correlatorGlfull}, podemos encontrar a recursão para $G^{(\ell+1)}_{\aaA\aaB}$.
+	Usando \eqref{eq:correlatorGlfull}, podemos encontrar a recursão para $G^\eellum_{\aaA\aaB}$.
 \end{frame}
 
 \begin{frame}{Recursão}
 	\begin{align*}\tag{3.14}\label{eq:tresquatorze}
-		G^{(\ell+1)}_{\aaA\aaB} &= \frac{1}{n_{\ell+1}}\EE\big(z^{(\ell+1)}_{\aaA}\cdot z^{(\ell+1)}_{\aaB}\big) \\
-		&= \frac{1}{n_{\ell+1}}\EE\left(\sum_{\nu=1}^{n_{\ell+1}}z^{(\ell+1)}_{\nu;\aaA} z^{(\ell+1)}_{\nu;\aaB}\right) \\
-		&= \frac{1}{n_{\ell+1}}\sum_{\nu=1}^{n_{\ell+1}} \EE\left(z^{(\ell+1)}_{\nu;\aaA} z^{(\ell+1)}_{\nu;\aaB}\right) \\
-		&= \frac{1}{n_{\ell+1}}\sum_{\nu=1}^{n_{\ell+1}} \delta_{\nu\nu}C_WG^{(\ell)}_{\aaA\aaB} \\
-		&= \frac{C_W}{n_{\ell+1}}\sum_{\nu=1}^{n_{\ell+1}} G^{(\ell)}_{\aaA\aaB} = \frac{C_W}{n_{\ell+1}}n_{\ell+1}G^{(\ell)}_{\aaA\aaB} = C_WG^{(\ell)}_{\aaA\aaB}\\ 
+		G^\eellum_{\aaA\aaB} &= \frac{1}{n_{\ell+1}}\EE\big(z^\eellum_{\aaA}\cdot z^\eellum_{\aaB}\big) \\
+		&= \frac{1}{n_{\ell+1}}\EE\left(\sum_{\nu=1}^{n_{\ell+1}}z^\eellum_{\nu;\aaA} z^\eellum_{\nu;\aaB}\right) \\
+		&= \frac{1}{n_{\ell+1}}\sum_{\nu=1}^{n_{\ell+1}} \EE\left(z^\eellum_{\nu;\aaA} z^\eellum_{\nu;\aaB}\right) \\
+		&= \frac{1}{n_{\ell+1}}\sum_{\nu=1}^{n_{\ell+1}} \delta_{\nu\nu}C_WG^\eell_{\aaA\aaB} \\
+		&= \frac{C_W}{n_{\ell+1}}\sum_{\nu=1}^{n_{\ell+1}} G^\eell_{\aaA\aaB} = \frac{C_W}{n_{\ell+1}}n_{\ell+1}G^\eell_{\aaA\aaB} = C_WG^\eell_{\aaA\aaB}\\ 
 	\end{align*}
 \end{frame}
 
 \begin{frame}{Recursão}
 	Da equação \eqref{eq:tresquatorze} obtemos a recursão
 	\begin{equation*}\tag{3.15}\label{eq:trezquinze}
-		G^{(\ell)}_{\aaA\aaB} = (C_W)^{\ell}G^{(0)}_{\aaA\aaB}
+		G^\eell_{\aaA\aaB} = (C_W)^{\ell}G^{(0)}_{\aaA\aaB}
 	\end{equation*}
 \end{frame}
 
