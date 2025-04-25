@@ -38,9 +38,12 @@
 \newcommand{\vmu}{\vec{\mu}}
 \newcommand{\WW}{\mathcal{W}}
 \newcommand{\aaA}{\alpha}
-\newcommand{\aaB}{\beta}
+\newcommand{\aaB}{\beta} 
+\def\mi#1{{\,\widehat{#1}}}
+\def\mj#1{\underline{#1}}
 \def\eell{{(\ell)}}
 \def\eellum{{(\ell+1)}}
+\def\wickquatro{\delta_{\mi1\mi2}\delta_{\mi3\mi4} + \delta_{\mi1\mi3}\delta_{\mi2\mi4}+  \delta_{\mi1\mi4}\delta_{\mi2\mi3}}
 
 
 \begin{document}
@@ -317,7 +320,7 @@ Fazemos todas as variâncias constantes e independentes da camada $C_W^\eell \eq
 		\sum_{i,j=1}^{n_\ell} \EE\big(z^\eell_{i;\aaA} z^\eell_{j;\aaB}\big) &= \sum_{i,j=1}^{n_\ell} \delta_{ij} G^\eell_{\aaA\aaB} \\
 		\sum_{\nu=1}^{n_\ell} \EE\big(z^\eell_{\nu;\aaA} z^\eell_{\nu;\aaB}\big) &= \sum_{\nu=1}^{n_\ell} \delta_{\nu\nu}G^\eell_{\aaA\aaB} \\
 		\EE\left(\sum_{\nu=1}^{n_\ell}z^\eell_{\nu;\aaA} z^\eell_{\nu;\aaB}\right) &= \sum_{\nu=1}^{n_\ell} G^\eell_{\aaA\aaB} \\
-		\EE(z^\eell_{\aaA}\cdot z^\eell_{\aaB}) &= n_\ell G^\eell_{\aaA\aaB} \\
+		\EE\big(z^\eell_{\aaA}\cdot z^\eell_{\aaB}\big) &= n_\ell G^\eell_{\aaA\aaB} \\
 	\end{align*}
 \end{frame}
 
@@ -390,15 +393,263 @@ Fazemos todas as variâncias constantes e independentes da camada $C_W^\eell \eq
 % 	\end{itemize}
 	
 % \end{frame}
-% \subsection{Flutuacoes}
-% \begin{frame}{Flutuações}
-% 	\begin{itemize}
-% 		\item O correlator de 4 pontos é dado por
-% 		$$\EE(z^{(\ell)}_i z^{(\ell)}_j z^{(\ell)}_k z^{(\ell)}_l) = \Cov(z^{(\ell)}_i z^{(\ell)}_j, z^{(\ell)}_k z^{(\ell)}_l)$$
-% 		\item Vamos calcular o correlator de 4 pontos para a rede neural com $L$ camadas.
-% 	\end{itemize}
-	
-% \end{frame}
+ 
+\subsection{Flutuacoes}
 
+\begin{frame}
+	\tableofcontents[currentsubsection]
+\end{frame}
+
+\begin{frame}{Salada de Índices}
+	Novamente, para evitar subscrito duplo, vamos fazer as seguintes mudanças de notação:
+	\begin{itemize}
+		\item $i_1, i_2, i_3, i_4$ para $\mi1, \mi2, \mi3, \mi4$ 
+		\item $j_1, j_2, j_3, j_4$ para $\mj1, \mj2, \mj3, \mj4$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Flutuações}
+	\begin{itemize}
+		\item O correlator de 4 pontos na camada $\ell$ é dado por
+		$$\EE\big(z^\eell_{\mi1} z^\eell_{\mi2} z^\eell_{\mi3} z^\eell_{\mi4}\big)$$
+		\item Vamos calcular o correlator de 4 pontos de maneira recursiva.
+		\item Nessa sessão, vamos calcular as correlações em apenas uma entrada $x_\aaA$, e portanto vamos abandonar o índice.
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}{Flutuações}
+	\begin{itemize}
+		\item Introduzimos a notação 
+		\begin{equation*}\tag{3.17}
+			G^\eell_2 := G^\eell_{\aaA\aaA}   = \frac{1}{n_\ell}\EE\left(z^\eell_{\aaA}\cdot z^\eell_{\aaA}\right) 
+		\end{equation*}
+		\item Em particular, na camada 0, 
+		\begin{equation*}
+			G^{(0)}_2 = \frac{1}{n_0}\EE\left(x_{\aaA}\cdot x_{\aaA}\right) = \frac{1}{n_0}x_{}\cdot x_{} 
+		\end{equation*}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Teorema de Wick}
+	\begin{block}{Teorema de Wick}
+		Para calcular momentos superiores de uma variável aleatória $z$, usamos a fórmula 
+		$$\EE\big(z_{\mi1} z_{\mi2} \ldots z_{\mi{2m}}\big) = \sum\EE(z_{\mi{k_1}}z_{\mi{k_2}})\EE(z_{\mi{k_3}}z_{\mi{k_4}})\ldots\EE(z_{\mi{k_{2m-1}}}z_{\mi{k_{2m}}})$$
+		em que a soma é feita sobre todos os pareamentos possíveis dos índices.
+	\end{block}
+\end{frame}
+
+\begin{frame}{Teorema de Wick -- ordem 4}
+	\begin{itemize}
+		\item O Teorema de Wick para 4 pontos nos diz que
+	\end{itemize}
+	\begin{multline*}
+		\EE\big(z_{\mi1} z_{\mi2} z_{\mi3} z_{\mi4}\big) = \\
+		\EE\big(z_{\mi1} z_{\mi2}\big)\EE\big(z_{\mi3} z_{\mi4}\big) 
+		+ \EE\big(z_{\mi1} z_{\mi3}\big)\EE\big(z_{\mi2} z_{\mi4}\big)
+		+ \EE\big(z_{\mi1} z_{\mi4}\big)\EE\big(z_{\mi2} z_{\mi3}\big)
+	\end{multline*}
+\end{frame}
+
+\begin{frame}{Correlator 4 pontos -- camada 1}
+	\begin{multline*}\tag{3.18}
+		\EE\big(z^{(1)}_{\mi1} z^{(1)}_{\mi2} z^{(1)}_{\mi3} z^{(1)}_{\mi4}\big) = \EE\left(W^{(1)}_{\mi1*}\cdot x \ W^{(1)}_{\mi2*}\cdot x \ W^{(1)}_{\mi3*}\cdot x \ W^{(1)}_{\mi4*}\cdot x\right)\\
+		= \EE\left( \sum_{\mj1=1}^{n_0}W^{(1)}_{\mi1\mj1} x_{\mj1} \sum_{\mj2=1}^{n_0}W^{(1)}_{\mi2\mj2} x_{\mj2} \sum_{\mj3=1}^{n_0}W^{(1)}_{\mi3\mj3} x_{\mj3} \sum_{\mj4=1}^{n_0}W^{(1)}_{\mi4\mj4} x_{\mj4}   \right)   \\ 
+		= \sum_{\mj1,\mj2,\mj3,\mj4=1}^{n_0} \EE\left(W^{(1)}_{\mi1\mj1}W^{(1)}_{\mi2\mj2}W^{(1)}_{\mi3\mj3}W^{(1)}_{\mi4\mj4}\right) x_{\mj1}x_{\mj2}x_{\mj3}x_{\mj4} 
+	\end{multline*}
+	Aplicamos o Teorema de Wick para o termo com esperança, lembrando que $\EE\left(W^\eell_{ij}W^\eell_{kl}\right) = \delta_{ik}\delta_{jl}\frac{C_W}{n_{\ell-1}}$.
+\end{frame}
+
+\begin{frame}{Correlator 4 pontos -- camada 1}
+	\begin{multline*}
+		\EE\left(W^{(1)}_{\mi1\mj1}W^{(1)}_{\mi2\mj2}W^{(1)}_{\mi3\mj3}W^{(1)}_{\mi4\mj4}\right) = \\
+		\EE\left(W^{(1)}_{\mi1\mj1}W^{(1)}_{\mi2\mj2}\right)\EE\left(W^{(1)}_{\mi3\mj3}W^{(1)}_{\mi4\mj4}\right) + \\
+		\EE\left(W^{(1)}_{\mi1\mj1}W^{(1)}_{\mi3\mj3}\right)\EE\left(W^{(1)}_{\mi2\mj2}W^{(1)}_{\mi4\mj4}\right) + 	\\ 
+		\EE\left(W^{(1)}_{\mi1\mj1}W^{(1)}_{\mi4\mj4}\right)\EE\left(W^{(1)}_{\mi2\mj2}W^{(1)}_{\mi2\mj3}\right) = \\
+		\delta_{\mi1\mi2}\delta_{\mj1\mj2}\frac{C_W}{n_0}\delta_{\mi3\mi4}\delta_{\mj3\mj4}\frac{C_W}{n_0} + \\
+		\delta_{\mi1\mi3}\delta_{\mj1\mj3}\frac{C_W}{n_0}\delta_{\mi2\mi4}\delta_{\mj2\mj4}\frac{C_W}{n_0} + \\
+		 \delta_{\mi1\mi4}\delta_{\mj1\mj4}\frac{C_W}{n_0}\delta_{\mi2\mi3}\delta_{\mj2\mj3}\frac{C_W}{n_0} =\\
+	\end{multline*}
+\end{frame}
+\begin{frame}{Correlator 4 pontos -- camada 1}
+	Agrupando os termos, obtemos
+	\begin{multline*}
+		\EE\left(W^{(1)}_{\mi1\mj1}W^{(1)}_{\mi2\mj2}W^{(1)}_{\mi3\mj3}W^{(1)}_{\mi4\mj4}\right) =\\= \frac{C_W^2}{n_0^2}\left(\delta_{\mi1\mi2}\delta_{\mj1\mj2}\delta_{\mi3\mi4}\delta_{\mj3\mj4} + \delta_{\mi1\mi3}\delta_{\mj1\mj3} \delta_{\mi2\mi4}\delta_{\mj2\mj4} + \delta_{\mi1\mi4}\delta_{\mj1\mj4} \delta_{\mi2\mi3}\delta_{\mj2\mj3}\right)
+	\end{multline*}
+	Voltando para (3.18), obtemos
+\end{frame}
+\begin{frame}
+	\begin{multline*}
+		\EE\big(z^{(1)}_{\mi1} z^{(1)}_{\mi2} z^{(1)}_{\mi3} z^{(1)}_{\mi4}\big) = \\
+		\frac{C_W^2}{n_0^2}\sum_{\mj1,\mj2,\mj3,\mj4=1}^{n_0} \left(\delta_{\mi1\mi2}\delta_{\mj1\mj2}\delta_{\mi3\mi4}\delta_{\mj3\mj4} + \delta_{\mi1\mi3}\delta_{\mj1\mj3} \delta_{\mi2\mi4}\delta_{\mj2\mj4} + \delta_{\mi1\mi4}\delta_{\mj1\mj4} \delta_{\mi2\mi3}\delta_{\mj2\mj3}\right) x_{\mj1}x_{\mj2}x_{\mj3}x_{\mj4}
+	\end{multline*}
+	Vamos nos atentar ao primeiro grupo de deltas, e os outros saem de maneira análoga.
+\end{frame}
+
+\begin{frame}
+	Os índices `chapéu' são fixos, então podemos retirar da soma
+	\begin{multline*}
+		\sum_{\mj1,\mj2,\mj3,\mj4=1}^{n_0} \delta_{\mi1\mi2}\delta_{\mj1\mj2}\delta_{\mi3\mi4}\delta_{\mj3\mj4} x_{\mj1}x_{\mj2}x_{\mj3}x_{\mj4}  = 
+		\delta_{\mi1\mi2}\delta_{\mi3\mi4}\sum_{\mj1,\mj2,\mj3,\mj4=1}^{n_0}\delta_{\mj1\mj2}\delta_{\mj3\mj4} x_{\mj1}x_{\mj2}x_{\mj3}x_{\mj4} 
+	\end{multline*}
+	O primeiro delta só é diferente de zero quando $\mj1 = \mj2$, assim fazemos a mudança de variáveis $\nu = \mj1 = \mj2$. 
+	De modo análogo, $\mu = \mj3 = \mj4$. Assim, obtemos
+	\begin{multline*}
+		\delta_{\mi1\mi2}\delta_{\mi3\mi4}\sum_{\nu,\mu=1}^{n_0}\delta_{\nu\nu}\delta_{\mu\mu} x_{\nu}x_{\nu}x_{\mu}x_{\mu} =
+	\delta_{\mi1\mi2}\delta_{\mi3\mi4}\sum_{\nu=1}^{n_0}x_{\nu}x_{\nu} \sum_{\mu=1}^{n_0}x_{\mu}x_{\mu} \\
+	= \delta_{\mi1\mi2}\delta_{\mi3\mi4} (x\cdot x)^2
+	\end{multline*}
+\end{frame}
+
+\begin{frame}
+	Voltando para (3.18), obtemos
+	\begin{multline*}\tag{3.18}\label{eq:tresdezoito}
+		\EE\big(z^{(1)}_{\mi1} z^{(1)}_{\mi2} z^{(1)}_{\mi3} z^{(1)}_{\mi4}\big) = \\
+		 = \frac{C_W^2}{n_0^2}\left(\delta_{\mi1\mi2}\delta_{\mi3\mi4} (x\cdot x)^2 + \delta_{\mi1\mi3}\delta_{\mi2\mi4} (x\cdot x)^2 + \delta_{\mi1\mi4}\delta_{\mi2\mi3} (x\cdot x)^2 \right) \\
+		 = \frac{C_W^2}{n_0^2} (x\cdot x)^2 \left(\delta_{\mi1\mi2}\delta_{\mi3\mi4} + \delta_{\mi1\mi3}\delta_{\mi2\mi4} + \delta_{\mi1\mi4}\delta_{\mi2\mi3} \right)\\
+		 = C_W^2 \left(\frac{x\cdot x}{n_0}\right)^2 \left(\delta_{\mi1\mi2}\delta_{\mi3\mi4} + \delta_{\mi1\mi3}\delta_{\mi2\mi4} + \delta_{\mi1\mi4}\delta_{\mi2\mi3} \right)\\
+		 = C_W^2 \left(G^{(0)}_2 \right)^2\left(\delta_{\mi1\mi2}\delta_{\mi3\mi4} + \delta_{\mi1\mi3}\delta_{\mi2\mi4} + \delta_{\mi1\mi4}\delta_{\mi2\mi3} \right)
+	\end{multline*}
+\end{frame}
+
+\begin{frame}{Correlator 4 pontos -- camada $\ell$}
+	\begin{itemize}
+		\item O mesmo raciocínio pode ser aplicado para a camada $\ell$, e obtemos
+	\end{itemize}
+	\begin{multline*}\tag{3.20}
+		\EE\big(z^\eellum_{\mi1} z^\eellum_{\mi2} z^\eellum_{\mi3} z^\eellum_{\mi4}\big) = \\
+		\EE\left(W^\eellum_{\mi1*}z^\eell \ W^\eellum_{\mi2*}z^\eell \ W^\eellum_{\mi3*}z^\eell \ W^\eellum_{\mi4*}z^\eell \right) = \\
+		\EE\left(\sum_{\mj1=1}^{n_\ell} W^\eellum_{\mi1\mj1}z^\eell_{\mj1} \ \sum_{\mj2=1}^{n_\ell} W^\eellum_{\mi2\mj2}z^\eell_{\mj2} \
+		\sum_{\mj3=1}^{n_\ell} W^\eellum_{\mi3\mj3}z^\eell_{\mj3} \ \sum_{\mj4=1}^{n_\ell} W^\eellum_{\mi4\mj4}z^\eell_{\mj4} \right) = \\
+		\sum_{\mj1,\mj2,\mj3,\mj4=1}^{n_\ell} \EE\left(W^\eellum_{\mi1\mj1}W^\eellum_{\mi2\mj2}W^\eellum_{\mi3\mj3}W^\eellum_{\mi4\mj4} z^\eell_{\mj1}z^\eell_{\mj2}z^\eell_{\mj3}z^\eell_{\mj4}\right)
+	\end{multline*}
+\end{frame}
+
+\begin{frame}
+	O que acontece na camada $\ell+1$ é independente do que acontece na camada $\ell$, então a esperança do produto é o produto das esperanças.
+	\begin{multline*}\tag{3.20}
+		\sum_{\mj1,\mj2,\mj3,\mj4=1}^{n_\ell}\hspace{-2ex}\EE\left(W^\eellum_{\mi1\mj1}W^\eellum_{\mi2\mj2}W^\eellum_{\mi3\mj3}W^\eellum_{\mi4\mj4} z^\eell_{\mj1}z^\eell_{\mj2}z^\eell_{\mj3}z^\eell_{\mj4}\right)
+ = \\ \sum_{\mj1,\mj2,\mj3,\mj4=1}^{n_\ell}\hspace{-2ex}\EE\left(W^\eellum_{\mi1\mj1}W^\eellum_{\mi2\mj2}W^\eellum_{\mi3\mj3}W^\eellum_{\mi4\mj4} \right)\EE\left( z^\eell_{\mj1}z^\eell_{\mj2}z^\eell_{\mj3}z^\eell_{\mj4}\right)
+	\end{multline*}
+\end{frame}
+
+\begin{frame}
+	Usando o Teorema de Wick, e fazendo o mesmo cálculo que fizemos para a camada 1, obtemos
+	\begin{multline*}
+		\EE\left(W^\eellum_{\mi1\mj1}W^\eellum_{\mi2\mj2}W^\eellum_{\mi3\mj3}W^\eellum_{\mi4\mj4} \right) = \\
+		\EE\left(W^\eellum_{\mi1\mj1}W^\eellum_{\mi2\mj2}\right)\EE\left(W^\eellum_{\mi3\mj3}W^\eellum_{\mi4\mj4}\right) + \\
+		\EE\left(W^\eellum_{\mi1\mj1}W^\eellum_{\mi3\mj3}\right)\EE\left(W^\eellum_{\mi2\mj2}W^\eellum_{\mi4\mj4}\right) + \\
+		\EE\left(W^\eellum_{\mi1\mj1}W^\eellum_{\mi4\mj4}\right)\EE\left(W^\eellum_{\mi2\mj2}W^\eellum_{\mi3\mj3}\right) = \\
+		\frac{C_W^2}{n_\ell^2}\left(\delta_{\mi1\mi2}\delta_{\mj1\mj2}\delta_{\mi3\mi4}\delta_{\mj3\mj4} + \delta_{\mi1\mi3}\delta_{\mj1\mj3} \delta_{\mi2\mi4}\delta_{\mj2\mj4} + \delta_{\mi1\mi4}\delta_{\mj1\mj4} \delta_{\mi2\mi3}\delta_{\mj2\mj3}\right)
+	\end{multline*}
+	Voltando para (3.20), obtemos
+\end{frame}
+
+\begin{frame}
+	\begin{multline*}\tag{3.20}\EE\big(z^\eellum_{\mi1} z^\eellum_{\mi2} z^\eellum_{\mi3} z^\eellum_{\mi4}\big) = \\
+		= \sum_{\mj1,\mj2,\mj3,\mj4=1}^{n_\ell}\frac{C_W^2}{n_\ell^2}\left(\begin{array}{r}
+			\delta_{\mi1\mi2}\delta_{\mj1\mj2}\delta_{\mi3\mi4}\delta_{\mj3\mj4} \hspace{6ex} \\[1mm] 
+			+\delta_{\mi1\mi3}\delta_{\mj1\mj3} \delta_{\mi2\mi4}\delta_{\mj2\mj4} \hspace{3ex} \\[1mm]
+			+  \delta_{\mi1\mi4}\delta_{\mj1\mj4} \delta_{\mi2\mi3}\delta_{\mj2\mj3}
+		\end{array}\right)\EE\left( z^\eell_{\mj1}z^\eell_{\mj2}z^\eell_{\mj3}z^\eell_{\mj4}\right)
+	\end{multline*}
+	Vamos nos concentrar no  primeiro grupo de deltas
+\end{frame}
+
+\begin{frame}
+	\begin{multline*}
+		\sum_{\mj1,\mj2,\mj3,\mj4=1}^{n_\ell} \delta_{\mi1\mi2}\delta_{\mj1\mj2}\delta_{\mi3\mi4}\delta_{\mj3\mj4} \EE\left( z^\eell_{\mj1}z^\eell_{\mj2}z^\eell_{\mj3}z^\eell_{\mj4}\right) = \\
+		= \delta_{\mi1\mi2}\delta_{\mi3\mi4}\sum_{\mj1,\mj2,\mj3,\mj4=1}^{n_\ell} \delta_{\mj1\mj2}\delta_{\mj3\mj4} \EE\left( z^\eell_{\mj1}z^\eell_{\mj2}z^\eell_{\mj3}z^\eell_{\mj4}\right) 
+	\end{multline*}
+Novamente, fazendo $\nu = \mj1 = \mj2$, $\mu = \mj3 = \mj4$, temos
+\begin{multline*}
+		\delta_{\mi1\mi2}\delta_{\mi3\mi4}\sum_{\nu,\mu=1}^{n_\ell} \delta_{\nu\nu}\delta_{\mu\mu} \EE\left( z^\eell_{\nu}z^\eell_{\nu}z^\eell_{\mu}z^\eell_{\mu}\right) = \\ 
+		=\delta_{\mi1\mi2}\delta_{\mi3\mi4}\sum_{\nu,\mu=1}^{n_\ell} \EE\left( z^\eell_{\nu}z^\eell_{\nu} z^\eell_{\mu}z^\eell_{\mu}\right)
+\end{multline*}
+\end{frame}
+
+\begin{frame}
+	Aplicando a ideia acima para todos os os grupos de deltas, obtemos
+	\begin{multline*}\tag{3.20}
+		\EE\big(z^\eellum_{\mi1} z^\eellum_{\mi2} z^\eellum_{\mi3} z^\eellum_{\mi4}\big) = \\
+		\sum_{\mj1,\mj2,\mj3,\mj4=1}^{n_\ell}\frac{C_W^2}{n_\ell^2}\left(\begin{array}{r}
+			\delta_{\mi1\mi2}\delta_{\mj1\mj2}\delta_{\mi3\mi4}\delta_{\mj3\mj4} \hspace{6ex} \\[1mm] 
+			+\delta_{\mi1\mi3}\delta_{\mj1\mj3} \delta_{\mi2\mi4}\delta_{\mj2\mj4} \hspace{3ex} \\[1mm]
+			+  \delta_{\mi1\mi4}\delta_{\mj1\mj4} \delta_{\mi2\mi3}\delta_{\mj2\mj3}
+		\end{array}\right)\EE\left( z^\eell_{\mj1}z^\eell_{\mj2}z^\eell_{\mj3}z^\eell_{\mj4}\right) = \\
+		= \frac{C_W^2}{n_\ell^2}\left(\delta_{\mi1\mi2}\delta_{\mi3\mi4}+\delta_{\mi1\mi3}\delta_{\mi2\mi4}+ \delta_{\mi1\mi4}\delta_{\mi2\mi3}\right)\sum_{\nu,\mu=1}^{n_\ell} \EE\left( z^\eell_{\nu}z^\eell_{\nu} z^\eell_{\mu}z^\eell_{\mu}\right)
+	\end{multline*}
+\end{frame}
+
+\begin{frame}
+	\begin{itemize}
+		\item Novamente, podemos argumentar que o correlator de 4 pontos é proporcional ao fator 
+		 $$\wickquatro $$
+		que chamaremos de \textit{fator Wick 4}.
+		\item Chamando a constante de proporcionalidade de $G_4^\eell$, escrevemos a relação
+	\end{itemize}
+
+	\begin{equation*}\tag{3.21}
+		\EE\left(z^\eell _\mi1 z^\eell_\mi2 z^\eell_\mi3 z^\eell_\mi4\right) = \left(\wickquatro \right)G_4^\eell
+	\end{equation*}
+\end{frame}
+
+\begin{frame}
+	Comparando (3.21) com (3.18), obtemos a relação
+	\begin{equation*}\tag{3.22}
+		G_4^{(1)} = {C_W^2}\left(G_2^{(0)}\right)^2
+	\end{equation*}
+\end{frame}
+
+\begin{frame}
+	
+	Aplicando (3.21) no somatório que aparece (3.20), obtemos
+	\begin{multline*}\tag{3.23}
+		\sum_{\nu,\mu=1}^{n_\ell} \EE\left( z^\eell_{\nu}z^\eell_{\nu} z^\eell_{\mu}z^\eell_{\mu}\right)
+		= \sum_{\nu,\mu=1}^{n_\ell} \left( \delta_{\nu\nu}\delta_{\mu\mu} + \delta_{\nu\mu}\delta_{\nu\mu} + \delta_{\nu\mu}\delta_{\nu\mu}\right)G^\eell_4=\\
+		= \sum_{\nu,\mu=1}^{n_\ell}  \left( \delta_{\nu\nu}\delta_{\mu\mu} + 2\delta_{\nu\mu}\delta_{\nu\mu}\right)G^\eell_4
+		\end{multline*}
+		\begin{itemize}
+			\item O primeiro par de deltas é sempre 1, então essa primeira parte da soma é $n_\ell^2$.
+			\item O segundo par de deltas só é diferente de zero quando $\nu = \mu$, então essa segunda parte da soma é $n_\ell$.
+			\item Portanto, a soma total é $\left(n_\ell^2 + 2n_\ell\right)G^\eell_4$.
+		\end{itemize}
+\end{frame}
+
+\begin{frame}
+	Voltando para (3.20),
+	\begin{multline*}
+		\EE\big(z^\eellum_{\mi1} z^\eellum_{\mi2} z^\eellum_{\mi3} z^\eellum_{\mi4}\big) = \\
+		= \frac{C_W^2}{n_\ell^2}\left(\wickquatro \right)\sum_{\nu,\mu=1}^{n_\ell} \EE\left( z^\eell_{\nu}z^\eell_{\nu} z^\eell_{\mu}z^\eell_{\mu}\right)= \\
+		= \frac{C_W^2}{n_\ell^2}\left(\wickquatro \right)\left(n_\ell^2 + 2n_\ell\right)G^\eell_4 = \\
+		= \left(\wickquatro \right) \left(1 + \frac{2}{n_\ell}\right)C_W^2 G^\eell_4
+	\end{multline*}
+\end{frame}
+
+\begin{frame}
+	Por outro lado, definimos que o correlator de 4 pontos na camada $\ell+1$ é dado pelo fator Wick 4 multiplicado pela constante de proporcionalidade $G_4^\eellum$. Assim, podemos escrever a recorrência
+	\begin{equation*}\tag{3.24}
+		G_4^{(\ell+1)} = {C_W^2}\left(1 + \frac{2}{n_\ell}\right)G_4^{(\ell)}
+	\end{equation*}
+\end{frame}
+
+\begin{frame}	
+	Se abrirmos essa recursão da camada $\ell$ até a camada 1, e aplicamos (3.22), obtemos
+
+	\begin{multline*}
+		G_4^\eell\! =\! \left[\prod_{\mi{\ell}=1}^{\ell-1}C_W^2\left(1 + \frac{2}{n_{\ell}}\right)\right]\!G_4^{(1)} 
+		= \left(C_W^2\right)^{\ell-1}G_4^{(1)}\prod_{\mi{\ell}=1}^{\ell-1}\left(1 + \frac{2}{n_{\ell}}\right) \\ = \left(C_W^2\right)^{\ell-1}C_W^2\left(G_2^{(0)}\right)^2\prod_{\mi{\ell}=1}^{\ell-1}\left(1 + \frac{2}{n_{\ell}}\right)  = \\=  \left(C_W^{\ell}G_2^{(0)}\right)^2\prod_{\mi{\ell}=1}^{\ell-1}\left(1 + \frac{2}{n_{\ell}}\right)
+	\end{multline*} 
+\end{frame}
+
+\begin{frame}
+
+	Aplicando \eqref{eq:trezquinze}, o fator $C_W^{\ell}G_2^{(0)} = G_2^\eell$, e obtemos
+	\begin{equation*}\tag{3.25}
+		G_4^\eell = \left(G_2^\eell\right)^2\prod_{\mi{\ell}=1}^{\ell-1}\left(1 + \frac{2}{n_{\ell}}\right)
+	\end{equation*}
+	que relaciona o correlator de 4 pontos com o correlator de 2 pontos.
+
+\end{frame}
 \end{document}
 
