@@ -33,17 +33,21 @@
 \newcommand{\RR}{\mathbb{R}}
 \DeclareMathOperator{\Cov}{Cov}
 \DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Wick}{Wick}
 \newcommand{\vX}{\vec{X}}
 \newcommand{\vY}{\vec{Y}}
 \newcommand{\vmu}{\vec{\mu}}
 \newcommand{\WW}{\mathcal{W}}
 \newcommand{\aaA}{\alpha}
 \newcommand{\aaB}{\beta} 
+\newcommand{\OO}{\mathcal{O}}
 \def\mi#1{{\,\widehat{#1}}}
 \def\mj#1{\underline{#1}}
 \def\eell{{(\ell)}}
 \def\eellum{{(\ell+1)}}
 \def\wickquatro{\delta_{\mi1\mi2}\delta_{\mi3\mi4} + \delta_{\mi1\mi3}\delta_{\mi2\mi4}+  \delta_{\mi1\mi4}\delta_{\mi2\mi3}}
+\def\ddelta#1#2{\delta_{\mi{#1}\mi{#2}}}
+
 
 
 \begin{document}
@@ -461,14 +465,15 @@ Fazemos todas as variâncias constantes e independentes da camada $C_W^\eell \eq
 \end{frame}
 
 \begin{frame}{Correlator 4 pontos -- camada 1}
+	\small
 	\begin{multline*}
-		\EE\left(W^{(1)}_{\mi1\mj1}W^{(1)}_{\mi2\mj2}W^{(1)}_{\mi3\mj3}W^{(1)}_{\mi4\mj4}\right) = \\
-		\EE\left(W^{(1)}_{\mi1\mj1}W^{(1)}_{\mi2\mj2}\right)\EE\left(W^{(1)}_{\mi3\mj3}W^{(1)}_{\mi4\mj4}\right) + \\
-		\EE\left(W^{(1)}_{\mi1\mj1}W^{(1)}_{\mi3\mj3}\right)\EE\left(W^{(1)}_{\mi2\mj2}W^{(1)}_{\mi4\mj4}\right) + 	\\ 
-		\EE\left(W^{(1)}_{\mi1\mj1}W^{(1)}_{\mi4\mj4}\right)\EE\left(W^{(1)}_{\mi2\mj2}W^{(1)}_{\mi2\mj3}\right) = \\
-		\delta_{\mi1\mi2}\delta_{\mj1\mj2}\frac{C_W}{n_0}\delta_{\mi3\mi4}\delta_{\mj3\mj4}\frac{C_W}{n_0} + \\
+		\EE\left(W^{(1)}_{\mi1\mj1}W^{(1)}_{\mi2\mj2}W^{(1)}_{\mi3\mj3}W^{(1)}_{\mi4\mj4}\right) = 
+		\EE\left(W^{(1)}_{\mi1\mj1}W^{(1)}_{\mi2\mj2}\right)\EE\left(W^{(1)}_{\mi3\mj3}W^{(1)}_{\mi4\mj4}\right) + \\[1mm]
+		\EE\left(W^{(1)}_{\mi1\mj1}W^{(1)}_{\mi3\mj3}\right)\EE\left(W^{(1)}_{\mi2\mj2}W^{(1)}_{\mi4\mj4}\right) + 	
+		\EE\left(W^{(1)}_{\mi1\mj1}W^{(1)}_{\mi4\mj4}\right)\EE\left(W^{(1)}_{\mi2\mj2}W^{(1)}_{\mi2\mj3}\right) = \\[1mm]
+		\delta_{\mi1\mi2}\delta_{\mj1\mj2}\frac{C_W}{n_0}\delta_{\mi3\mi4}\delta_{\mj3\mj4}\frac{C_W}{n_0} + 
 		\delta_{\mi1\mi3}\delta_{\mj1\mj3}\frac{C_W}{n_0}\delta_{\mi2\mi4}\delta_{\mj2\mj4}\frac{C_W}{n_0} + \\
-		 \delta_{\mi1\mi4}\delta_{\mj1\mj4}\frac{C_W}{n_0}\delta_{\mi2\mi3}\delta_{\mj2\mj3}\frac{C_W}{n_0} =\\
+		 \delta_{\mi1\mi4}\delta_{\mj1\mj4}\frac{C_W}{n_0}\delta_{\mi2\mi3}\delta_{\mj2\mj3}\frac{C_W}{n_0} =
 	\end{multline*}
 \end{frame}
 \begin{frame}{Correlator 4 pontos -- camada 1}
@@ -478,22 +483,30 @@ Fazemos todas as variâncias constantes e independentes da camada $C_W^\eell \eq
 	\end{multline*}
 	Voltando para (3.18), obtemos
 \end{frame}
-\begin{frame}
+\begin{frame}{Correlator 4 pontos -- camada 1}\small
 	\begin{multline*}
 		\EE\big(z^{(1)}_{\mi1} z^{(1)}_{\mi2} z^{(1)}_{\mi3} z^{(1)}_{\mi4}\big) = \\
-		\frac{C_W^2}{n_0^2}\sum_{\mj1,\mj2,\mj3,\mj4=1}^{n_0} \left(\delta_{\mi1\mi2}\delta_{\mj1\mj2}\delta_{\mi3\mi4}\delta_{\mj3\mj4} + \delta_{\mi1\mi3}\delta_{\mj1\mj3} \delta_{\mi2\mi4}\delta_{\mj2\mj4} + \delta_{\mi1\mi4}\delta_{\mj1\mj4} \delta_{\mi2\mi3}\delta_{\mj2\mj3}\right) x_{\mj1}x_{\mj2}x_{\mj3}x_{\mj4}
+		\frac{C_W^2}{n_0^2}\sum_{\mj1,\mj2,\mj3,\mj4=1}^{n_0} 
+		%\left(\delta_{\mi1\mi2}\delta_{\mj1\mj2}\delta_{\mi3\mi4}\delta_{\mj3\mj4} + \delta_{\mi1\mi3}\delta_{\mj1\mj3} \delta_{\mi2\mi4}\delta_{\mj2\mj4} + \delta_{\mi1\mi4}\delta_{\mj1\mj4} \delta_{\mi2\mi3}\delta_{\mj2\mj3}\right) 
+		\left(\begin{array}{r}
+			\delta_{\mi1\mi2}\delta_{\mj1\mj2}\delta_{\mi3\mi4}\delta_{\mj3\mj4} \hspace{6ex} \\[1mm] 
+			+\delta_{\mi1\mi3}\delta_{\mj1\mj3} \delta_{\mi2\mi4}\delta_{\mj2\mj4} \hspace{3ex} \\[1mm]
+			+  \delta_{\mi1\mi4}\delta_{\mj1\mj4} \delta_{\mi2\mi3}\delta_{\mj2\mj3}
+		\end{array}\right)
+		x_{\mj1}x_{\mj2}x_{\mj3}x_{\mj4}
 	\end{multline*}
 	Vamos nos atentar ao primeiro grupo de deltas, e os outros saem de maneira análoga.
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Correlator 4 pontos -- camada 1}
 	Os índices `chapéu' são fixos, então podemos retirar da soma
 	\begin{multline*}
-		\sum_{\mj1,\mj2,\mj3,\mj4=1}^{n_0} \delta_{\mi1\mi2}\delta_{\mj1\mj2}\delta_{\mi3\mi4}\delta_{\mj3\mj4} x_{\mj1}x_{\mj2}x_{\mj3}x_{\mj4}  = 
-		\delta_{\mi1\mi2}\delta_{\mi3\mi4}\sum_{\mj1,\mj2,\mj3,\mj4=1}^{n_0}\delta_{\mj1\mj2}\delta_{\mj3\mj4} x_{\mj1}x_{\mj2}x_{\mj3}x_{\mj4} 
+		\sum_{\mj1,\mj2,\mj3,\mj4=1}^{n_0}\hspace{-2mm}\delta_{\mi1\mi2}\delta_{\mj1\mj2}\delta_{\mi3\mi4}\delta_{\mj3\mj4} x_{\mj1}x_{\mj2}x_{\mj3}x_{\mj4}  = 
+		\delta_{\mi1\mi2}\delta_{\mi3\mi4}\hspace{-2mm}\sum_{\mj1,\mj2,\mj3,\mj4=1}^{n_0}\hspace{-2mm}\delta_{\mj1\mj2}\delta_{\mj3\mj4} x_{\mj1}x_{\mj2}x_{\mj3}x_{\mj4} 
 	\end{multline*}
 	O primeiro delta só é diferente de zero quando $\mj1 = \mj2$, assim fazemos a mudança de variáveis $\nu = \mj1 = \mj2$. 
 	De modo análogo, $\mu = \mj3 = \mj4$. Assim, obtemos
+	\small
 	\begin{multline*}
 		\delta_{\mi1\mi2}\delta_{\mi3\mi4}\sum_{\nu,\mu=1}^{n_0}\delta_{\nu\nu}\delta_{\mu\mu} x_{\nu}x_{\nu}x_{\mu}x_{\mu} =
 	\delta_{\mi1\mi2}\delta_{\mi3\mi4}\sum_{\nu=1}^{n_0}x_{\nu}x_{\nu} \sum_{\mu=1}^{n_0}x_{\mu}x_{\mu} \\
@@ -501,7 +514,7 @@ Fazemos todas as variâncias constantes e independentes da camada $C_W^\eell \eq
 	\end{multline*}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Correlator 4 pontos -- camada 1}
 	Voltando para (3.18), obtemos
 	\begin{multline*}\tag{3.18}\label{eq:tresdezoito}
 		\EE\big(z^{(1)}_{\mi1} z^{(1)}_{\mi2} z^{(1)}_{\mi3} z^{(1)}_{\mi4}\big) = \\
@@ -515,17 +528,17 @@ Fazemos todas as variâncias constantes e independentes da camada $C_W^\eell \eq
 \begin{frame}{Correlator 4 pontos -- camada $\ell$}
 	\begin{itemize}
 		\item O mesmo raciocínio pode ser aplicado para a camada $\ell$, e obtemos
-	\end{itemize}
+	\end{itemize}\small
 	\begin{multline*}\tag{3.20}
 		\EE\big(z^\eellum_{\mi1} z^\eellum_{\mi2} z^\eellum_{\mi3} z^\eellum_{\mi4}\big) = \\
 		\EE\left(W^\eellum_{\mi1*}z^\eell \ W^\eellum_{\mi2*}z^\eell \ W^\eellum_{\mi3*}z^\eell \ W^\eellum_{\mi4*}z^\eell \right) = \\
-		\EE\left(\sum_{\mj1=1}^{n_\ell} W^\eellum_{\mi1\mj1}z^\eell_{\mj1} \ \sum_{\mj2=1}^{n_\ell} W^\eellum_{\mi2\mj2}z^\eell_{\mj2} \
-		\sum_{\mj3=1}^{n_\ell} W^\eellum_{\mi3\mj3}z^\eell_{\mj3} \ \sum_{\mj4=1}^{n_\ell} W^\eellum_{\mi4\mj4}z^\eell_{\mj4} \right) = \\
-		\sum_{\mj1,\mj2,\mj3,\mj4=1}^{n_\ell} \EE\left(W^\eellum_{\mi1\mj1}W^\eellum_{\mi2\mj2}W^\eellum_{\mi3\mj3}W^\eellum_{\mi4\mj4} z^\eell_{\mj1}z^\eell_{\mj2}z^\eell_{\mj3}z^\eell_{\mj4}\right)
+		\EE\left(\sum_{\mj1=1}^{n_\ell}\! W^\eellum_{\mi1\mj1}z^\eell_{\mj1} \sum_{\mj2=1}^{n_\ell}\! W^\eellum_{\mi2\mj2}z^\eell_{\mj2} 
+		\sum_{\mj3=1}^{n_\ell}\! W^\eellum_{\mi3\mj3}z^\eell_{\mj3}  \sum_{\mj4=1}^{n_\ell} \! W^\eellum_{\mi4\mj4}z^\eell_{\mj4} \right) = \\
+		\sum_{\mj1,\mj2,\mj3,\mj4=1}^{n_\ell}\! \EE\left(W^\eellum_{\mi1\mj1}W^\eellum_{\mi2\mj2}W^\eellum_{\mi3\mj3}W^\eellum_{\mi4\mj4} z^\eell_{\mj1}z^\eell_{\mj2}z^\eell_{\mj3}z^\eell_{\mj4}\right)
 	\end{multline*}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Correlator 4 pontos -- camada $\ell$}
 	O que acontece na camada $\ell+1$ é independente do que acontece na camada $\ell$, então a esperança do produto é o produto das esperanças.
 	\begin{multline*}\tag{3.20}
 		\sum_{\mj1,\mj2,\mj3,\mj4=1}^{n_\ell}\hspace{-2ex}\EE\left(W^\eellum_{\mi1\mj1}W^\eellum_{\mi2\mj2}W^\eellum_{\mi3\mj3}W^\eellum_{\mi4\mj4} z^\eell_{\mj1}z^\eell_{\mj2}z^\eell_{\mj3}z^\eell_{\mj4}\right)
@@ -533,7 +546,7 @@ Fazemos todas as variâncias constantes e independentes da camada $C_W^\eell \eq
 	\end{multline*}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Correlator 4 pontos -- camada $\ell$}
 	Usando o Teorema de Wick, e fazendo o mesmo cálculo que fizemos para a camada 1, obtemos
 	\begin{multline*}
 		\EE\left(W^\eellum_{\mi1\mj1}W^\eellum_{\mi2\mj2}W^\eellum_{\mi3\mj3}W^\eellum_{\mi4\mj4} \right) = \\
@@ -545,7 +558,7 @@ Fazemos todas as variâncias constantes e independentes da camada $C_W^\eell \eq
 	Voltando para (3.20), obtemos
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Correlator 4 pontos -- camada $\ell$}
 	\begin{multline*}\tag{3.20}\EE\big(z^\eellum_{\mi1} z^\eellum_{\mi2} z^\eellum_{\mi3} z^\eellum_{\mi4}\big) = \\
 		= \sum_{\mj1,\mj2,\mj3,\mj4=1}^{n_\ell}\frac{C_W^2}{n_\ell^2}\left(\begin{array}{r}
 			\delta_{\mi1\mi2}\delta_{\mj1\mj2}\delta_{\mi3\mi4}\delta_{\mj3\mj4} \hspace{6ex} \\[1mm] 
@@ -556,7 +569,7 @@ Fazemos todas as variâncias constantes e independentes da camada $C_W^\eell \eq
 	Vamos nos concentrar no  primeiro grupo de deltas
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Correlator 4 pontos -- camada $\ell$}
 	\begin{multline*}
 		\sum_{\mj1,\mj2,\mj3,\mj4=1}^{n_\ell} \delta_{\mi1\mi2}\delta_{\mj1\mj2}\delta_{\mi3\mi4}\delta_{\mj3\mj4} \EE\left( z^\eell_{\mj1}z^\eell_{\mj2}z^\eell_{\mj3}z^\eell_{\mj4}\right) = \\
 		= \delta_{\mi1\mi2}\delta_{\mi3\mi4}\sum_{\mj1,\mj2,\mj3,\mj4=1}^{n_\ell} \delta_{\mj1\mj2}\delta_{\mj3\mj4} \EE\left( z^\eell_{\mj1}z^\eell_{\mj2}z^\eell_{\mj3}z^\eell_{\mj4}\right) 
@@ -568,7 +581,7 @@ Novamente, fazendo $\nu = \mj1 = \mj2$, $\mu = \mj3 = \mj4$, temos
 \end{multline*}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Correlator 4 pontos -- camada $\ell$}
 	Aplicando a ideia acima para todos os os grupos de deltas, obtemos
 	\begin{multline*}\tag{3.20}
 		\EE\big(z^\eellum_{\mi1} z^\eellum_{\mi2} z^\eellum_{\mi3} z^\eellum_{\mi4}\big) = \\
@@ -581,7 +594,7 @@ Novamente, fazendo $\nu = \mj1 = \mj2$, $\mu = \mj3 = \mj4$, temos
 	\end{multline*}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Correlator 4 pontos -- camada $\ell$}
 	\begin{itemize}
 		\item Novamente, podemos argumentar que o correlator de 4 pontos é proporcional ao fator 
 		 $$\wickquatro $$
@@ -594,30 +607,30 @@ Novamente, fazendo $\nu = \mj1 = \mj2$, $\mu = \mj3 = \mj4$, temos
 	\end{equation*}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Correlator 4 pontos -- camada $\ell$}
 	Comparando (3.21) com (3.18), obtemos a relação
 	\begin{equation*}\tag{3.22}
 		G_4^{(1)} = {C_W^2}\left(G_2^{(0)}\right)^2
 	\end{equation*}
 \end{frame}
 
-\begin{frame}
-	
+\begin{frame}{Correlator 4 pontos -- camada $\ell$}
 	Aplicando (3.21) no somatório que aparece (3.20), obtemos
+	{\small
 	\begin{multline*}\tag{3.23}
 		\sum_{\nu,\mu=1}^{n_\ell} \EE\left( z^\eell_{\nu}z^\eell_{\nu} z^\eell_{\mu}z^\eell_{\mu}\right)
 		= \sum_{\nu,\mu=1}^{n_\ell} \left( \delta_{\nu\nu}\delta_{\mu\mu} + \delta_{\nu\mu}\delta_{\nu\mu} + \delta_{\nu\mu}\delta_{\nu\mu}\right)G^\eell_4=\\
 		= \sum_{\nu,\mu=1}^{n_\ell}  \left( \delta_{\nu\nu}\delta_{\mu\mu} + 2\delta_{\nu\mu}\delta_{\nu\mu}\right)G^\eell_4
 		\end{multline*}
-		\begin{itemize}
+	}\begin{itemize}
 			\item O primeiro par de deltas é sempre 1, então essa primeira parte da soma é $n_\ell^2$.
 			\item O segundo par de deltas só é diferente de zero quando $\nu = \mu$, então essa segunda parte da soma é $n_\ell$.
 			\item Portanto, a soma total é $\left(n_\ell^2 + 2n_\ell\right)G^\eell_4$.
 		\end{itemize}
 \end{frame}
 
-\begin{frame}
-	Voltando para (3.20),
+\begin{frame}{Correlator 4 pontos -- camada $\ell$}
+	Voltando para (3.20),\small
 	\begin{multline*}
 		\EE\big(z^\eellum_{\mi1} z^\eellum_{\mi2} z^\eellum_{\mi3} z^\eellum_{\mi4}\big) = \\
 		= \frac{C_W^2}{n_\ell^2}\left(\wickquatro \right)\sum_{\nu,\mu=1}^{n_\ell} \EE\left( z^\eell_{\nu}z^\eell_{\nu} z^\eell_{\mu}z^\eell_{\mu}\right)= \\
@@ -626,14 +639,14 @@ Novamente, fazendo $\nu = \mj1 = \mj2$, $\mu = \mj3 = \mj4$, temos
 	\end{multline*}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Correlator 4 pontos -- Recorrência}
 	Por outro lado, definimos que o correlator de 4 pontos na camada $\ell+1$ é dado pelo fator Wick 4 multiplicado pela constante de proporcionalidade $G_4^\eellum$. Assim, podemos escrever a recorrência
 	\begin{equation*}\tag{3.24}
 		G_4^{(\ell+1)} = {C_W^2}\left(1 + \frac{2}{n_\ell}\right)G_4^{(\ell)}
 	\end{equation*}
 \end{frame}
 
-\begin{frame}	
+\begin{frame}{Correlator 4 pontos -- Recorrência}
 	Se abrirmos essa recursão da camada $\ell$ até a camada 1, e aplicamos (3.22), obtemos
 
 	\begin{multline*}
@@ -642,8 +655,7 @@ Novamente, fazendo $\nu = \mj1 = \mj2$, $\mu = \mj3 = \mj4$, temos
 	\end{multline*} 
 \end{frame}
 
-\begin{frame}
-
+\begin{frame}{Correlator 4 pontos -- Recorrência}
 	Aplicando \eqref{eq:trezquinze}, o fator $C_W^{\ell}G_2^{(0)} = G_2^\eell$, e obtemos
 	\begin{equation*}\tag{3.25}
 		G_4^\eell = \left(G_2^\eell\right)^2\prod_{\mi{\ell}=1}^{\ell-1}\left(1 + \frac{2}{n_{\ell}}\right)
@@ -651,5 +663,228 @@ Novamente, fazendo $\nu = \mj1 = \mj2$, $\mu = \mj3 = \mj4$, temos
 	que relaciona o correlator de 4 pontos com o correlator de 2 pontos.
 
 \end{frame}
+
+\begin{frame}{Física: Flutuações}
+	\begin{itemize}
+		\item Equalizando o número de neurônios em todas as camadas $n_i = n, i=1,\ldots,L$, a equação (3.25) se torna
+	\begin{equation*}\tag{3.25'}
+		G_4^\eell = \left(G_2^\eell\right)^2\left(1 + \frac{2}{n}\right)^{\ell-1}
+	\end{equation*}
+	\item Se fizermos $n\to\infty$, o correlator de 4 pontos converge para
+	\begin{equation*}
+		G_4^\eell = \left(G_2^\eell\right)^2
+	\end{equation*}
+	o que tornaria a distribuição gaussiana.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Física: Flutuações}
+	Para medir o desvio da gaussianidade, usamos a aproximação de Taylor centrada em 0 para $$(1+x)^{\ell-1} \approx 1 + (\ell-1)x + O(x^2)$$ e obtemos
+
+\begin{align*}\tag{3.28}
+	G_4^\eell  - \left(G_2^\eell\right)^2 &=  \left(G_2^\eell\right)^2\left[\left(1 + \frac{2}{n}\right)^{\ell-1}-1\right] \\
+	&= \left(G_2^\eell\right)^2\left[\frac{2}{n}(\ell-1) + O\left(\frac{1}{n^2}\right)\right] \\
+	&= \frac{2(\ell-1)}{n}\left(G_2^\eell\right)^2 + O\left(\frac{1}{n^2}\right)
+\end{align*}
+\end{frame}
+
+\begin{frame}{Escala emergente}
+	\begin{itemize}
+		\item O desvio da gaussianidade é proporcional ao número de camadas $\ell$ e inversamente proporcional ao número de neurônios $n$.
+		\item A magnitude do desvio é proporcional ao quociente $\frac{\ell}{n}$, chamado de \textit{escala emergente}.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Correlator conexo}
+	O correlator de 4 pontos conexo tem a fórmula:
+\begin{align*}\tag{1.54}
+	\left.\EE(z_{\mi1} z_{\mi2} z_{\mi3} z_{\mi4})\right|_C &= \EE(z_{\mi1} z_{\mi2} z_{\mi3} z_{\mi4}) - \EE(z_{\mi1} z_{\mi2})\EE(z_{\mi3} z_{\mi4}) \\
+	& - \EE(z_{\mi1} z_{\mi3})\EE(z_{\mi2} z_{\mi4}) - \EE(z_{\mi1} z_{\mi4})\EE(z_{\mi2} z_{\mi3}) 
+\end{align*}
+\begin{itemize}
+	\item O teorema de Wick garante que se a distribuição for gaussiana, o correlator de 4 pontos conexo é zero.
+	\item Valores diferentes de zero indicam o desvio da gaussianidade.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Correlator conexo}
+	Utilizando as equações (3.21) e (3.12), obtemos a fórmula para o correlator de 4 pontos conexo
+	\small
+	\begin{align*}\tag{3.29}
+	\left.\EE(z_{\mi1} z_{\mi2} z_{\mi3} z_{\mi4})\right|_C &=  \left(\wickquatro \right)G_4^\eell  \\
+	 &- \delta_{\mi1\mi2}G_2^\eell  \delta_{\mi3\mi4}G_2^\eell  - \delta_{\mi1\mi3}G_2^\eell\delta_{\mi2\mi4}  G_2^\eell  \\
+	 &- \delta_{\mi1\mi4}G_2^\eell\delta_{\mi2\mi3}  G_2^\eell  \\
+	 &=  \left(\wickquatro \right)\left(G_4^\eell - \left(G_2^\eell\right)^2\right)
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Interações}
+	Outra maneira de interpretar a não-gaussianidade é através das interações: quebras da independência estatística entre os neurônios.
+	Para $\mi1=\mi2=j \neq \mi3=\mi4=k$ {\small
+	\begin{multline*}\tag{3.30}
+		\EE\left( \left(z_j^\eell z_j^\eell - G_2^\eell\right)  \left(z_k^\eell z_k^\eell - G_2^\eell\right) \right) = \\
+		= \EE\left(z_j^\eell z_j^\eell z_k^\eell z_k^\eell\right) - G^\eell_2\EE\left(z_j^\eell z_j^\eell\right) - G^\eell_2\EE\left(z_k^\eell z_k^\eell\right)  + G_2^{\eell^2} = \\
+		= (1+0+0)G_4^\eell - G_2^\eell \delta_{jj}G_2^\eell - G_2^\eell \delta_{kk}G_2^\eell + G_2^{\eell^2} \\
+		= G_4^\eell - G_2^{\eell^2} 
+	\end{multline*}
+	}
+	\begin{itemize}
+		\item O quanto $z_jz_j$ desvia de sua média $G_2^\eell$ está correlacionado com o quanto $z_kz_k$ desvia de sua média $G_2^\eell$.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Observável}
+	Observável
+	\begin{equation*}
+		\OO^\eell := \frac{1}{n}z^\eell\cdot z^\eell
+	\end{equation*}
+mede a magnitude média do vetor de ativação na camada $\ell$. Seu valor médio é
+	\begin{equation*}
+		\EE\left(\OO^\eell\right) = \frac{1}{n}\EE\left(z^\eell\cdot z^\eell\right) = G_2^\eell
+	\end{equation*}
+
+Quanto esse observável desvia de sua média?
+\end{frame}
+
+\begin{frame}{Observável}
+	\small
+	\begin{multline*}
+		\EE\left(\left(\OO^\eell - G_2^\eell\right)^2\right) = \EE\left(\OO^{\eell^2}\right) - 2G_2^\eell \EE\left(\OO^\eell\right) + \left(G_2^\eell\right)^2 \\
+		= \EE\left(\left(\frac{1}{n} z^\eell \cdot z\eell\right)^2\right) - \left(G_2^\eell\right)^2 \\
+		= \frac{1}{n^2}\EE\left(\sum_{\mu=1}^{n} z_\mu^\eell z_\mu^\eell \sum_{\nu=1}^{n}z_\nu^\eell z_\nu^\eell \right) - \left(G_2^\eell\right)^2 \\
+		= \frac{1}{n^2}\sum_{\mu,\nu=1}^{n} \EE\left(z_\mu^\eell z_\mu^\eell z_\nu^\eell z_\nu^\eell \right) - \left(G_2^\eell\right)^2 \\
+		= \frac{1}{n^2}\sum_{\mu,\nu=1}^{n}\left( \delta_{\nu\nu}\delta_{\mu\mu} + 2\delta_{\nu\mu}\delta_{\nu\mu} \right)G_4^\eell - \left(G_2^\eell\right)^2 \\
+		= \frac{1}{n^2}\left(n^2 + 2n\right)G_4^\eell - \left(G_2^\eell\right)^2 
+		= \left(1+\frac{2}{n}\right)G_4^\eell -  \left(G_2^\eell\right)^2  
+	\end{multline*}
+\end{frame}
+
+\begin{frame}{Observável}
+	Aqui, vamos utilizar (3.25'), que nos diz que $$G_4^\eell = \left(G_2^\eell\right)^2\left(1 + \frac{2}{n}\right)^{\ell-1}$$
+	Logo, multiplicando tudo pelo fator $(1+2/n)$, obtemos
+	$$\left(1+\frac{2}{n}\right)G_4^\eell = \left(G_2^\eell\right)^2\left(1 + \frac{2}{n}\right)^{\ell}$$ 
+	e assim
+	\begin{align*}
+		\left(1+\frac{2}{n}\right)G_4^\eell - \left(G_2^\eell\right)^2 &= \left(G_2^\eell\right)^2\left[\left(1 + \frac{2}{n}\right)^{\ell} - 1\right] \\
+		&= \left(G_2^\eell\right)^2\left[\frac{2}{n}\ell + O\left(\frac{1}{n^2}\right)\right] \\
+		\end{align*}
+\end{frame}
+
+\begin{frame}{Observável}
+	Com isso, concluímos que 
+	\begin{align*}\tag{3.33}
+		\EE\left(\left(\OO^\eell - G_2^\eell\right)^2\right) &=
+		\left(1+\frac{2}{n}\right)G_4^\eell -  \left(G_2^\eell\right)^2 \\
+		&= \frac{2\ell}{n}\left(G_2^\eell\right)^2 + O\left(\frac{1}{n^2}\right) \\
+	\end{align*}
+
+	Assim, a escala emergente $\frac{\ell}{n}$  mede a magnitude do desvio do observável $\OO^\eell$ de sua média $G_2^\eell$.
+\end{frame}
+
+\subsection{Caos}
+
+\begin{frame}
+	\tableofcontents[currentsubsection]
+\end{frame}
+
+\begin{frame}{Correlator de 6 pontos}
+\begin{itemize}
+	\item Pra calcular o correlator de 6 pontos, precisamos do \textit{fator Wick 6}. 
+	\item Como vou construir esse monstro de 15 termos?
+	\item Usando a ordem dentro de cada par.
+	\item Fixo o par (1,2) e faço os 3 agrupamentos dos indices 3, 4, 5 6.
+	\item Passo pro par (1,3) e faço os 3 agrupamentos dos índices 2, 4, 5, 6.
+	\item E assim por diante.
+\end{itemize}	
+\end{frame}
+
+\begin{frame}{Fator Wick 6}
+	
+	\begin{equation*}
+		\Wick_6 = 
+		\begin{array}{c c c}
+			+ \ddelta12 \ddelta34 \ddelta56 & +\ddelta12 \ddelta35 \ddelta46 & +\ddelta12 \ddelta36 \ddelta45 \\[1mm]
+			+ \ddelta13 \ddelta24 \ddelta56 & +\ddelta13 \ddelta25 \ddelta46 & +\ddelta13 \ddelta26 \ddelta45 \\[1mm]
+			+ \ddelta14 \ddelta23 \ddelta56 & +\ddelta14 \ddelta25 \ddelta36 & +\ddelta14 \ddelta26 \ddelta35 \\[1mm]
+			+ \ddelta15 \ddelta23 \ddelta46 & +\ddelta15 \ddelta24 \ddelta36 & +\ddelta15 \ddelta26 \ddelta34 \\[1mm]
+			+ \ddelta16 \ddelta23 \ddelta45 & +\ddelta16 \ddelta24 \ddelta35 & +\ddelta16 \ddelta25 \ddelta34
+		\end{array}
+	\end{equation*}
+\end{frame}
+
+\begin{frame}{Correlator de 6 pontos}
+	Assim, o correlator de 6 pontos é dado por
+	\small
+	\begin{multline*}\tag{3.36}
+		\EE\left(z_{\mi1}^\eellum z_{\mi2}^\eellum z_{\mi3}^\eellum z_{\mi4}^\eellum z_{\mi5}^\eellum z_{\mi6}^\eellum\right) =  \\
+				= \sum_{\substack{\mj{k}=1\\k=1\ldots 6}}^{n_\ell} \EE\left( W_{\mi1 \mj1}^\eellum W_{\mi2 \mj2}^\eellum W_{\mi3 \mj3}^\eellum W_{\mi4 \mj4}^\eellum W_{\mi5 \mj5}^\eellum W_{\mi6 \mj6}^\eellum \right)\\\EE\big(z_{\mj1}^\eell z_{\mj2}^\eell z_{\mj3}^\eell z_{\mj4}^\eell z_{\mj5}^\eell z_{\mj6}^\eell\big) = \\
+				= \frac{C_W^3}{n_\ell^3}(\Wick_6)\sum_{\mu,\nu,\kappa=1}^{n_\ell} \EE\left(z_{\mu}^\eell z_{\mu}^\eell z_{\nu}^\eell z_{\nu}^\eell z_{\kappa}^\eell z_{\kappa}^\eell\right) 
+	\end{multline*} 
+\end{frame}
+
+\begin{frame}{Recorrência}
+	Novamente, assumimos que o correlator de 6 pontos tem a forma
+	\begin{equation*}\tag{3.37}
+		\EE\left(z_{\mi1}^\eell z_{\mi2}^\eell z_{\mi3}^\eell z_{\mi4}^\eell z_{\mi5}^\eell z_{\mi6}^\eell\right) = \left(\Wick_6 \right)G_6^\eell
+	\end{equation*}
+
+	Para calcular $G_6^\eell$, vamos usar a mesma ideia que usamos para o correlator de 4 pontos, e precisamos calcular 
+	$$\sum_{\mu,\nu,\kappa=1}^{n_\ell} \EE\left(z_{\mu}^\eell z_{\mu}^\eell z_{\nu}^\eell z_{\nu}^\eell z_{\kappa}^\eell z_{\kappa}^\eell\right) $$
+\end{frame}
+
+\begin{frame}{Fator Wick 6 -- 3 grupos} 
+	Fazendo $\mu=\mi1=\mi2$, $\nu=\mi3=\mi4$, $\kappa=\mi5=\mi6$, na fórmula para $\Wick_6$, obtemos
+ 
+	\begin{equation*}
+		\Wick_6^3 = 
+		\begin{array}{c c c}
+			\color{green}+ \ddelta{\mu}{\mu} \ddelta{\nu}{\nu} \ddelta{\kappa}{\kappa} &\color{blue} +\ddelta{\mu}{\mu} \ddelta{\nu}{\kappa} \ddelta{\nu}{\kappa} & \color{blue}+\ddelta{\mu}{\mu} \ddelta{\nu}{\kappa} \ddelta{\nu}{\kappa} \\[1mm]
+			\color{blue}+ \ddelta{\mu}{\nu} \ddelta{\mu}{\nu} \ddelta{\kappa}{\kappa} & +\ddelta{\mu}{\nu} \ddelta{\mu}{\kappa} \ddelta{\nu}{\kappa} & +\ddelta{\mu}{\nu} \ddelta{\mu}{\kappa} \ddelta{\nu}{\kappa} \\[1mm]
+			\color{blue}+ \ddelta{\mu}{\nu} \ddelta{\mu}{\nu} \ddelta{\kappa}{\kappa} & +\ddelta{\mu}{\nu} \ddelta{\mu}{\kappa} \ddelta{\nu}{\kappa} & +\ddelta{\mu}{\nu} \ddelta{\mu}{\kappa} \ddelta{\nu}{\kappa} \\[1mm]
+			+ \ddelta{\mu}{\kappa} \ddelta{\mu}{\nu} \ddelta{\nu}{\kappa} & +\ddelta{\mu}{\kappa} \ddelta{\mu}{\nu} \ddelta{\nu}{\kappa} & \color{blue} +\ddelta{\mu}{\kappa} \ddelta{\mu}{\kappa} \ddelta{\nu}{\nu} \\[1mm]
+			+ \ddelta{\mu}{\kappa} \ddelta{\mu}{\nu} \ddelta{\nu}{\kappa} & +\ddelta{\mu}{\kappa} \ddelta{\mu}{\nu} \ddelta{\nu}{\kappa} & \color{blue} +\ddelta{\mu}{\kappa} \ddelta{\mu}{\kappa} \ddelta{\nu}{\nu}
+		\end{array}
+	\end{equation*}
+\end{frame}
+
+\begin{frame}{Contando agrupamentos}
+	Temos 
+	\begin{itemize}
+		\item 1 termo $\delta_{ii}\delta_{jj}\delta_{kk}$ em {\color{green} verde}, cujo valor é sempre 1 em todas as $n_\ell^3$ ocorrências;
+		\item 6 termos do tipo  $\delta_{ii}\delta_{jk}\delta_{kj}$	em {\color{blue} azul}, cujo valor é 1 quando $j=k$, ou seja, em $n_\ell^2$ ocorrências;
+		\item 8 termos do tipo $\delta_{ij}\delta_{jk}\delta_{ki}$ em preto, cujo valor é 1 quando $i=j=k$, ou seja, em $n_\ell$ ocorrências.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Recorrência}
+	Assim, (3.36) nos dá a recorrência
+	\begin{align*}\tag{3.42}
+		G_6^\eellum &=  \frac{C_W^3}{n_\ell^3} \sum_{\mu,\nu,\kappa=1}^{n_\ell} \left(\Wick_6^3 \right) G_6^\eell \\
+		&= \frac{C_W^3}{n_\ell^3}\left(n_\ell^3 + 6n_\ell^2 + 8n_\ell\right)G_6^{(\ell)} \\  
+		&= C_W^3\left(1 + \frac{6}{n_\ell} + \frac{8}{n_\ell^2}\right)G_6^{(\ell)}
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Recorrência}
+	Descendo até a camada 0, obtemos a relação
+	\begin{align*}\tag{3.43}
+		G_6^\eell &= \left(C_W^3\right)^{\ell}G_6^{(0)}\prod_{\mi{\ell}=1}^{\ell-1}\left(1 + \frac{6}{n_{\mi\ell}} + \frac{8}{n_{\mi\ell}^2}\right) \\
+		& = \left(C_W^3\right)^{\ell}\left(G_2^{(0)}\right)^3\prod_{\mi{\ell}=1}^{\ell-1}\left(1 + \frac{6}{n_{\mi\ell}} + \frac{8}{n_{\mi\ell}^2}\right)\\
+		& =  \left(G_2^\eell\right)^3\prod_{\mi{\ell}=1}^{\ell-1}\left(1 + \frac{6}{n_{\mi\ell}} + \frac{8}{n_{\mi\ell}^2}\right)
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Física: caos}
+	Novamente fazendo todos os $n_\ell$ iguais a $n$, obtemos
+	\begin{align*}\tag{3.43'}
+		G_6^\eell &= \left(G_2^\eell\right)^3\left(1 + \frac{6}{n} + \frac{8}{n^2}\right)^{\ell-1} 
+	\end{align*}
+
+	\begin{itemize}
+		\item Tomando $n\to\infty$, temos $(1 + 6/n + 8/n^2) \to 1$, e o correlator de 6 pontos converge para a distribuição gaussiana.
+		\item Fixando $n$ e fazendo $\ell\to\infty$, o correlator de 6 pontos explode para o infinito, mesmo com a variância $C_W = 1$. 
+	\end{itemize}
+\end{frame}
+
 \end{document}
 
