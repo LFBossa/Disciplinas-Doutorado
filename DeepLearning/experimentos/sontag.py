@@ -236,7 +236,7 @@ def train_loop(model, num_epochs):
 
 if __name__ == "__main__":
     # Treinando a rede
-    num_epochs = 1000
+    num_epochs = 2000
     metadados_treino = [] 
     for sontag in [False, True]:
         for n1 in [32, 128, 256]: 
