@@ -157,36 +157,27 @@ dataset_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
 # %%
 
 def train_model(model, num_epochs=1000): 
-    # Initialize the model
-    
     # Define the loss function and optimizer
     loss_fn = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
-    
     mean_loss = []
     # Training loop
     for epoch in range(num_epochs):
         for X, y in dataset_loader:
             # Zero the gradients
             optimizer.zero_grad()
-            
             # Forward pass
             outputs = model(X)
-            
             # Compute the loss
             loss = loss_fn(outputs.squeeze(), y)
-            
             # Backward pass and optimization
             loss.backward()
             optimizer.step()
-        
         mu = loss.item()    
         mean_loss.append(mu)
-        
         if epoch % 100 == 0:
             sys.stdout.write(f'\r{model.name}, Epoch [{epoch+1}/{num_epochs}], Loss: {mu:.4f}')
             sys.stdout.flush()
-
     return mean_loss
 
 # %%
