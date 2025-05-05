@@ -311,7 +311,7 @@ Fazemos todas as variâncias constantes e independentes da camada $C_W^\eell \eq
 		 %\item Note que, novamente, no lado direito da equação acima, o único termo que depende das coordenadas $i,j$ é $\delta_{ij}$.
 		 \item Em qualquer camada, o correlator das coordenadas $i,j$ é sempre o delta de Kronecker vezes um número que não depende das coordenadas, permitindo assim introduzir a notação 
 		 \begin{equation*}\tag{3.12}\label{eq:Gldef}
-			\EE\big(z^\eell_{i;\aaA}\cdot z^\eell_{j;\aaB}\big) = \delta_{ij} G^\eell_{\aaA\aaB}  
+			\EE\big(z^\eell_{i;\aaA}\ z^\eell_{j;\aaB}\big) = \delta_{ij} G^\eell_{\aaA\aaB}  
 		 \end{equation*}
 	\end{itemize}
 \end{frame}
@@ -650,15 +650,15 @@ Novamente, fazendo $\nu = \mj1 = \mj2$, $\mu = \mj3 = \mj4$, temos
 	Se abrirmos essa recursão da camada $\ell$ até a camada 1, e aplicamos (3.22), obtemos
 
 	\begin{multline*}
-		G_4^\eell\! =\! \left[\prod_{\mi{\ell}=1}^{\ell-1}C_W^2\left(1 + \frac{2}{n_{\ell}}\right)\right]\!G_4^{(1)} 
-		= \left(C_W^2\right)^{\ell-1}G_4^{(1)}\prod_{\mi{\ell}=1}^{\ell-1}\left(1 + \frac{2}{n_{\ell}}\right) \\ = \left(C_W^2\right)^{\ell-1}C_W^2\left(G_2^{(0)}\right)^2\prod_{\mi{\ell}=1}^{\ell-1}\left(1 + \frac{2}{n_{\ell}}\right)  = \\=  \left(C_W^{\ell}G_2^{(0)}\right)^2\prod_{\mi{\ell}=1}^{\ell-1}\left(1 + \frac{2}{n_{\ell}}\right)
+		G_4^\eell\! =\! \left[\prod_{\mi{\ell}=1}^{\ell-1}C_W^2\left(1 + \frac{2}{n_{\mi{\ell}}}\right)\right]\!G_4^{(1)} 
+		= \left(C_W^2\right)^{\ell-1}G_4^{(1)}\prod_{\mi{\ell}=1}^{\ell-1}\left(1 + \frac{2}{n_{\mi{\ell}}}\right) \\ = \left(C_W^2\right)^{\ell-1}C_W^2\left(G_2^{(0)}\right)^2\prod_{\mi{\ell}=1}^{\ell-1}\left(1 + \frac{2}{n_{\mi{\ell}}}\right)  = \\=  \left(C_W^{\ell}G_2^{(0)}\right)^2\prod_{\mi{\ell}=1}^{\ell-1}\left(1 + \frac{2}{n_{\mi{\ell}}}\right)
 	\end{multline*} 
 \end{frame}
 
 \begin{frame}{Correlator 4 pontos -- Recorrência}
 	Aplicando \eqref{eq:trezquinze}, o fator $C_W^{\ell}G_2^{(0)} = G_2^\eell$, e obtemos
 	\begin{equation*}\tag{3.25}
-		G_4^\eell = \left(G_2^\eell\right)^2\prod_{\mi{\ell}=1}^{\ell-1}\left(1 + \frac{2}{n_{\ell}}\right)
+		G_4^\eell = \left(G_2^\eell\right)^2\prod_{\mi{\ell}=1}^{\ell-1}\left(1 + \frac{2}{n_{\mi{\ell}}}\right)
 	\end{equation*}
 	que relaciona o correlator de 4 pontos com o correlator de 2 pontos.
 
