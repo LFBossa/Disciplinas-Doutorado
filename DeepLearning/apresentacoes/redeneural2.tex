@@ -1,0 +1,13 @@
+
+\documentclass{standalone}
+\usepackage{neuralnetwork}
+\begin{document}
+\begin{neuralnetwork}[height=4]
+		\newcommand{\nodetextx}[2]{$x_{#2}$}
+		\newcommand{\nodenone}[2]{} 
+		\inputlayer[count=2, bias=false, title=Entrada, text=\nodetextx]  
+		\hiddenlayer[count=4, bias=false, title=Camada 1, text=\nodenone] \linklayers 
+		\hiddenlayer[count=4, bias=false, title=Camada 2, text=\nodenone] \linklayers 
+		\outputlayer[count=1, title=Saída, text=\nodenone] \linklayers 
+\end{neuralnetwork}
+\end{document}
