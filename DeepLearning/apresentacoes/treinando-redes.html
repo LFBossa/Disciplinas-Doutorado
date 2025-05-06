@@ -461,7 +461,19 @@
       </div>
       ---
       ## Conclusões
+      A tabela abaixo resume o erro de classificação para uma amostra de 1000 pontos, em que * representa o melhor resultado por linha.
 
+      | Tamanho do Modelo | ReLU   | Sontag |
+      |--------------------|--------|--------|
+      | 32                | 0.099  | 0.064* |
+      | 128               | 0.04   | 0.03*  |
+      | 256               | 0.048  | 0.027* |
+      | (9, 9)            | 0.06*   | 0.089  |
+      | (20, 20)          | 0.039  | 0.025* |
+      | (30, 30)          | 0.028  | 0.022* |
+      | (7, 7, 7)         | 0.126  | 0.035* |
+      | (15, 15, 15)      | 0.029  | 0.022* |
+      | (21, 21, 21)      | 0.037  | 0.014* |
 
     </textarea>
         <script src="http://gnab.github.io/remark/downloads/remark-latest.min.js" type="text/javascript"></script>
