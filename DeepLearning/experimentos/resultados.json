@@ -1,0 +1,74 @@
+[
+  {
+    "model": "ReLU 1 (32)",
+    "erro": 0.099
+  },
+  {
+    "model": "ReLU 1 (128)",
+    "erro": 0.04
+  },
+  {
+    "model": "ReLU 1 (256)",
+    "erro": 0.048
+  },
+  {
+    "model": "ReLU 2 (9, 9)",
+    "erro": 0.06
+  },
+  {
+    "model": "ReLU 2 (20, 20)",
+    "erro": 0.039
+  },
+  {
+    "model": "ReLU 2 (30, 30)",
+    "erro": 0.028
+  },
+  {
+    "model": "ReLU 3 (7, 7, 7)",
+    "erro": 0.126
+  },
+  {
+    "model": "ReLU 3 (15, 15, 15)",
+    "erro": 0.029
+  },
+  {
+    "model": "ReLU 3 (21, 21, 21)",
+    "erro": 0.037
+  },
+  {
+    "model": "Sontag 1 (32)",
+    "erro": 0.064
+  },
+  {
+    "model": "Sontag 1 (128)",
+    "erro": 0.03
+  },
+  {
+    "model": "Sontag 1 (256)",
+    "erro": 0.027
+  },
+  {
+    "model": "Sontag 2 (9, 9)",
+    "erro": 0.089
+  },
+  {
+    "model": "Sontag 2 (20, 20)",
+    "erro": 0.025
+  },
+  {
+    "model": "Sontag 2 (30, 30)",
+    "erro": 0.022
+  },
+  {
+    "model": "Sontag 3 (7, 7, 7)",
+    "erro": 0.035
+  },
+  {
+    "model": "Sontag 3 (15, 15, 15)",
+    "erro": 0.022
+  },
+  {
+    "model": "Sontag 3 (21, 21, 21)",
+    "erro": 0.014
+  }
+]
