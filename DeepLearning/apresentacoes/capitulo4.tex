@@ -1,0 +1,340 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{positioning,calc}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{fontawesome}
+\usepackage{ulem}
+\usepackage{xfrac}
+\usepackage{oands}
+\usepackage{hieroglf}
+
+
+%https://github.com/battlesnake/neural
+%
+\usepackage{neuralnetwork}
+%https://pt.overleaf.com/latex/templates/template-departamento-de-mtm-ufsc/jxjxqttwjrws
+\usetheme{mtmufsc} %%%%%%%%Use this template
+\renewcommand{\qedsymbol}{$\blacksquare$}
+% This is a beamer template inspired by unofficial Oxford University Beamer Template, made by Clara Eleonore Pavillet.
+\title{RG Flow of Preactivations}
+\author{Luiz Fernando Bossa}
+\date{\today}
+\institute{Universidade Federal de Santa Catarina}
+
+
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\RR}{\mathbb{R}}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Wick}{Wick}
+\newcommand{\vX}{\vec{X}}
+\newcommand{\vY}{\vec{Y}}
+\newcommand{\vmu}{\vec{\mu}}
+\newcommand{\WW}{\mathcal{W}}
+\newcommand{\aaA}{\alpha}
+\newcommand{\aaB}{\beta} 
+\newcommand{\OO}{\mathcal{O}}
+\def\mi#1{{\alpha_{#1}}}
+\def\mj#1{\beta_{#1}}
+\def\eell{{(\ell)}}
+\def\eellum{{(\ell+1)}}
+\def\wickquatro{\delta_{\mi1\mi2}\delta_{\mi3\mi4} + \delta_{\mi1\mi3}\delta_{\mi2\mi4}+  \delta_{\mi1\mi4}\delta_{\mi2\mi3}}
+\def\ddelta#1#2{\delta_{\mi{#1}\mi{#2}}}
+\def\Gchapp#1{\widehat{G}^{(#1)}}
+%\def\Gchapeu#1#2{\widehat{G}^{(#1)}_{\alpha_{#2}\alpha_{#3}}} 
+\newcommand{\Gchapeu}[3]{{\Gchapp{#1}_{\mi{#2}\mi{#3}}}} 
+\newcommand{\Gchapeuinv}[3]{\widehat{G}_{(#1)}^{\mi{#2}\mi{#3}}}
+\newcommand{\Gnormal}[3]{{G^{(#1)}_{\mi{#2}\mi{#3}}}} 
+\newcommand{\Gnormalinv}[3]{{G_{(#1)}^{\mi{#2}\mi{#3}}}} 
+\newcommand{\Gflutu}[3]{{\widehat{\Delta G}^{(#1)}_{\mi{#2}\mi{#3}}}} 
+\newcommand{\Vertice}[5]{V^{(#1)}_{(\mi#2\mi#3)(\mi#4\mi#5)}}
+\newcommand{\Verticeb}[5]{V^{(#1)}_{(\mj#2\mj#3)(\mj#4\mj#5)}}
+\newcommand{\Verticeinv}[5]{V_{(#1)}^{(\mi#2\mi#3)(\mi#4\mi#5)}}
+\newcommand{\Verticeinvb}[5]{V_{(#1)}^{(\mj#2\mj#3)(\mj#4\mj#5)}}
+\newcommand{\Expectation}[2]{\left\langle #1 \right\rangle_{#2}}
+\newcommand{\zia}[2]{z_{i_{#1};\mi{#2}}}
+
+
+
+\begin{document}
+
+{\setbeamertemplate{footline}{} 
+\frame{\titlepage}}
+\frame{\tableofcontents}
+
+
+\section{Recapitulação}    
+%Sempre que iniciar uma nova sessão, você pode fazer um slide de transição com o índice.
+\begin{frame}
+\tableofcontents[currentsection]
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%A partir daqui, faça seus slides%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{\S 4.2 Second Layer: Genesis of Non-Gaussianity}
+	\begin{itemize}
+		\item Cálculo da distribuição condicional
+		\begin{equation*}\tag{4.32}
+			p\left(z^{(2)},z^{(1)}\Big|\mathcal{D}\right) = p\left(z^{(2)}\Big| z^{(1)}\right)p\left(z^{(1)}\Big| \mathcal{D}\right)
+		\end{equation*}
+		\begin{equation*}\tag{4.35}
+			p\left(z^{(2)}\Big| z^{(1)}\right) = \frac{1}{\sqrt{\left|2\pi \hat{G}^{(2)}\right|^{n_2}}}
+			\exp\left(-\frac{1}{2} \sum_{\mi1,\mi2\in\mathcal{D}} \Gchapeuinv212 z^{(2)}_{\mi1}\cdot z^{(2)}_{\mi2} \right)
+		\end{equation*}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{\S 4.2 Second Layer: Genesis of Non-Gaussianity}
+
+\begin{itemize}
+	\item 
+	Métrica estocástica da 2ª camada
+	\begin{equation*}\tag{4.36}
+		\Gchapeu212 := C_b^{(2)} + C_W^{(2)}\frac{1}{n_1}\sum_{j=1}^{n_1} \sigma_{j;\mi1}^{(1)}\sigma_{j;\mi2}^{(1)}
+	\end{equation*}
+
+	\item Média da métrica da 2ª camada
+	\begin{align*}
+		\Gnormal212 :&= \EE\left[\Gchapeu212\right] 
+		= C_b^{(2)} + C_W^{(2)}\frac{1}{n_1}\sum_{j=1}^{n_1} \EE\left[\sigma_{j;\mi1}^{(1)}\sigma_{j;\mi2}^{(1)}\right]\\
+		&= C_b^{(2)} + C_W^{(2)}\Expectation{\sigma_{\mi1}\sigma_{\mi2}}{G^{(1)}}\tag{4.37}
+	\end{align*}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{\S 4.2 Second Layer: Genesis of Non-Gaussianity}
+\begin{itemize}
+	\item Flutuação da 2ª camada: desvio da média
+	\begin{equation*}\tag{4.38}
+		\Gflutu212 := \Gchapeu212 - \Gnormal212
+	\end{equation*}
+	\item Vértice de 4 pontos: tamanho médio da flutuação
+	\begin{multline*}
+		\EE\left[\Gchapeu212\Gchapeu234\right]  = \\ \frac{1}{n_1}\big(C_W^{(2)}\big)^2\big(  \Expectation{\sigma_\mi1\sigma_\mi2\sigma_\mi3\sigma_\mi4}{G^{(1)}} -  \Expectation{\sigma_\mi1\sigma_\mi2 }{G^{(1)}}  \Expectation{\sigma_\mi3\sigma_\mi4}{G^{(1)}}\big) \\
+		=: \Vertice21234 \tag{4.40}
+	\end{multline*}
+\end{itemize}
+\end{frame}
+
+
+\section{Deeper Layers: Accumulation of Non-Gaussianity}
+
+\begin{frame}
+\tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}
+	\begin{itemize}
+		\item Pré-ativação na camada $\ell+1$ é dada por
+	\end{itemize}
+	\begin{equation*}
+		z_{i;\alpha}^\eellum = b_i^\eellum + \sum_{j=1}^{n_\ell} W_{ij}^\eellum\sigma_{j;\alpha}^\eell
+	\end{equation*}
+	com 
+	$$\sigma_{j;\alpha}^\eell := \sigma\left(z_{i;\alpha}^\eell\right)$$
+\end{frame}
+
+\subsection{Recursão}
+
+\begin{frame}
+	\begin{equation*}\tag{4.67}
+		p\left(z^\eellum,z^\eell\Big|\mathcal{D}\right) = p\left(z^\eellum\Big| z^\eell\right)p\left(z^\eell\Big| \mathcal{D}\right)
+	\end{equation*}
+	Distribuição condicional camada $\ell+1$
+{\footnotesize
+	\begin{equation*}\tag{4.69}
+			p\left(z^\eellum\Big| z^\eell\right) = \frac{1}{\sqrt{\left|2\pi \hat{G}^\eellum\right|^{n_{\ell+1}}}}
+			\exp\left(-\frac{1}{2} \sum_{\mi1,\mi2\in\mathcal{D}} \Gchapeuinv{\ell+1}12 z^\eellum_{\mi1}\cdot z^\eellum_{\mi2} \right)
+		\end{equation*}
+}
+Métrica estocástica da camada $\ell+1$
+	\begin{equation*}\tag{4.70}
+		\Gchapeu{\ell+1}12 := C_b^\eellum + C_W^\eellum\frac{1}{n_1}\sum_{j=1}^{n_1} \sigma_{j;\mi1}^\eell\sigma_{j;\mi2}^\eell
+	\end{equation*}
+\end{frame}
+
+\begin{frame}
+	Média da métrica estocástica da camada $\ell+1$
+	\begin{equation*}\tag{4.72}
+		\Gnormal{\ell+1}12 := \EE\left[\Gchapeu{\ell+1}12 \right] =  C_b^\eellum + C_W^\eellum\frac{1}{n_1}\sum_{j=1}^{n_\ell} \EE\left[\sigma_{j;\mi1}^\eell\sigma_{j;\mi2}^\eell\right]
+	\end{equation*}
+
+	Essa média governa o correlator de dois pontos
+
+	\begin{equation*}\tag{4.73}
+		\EE\left[\zia11^\eellum \zia22^\eellum\right] = \delta_{i_1i_2}\Gnormal{\ell+1}12 
+	\end{equation*}
+\end{frame}
+
+\begin{frame}
+	
+	Flutuação da métrica 
+	\begin{equation*}\tag{4.74}
+		\Gflutu{\ell+1}12 := \Gchapeu{\ell+1}12 - \Gnormal{\ell+1}12
+	\end{equation*}
+	Magnitude da flutuação
+	\begin{equation*}\tag{4.76}
+		\frac{1}{n_\ell}\Vertice{\ell+1}1234 := \EE\left[\Gflutu{\ell+1}12 \Gflutu{\ell+1}34 \right]
+	\end{equation*}
+\end{frame}
+
+\begin{frame}
+	\begin{multline*}
+		\EE\left[\zia11^\eellum \zia22^\eellum \zia33^\eellum \zia44^\eellum\right]\Big|_{C} =\\= \frac{1}{n_\ell}\left( 
+			\delta_{i_1i_2}\delta_{i_3i_4} \Vertice{\ell+1}1234 +
+			\delta_{i_1i_3}\delta_{i_2i_4} \Vertice{\ell+1}1324 +\right.\\+\left.
+			\delta_{i_1i_4}\delta_{i_2i_3} \Vertice{\ell+1}1423 
+		\right)\tag{4.77}
+	\end{multline*}
+\end{frame}
+
+\subsection{Ação}
+
+\begin{frame}
+	Podemos definir a distribuição na camada $\ell$ através da ação
+	\begin{equation*}\tag{4.78}
+		p\left(z^\eell \Big| \mathcal{D}\right) = \frac{e^{-S(z^\eell)}}{Z_\ell}
+	\end{equation*}
+	com 
+	\begin{equation*}\tag{4.79}
+		Z_\ell := \int\bigg[{\prod_{i,\alpha}} dz_{i;\alpha}^\eell\bigg]e^{-S(z^\eell)}
+	\end{equation*}
+	sendo o termo de normalização.
+\end{frame}
+
+\begin{frame}
+	Nosso modelo para a ação $S$ será
+	{\footnotesize
+	\begin{equation*}\tag{4.80}
+		S(z^\eell) := \frac{1}{2}\sum_{\mi1,\mi2}g^{\mi1\mi2}_{\eell} z_{\mi1}{\cdot}z_{\mi2} - \frac{1}{8}\sum_{\mi{i}\in\mathcal{D}}^{1\le i \le 4} v^{(\mi1\mi2)(\mi3\mi4)}_{\eell} z_{\mi1}{\cdot}z_{\mi2} z_{\mi3}{\cdot}z_{\mi4}+\ldots
+	\end{equation*}}
+	\begin{itemize}
+		\item Esse modelo funciona para a camada 1 com 
+		$$g^{\mi1\mi2}_{(1)} = \Gnormalinv112, \qquad v_{(1)}^{(\mi1\mi2)(\mi3\mi4)} = 0.$$
+		\item Funciona para a camada 2 com 
+		{\small
+		$$g^{\mi1\mi2}_{(2)} = \Gnormalinv212 + {O}\left(\sfrac{1}{n_1}\right), \quad v_{(2)}^{(\mi1\mi2)(\mi3\mi4)} = \frac{1}{n_1}\Verticeinv21234 + O\left(\sfrac{1}{n_1^2}\right) $$ }
+	\end{itemize}
+\end{frame}
+\begin{frame}
+	
+Por analogia, temos
+	\begin{equation*}\tag{4.81}
+		g^{\mi1\mi2}_{\eell} = \Gnormalinv{\ell}12 + \mathcal{O}(v)
+	\end{equation*}
+	e 
+	\begin{equation*}\tag{4.82}
+		v^{(\mi1\mi2)(\mi3\mi4)}_{\eell} = \frac{1}{n_{\ell-1}}\Verticeinv{\ell}1234 + \mathcal{O}(v^2)
+	\end{equation*}
+no qual o vértice invertido é dado por
+	\begin{equation*}\tag{4.83}
+		\Verticeinv{\ell}1234 := \sum_{\mj{i}\in\mathcal{D}}^{1\le i \le 4} G^{\mi1\mj1}_\eell G^{\mi2\mj2}_\eell G^{\mi3\mj3}_\eell G^{\mi4\mj4}_\eell V^\eell_{(\mi1\mi2)(\mi3\mi4)}
+	\end{equation*}
+\end{frame}
+
+\subsection{Expansão de largura larga}
+
+\begin{frame}{Large-width expansion}
+	\begin{itemize}
+		\item Simplificamos os cálculos fazendo 
+		\begin{equation*}\tag{4.84}
+			n_1, n_2, \ldots, n_L \sim n \gg 1 
+		\end{equation*} 
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Indução}
+	\begin{block}{Teorema}
+		Se as métricas $G^\eell$ e $V^\eell$ são de ordem de grandeza constante $O(1)$, então $G^\eellum$ e $V^\eellum$ também são de ordem de grandeza constante.
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	Pela equação (4.72), temos que a métrica $G$ da camada $\ell+1$ é dada por
+	\begin{equation*}
+		\Gnormal{\ell+1}12 = C_b^\eellum + C_W^\eellum\frac{1}{n_\ell}\sum_{j=1}^{n_\ell}  \EE\left[\sigma_{j;\mi1}^\eell\sigma_{j;\mi2}^\eell\right]
+	\end{equation*}
+
+	Na sessão anterior, vimos a expressão para a esperança dentro do somatório.
+\end{frame}
+
+\begin{frame}
+	A equação (4.61) calculada na sessão anterior nos dá a terrível fórmula 
+	{\small
+	\begin{multline*}
+		\EE\left[\sigma_{j;\mi1}^\eell\sigma_{j;\mi2}^\eell\right] = \Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell}  \color{blue} + \frac{1}{8} \sum_{\mj{i}\in\mathcal{D}}^{1\le i \le 4}\Verticeinvb{\ell}1234\left( \text{\pmglyph{I-Y-Q}} \right) + O(v^2)
+	\end{multline*}
+	}
+	em que o hieróglifo \pmglyph{I-Y-Q} representa a exata sensação ao ver essa expressão. 
+	\medskip
+	\begin{itemize}
+		\item 	A parte em azul é de ordem $\sfrac{1}{n}$, pois o vértice de quatro pontos é dessa ordem.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	Assim, a métrica da camada $\ell+1$ é dada por
+	\begin{multline*} 
+		\Gnormal{\ell+1}12 = C_b^\eellum + C_W^\eellum\frac{1}{n_\ell}\sum_{j=1}^{n_\ell} \bigg[\Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell} + O(\sfrac{1}{n}) \bigg] \\
+		= C_b^\eellum + C_W^\eellum{\color{red}\Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell} } + O\left(\sfrac{1}{n}\right)
+	\end{multline*}
+	Pela hipótese de indução, essa expectativa em vermelho é de ordem constante. Segue que a métrica da camada $\ell+1$ é de ordem constante.
+\end{frame}
+
+\begin{frame}
+	Para o vértice de quatro pontos, temos
+	{\small
+	\begin{multline*}
+		\frac{1}{n_\ell}\Vertice{\ell+1}1234 =  \left(\frac{C_W^\eellum}{n_\ell}\right)^2 \sum_{j,k=1}^{n_\ell}  \left\{ \EE\left[\sigma_{j;\mi1}^\eell\sigma_{j;\mi2}^\eell \sigma_{k;\mi3}^\eell\sigma_{k;\mi4}^\eell\right] \right. \\
+		\left. - \EE\left[\sigma_{j;\mi1}^\eell\sigma_{j;\mi2}^\eell\right]\EE\left[\sigma_{k;\mi3}^\eell\sigma_{k;\mi4}^\eell\right]\right\}
+	\end{multline*}
+	} 
+	\begin{itemize}
+		\item Vamos dar um nome para a expressão entre chaves:  $\Xi_{j;k}^\eell$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	Para índices iguais, a equação (4.62) nos dá o seguinte resultado:
+	{
+\begin{multline*}
+	\EE\left[\sigma_{j;\mi1}^\eell\sigma_{j;\mi2}^\eell \sigma_{j;\mi3}^\eell\sigma_{j;\mi4}^\eell\right] - \EE\left[\sigma_{j;\mi1}^\eell\sigma_{j;\mi2}^\eell\right]\EE\left[\sigma_{j;\mi3}^\eell\sigma_{j;\mi4}^\eell\right] = \\
+	\Expectation{\sigma_\mi1\sigma_\mi2\sigma_\mi3\sigma_\mi4}{G^\eell} - \Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell}  \Expectation{\sigma_\mi3\sigma_\mi4}{G^\eell}  +  O(\sfrac{1}{n})
+\end{multline*}
+	}
+\end{frame}
+
+\begin{frame}
+	Para índices diferentes, a equação (4.63) nos dá o seguinte resultado:
+	{\small
+	\begin{multline*}
+		\EE\left[\sigma_{j;\mi1}^\eell\sigma_{j;\mi2}^\eell \sigma_{k;\mi3}^\eell\sigma_{k;\mi4}^\eell\right] - \EE\left[\sigma_{j;\mi1}^\eell\sigma_{j;\mi2}^\eell\right]\EE\left[\sigma_{k;\mi3}^\eell\sigma_{k;\mi4}^\eell\right] = \\
+		\frac{1}{4}\sum_{\mj{i}\in\mathcal{D}}^{1\le{i}\le4}\Verticeinvb{\ell}1234\left(\text{\pmglyph{a-F-\Hibp}}\right)  + O(\sfrac{1}{n})
+	\end{multline*}
+	}
+\end{frame}
+
+\begin{frame}
+	\small
+	\begin{multline*}
+		\frac{1}{n}\Vertice{\ell+1}1234 =  \left(\frac{C_W^\eellum}{n}\right)^2 \left\{\sum_{j=k}^{n}\Xi_{j;k}^\eell + \sum_{j\neq k}^{n}\Xi_{j;k}^\eell\right\} = \\
+		= \frac{{C_W^\eellum}^2}{n^2} \left\{\sum_{j=1}^{n}\Expectation{\sigma_\mi1\sigma_\mi2\sigma_\mi3\sigma_\mi4}{G^\eell} - \Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell}  \Expectation{\sigma_\mi3\sigma_\mi4}{G^\eell}  +  O(\sfrac{1}{n}) \right.\\ 
+		\left. +\sum_{j\neq k}^{n}\left(\frac{1}{4}\sum_{\mj{i}\in\mathcal{D}}^{1\le{i}\le4}\Verticeinvb{\ell}1234\left(\text{\pmglyph{a-F-\Hibp}}\right) + O(\sfrac{1}{n^2})\right)\right\} 
+	\end{multline*}
+\end{frame}
+
+\end{document}
+
