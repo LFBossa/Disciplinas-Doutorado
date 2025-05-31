@@ -7,6 +7,7 @@ Livro texto: [The Principles of Deep Learning Theory](https://arxiv.org/abs/2106
 ## Conteúdos online
 
 - [Alguns conceitos teóricos de base relacionados às redes neurais](https://homepages.dcc.ufmg.br/~gabriel/pestov/)
+- [Curso IME](https://www.ime.usp.br/~leonardi/curso_pestov/)
 - [Elementos da Teoria de Aprendizagem de Máquina Supervisionada - Vladimir G. Pestov](https://impa.br/wp-content/uploads/2022/03/32CBM07_eBook.pdf)
 - [CSE 254: Seminar on Learning Algorithms](https://cseweb.ucsd.edu/~dasgupta/254-deep/)
 	- [Weighted sums of random kitchen sinks](https://papers.nips.cc/paper_files/paper/2008/file/0efe32849d230d7f53049ddc4a4b0c60-Paper.pdf)
