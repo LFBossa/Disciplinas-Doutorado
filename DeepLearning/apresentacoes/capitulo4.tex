@@ -45,6 +45,11 @@
 \newcommand{\aaA}{\alpha}
 \newcommand{\aaB}{\beta} 
 \newcommand{\OO}{\mathcal{O}}
+\newcommand{\Dcal}{\mathcal{D}}
+\newcommand{\Ical}{\mathcal{I}}
+\newcommand{\Ncal}{\mathcal{N}}
+\newcommand{\Gcal}{\mathcal{G}}
+\newcommand{\Acal}{\mathcal{A}}
 \def\mi#1{{\alpha_{#1}}}
 \def\mj#1{\beta_{#1}}
 \def\eell{{(\ell)}}
@@ -74,7 +79,7 @@
 \frame{\tableofcontents}
 
 
-\section{Recapitulação}    
+\section{Recap}    
 %Sempre que iniciar uma nova sessão, você pode fazer um slide de transição com o índice.
 \begin{frame}
 \tableofcontents[currentsection]
@@ -87,11 +92,11 @@
 	\begin{itemize}
 		\item Cálculo da distribuição condicional
 		\begin{equation*}\tag{4.32}
-			p\left(z^{(2)},z^{(1)}\Big|\mathcal{D}\right) = p\left(z^{(2)}\Big| z^{(1)}\right)p\left(z^{(1)}\Big| \mathcal{D}\right)
+			p\left(z^{(2)},z^{(1)}\Big|\Dcal\right) = p\left(z^{(2)}\Big| z^{(1)}\right)p\left(z^{(1)}\Big| \Dcal\right)
 		\end{equation*}
 		\begin{equation*}\tag{4.35}
 			p\left(z^{(2)}\Big| z^{(1)}\right) = \frac{1}{\sqrt{\left|2\pi \hat{G}^{(2)}\right|^{n_2}}}
-			\exp\left(-\frac{1}{2} \sum_{\mi1,\mi2\in\mathcal{D}} \Gchapeuinv212 z^{(2)}_{\mi1}\cdot z^{(2)}_{\mi2} \right)
+			\exp\left(-\frac{1}{2} \sum_{\mi1,\mi2\in\Dcal} \Gchapeuinv212 z^{(2)}_{\mi1}\cdot z^{(2)}_{\mi2} \right)
 		\end{equation*}
 	\end{itemize}
 \end{frame}
@@ -147,17 +152,17 @@
 	$$\sigma_{j;\alpha}^\eell := \sigma\left(z_{i;\alpha}^\eell\right)$$
 \end{frame}
 
-\subsection{Recursão}
+\subsection{Recursion}
 
 \begin{frame}
 	\begin{equation*}\tag{4.67}
-		p\left(z^\eellum,z^\eell\Big|\mathcal{D}\right) = p\left(z^\eellum\Big| z^\eell\right)p\left(z^\eell\Big| \mathcal{D}\right)
+		p\left(z^\eellum,z^\eell\Big|\Dcal\right) = p\left(z^\eellum\Big| z^\eell\right)p\left(z^\eell\Big| \Dcal\right)
 	\end{equation*}
 	Distribuição condicional camada $\ell+1$
 {\footnotesize
 	\begin{equation*}\tag{4.69}
 			p\left(z^\eellum\Big| z^\eell\right) = \frac{1}{\sqrt{\left|2\pi \hat{G}^\eellum\right|^{n_{\ell+1}}}}
-			\exp\left(-\frac{1}{2} \sum_{\mi1,\mi2\in\mathcal{D}} \Gchapeuinv{\ell+1}12 z^\eellum_{\mi1}\cdot z^\eellum_{\mi2} \right)
+			\exp\left(-\frac{1}{2} \sum_{\mi1,\mi2\in\Dcal} \Gchapeuinv{\ell+1}12 z^\eellum_{\mi1}\cdot z^\eellum_{\mi2} \right)
 		\end{equation*}
 }
 Métrica estocástica da camada $\ell+1$
@@ -201,12 +206,12 @@ Métrica estocástica da camada $\ell+1$
 	\end{multline*}
 \end{frame}
 
-\subsection{Ação}
+\subsection{Action}
 
 \begin{frame}
 	Podemos definir a distribuição na camada $\ell$ através da ação
 	\begin{equation*}\tag{4.78}
-		p\left(z^\eell \Big| \mathcal{D}\right) = \frac{e^{-S(z^\eell)}}{Z_\ell}
+		p\left(z^\eell \Big| \Dcal\right) = \frac{e^{-S(z^\eell)}}{Z_\ell}
 	\end{equation*}
 	com 
 	\begin{equation*}\tag{4.79}
@@ -219,7 +224,7 @@ Métrica estocástica da camada $\ell+1$
 	Nosso modelo para a ação $S$ será
 	{\footnotesize
 	\begin{equation*}\tag{4.80}
-		S(z^\eell) := \frac{1}{2}\sum_{\mi1,\mi2}g^{\mi1\mi2}_{\eell} z_{\mi1}{\cdot}z_{\mi2} - \frac{1}{8}\sum_{\mi{i}\in\mathcal{D}}^{1\le i \le 4} v^{(\mi1\mi2)(\mi3\mi4)}_{\eell} z_{\mi1}{\cdot}z_{\mi2} z_{\mi3}{\cdot}z_{\mi4}+\ldots
+		S(z^\eell) := \frac{1}{2}\sum_{\mi1,\mi2}g^{\mi1\mi2}_{\eell} z_{\mi1}{\cdot}z_{\mi2} - \frac{1}{8}\sum_{\mi{i}\in\Dcal}^{1\le i \le 4} v^{(\mi1\mi2)(\mi3\mi4)}_{\eell} z_{\mi1}{\cdot}z_{\mi2} z_{\mi3}{\cdot}z_{\mi4}+\ldots
 	\end{equation*}}
 	\begin{itemize}
 		\item Esse modelo funciona para a camada 1 com 
@@ -241,11 +246,11 @@ Por analogia, temos
 	\end{equation*}
 no qual o vértice invertido é dado por
 	\begin{equation*}\tag{4.83}
-		\Verticeinv{\ell}1234 := \sum_{\mj{i}\in\mathcal{D}}^{1\le i \le 4} G^{\mi1\mj1}_\eell G^{\mi2\mj2}_\eell G^{\mi3\mj3}_\eell G^{\mi4\mj4}_\eell V^\eell_{(\mi1\mi2)(\mi3\mi4)}
+		\Verticeinv{\ell}1234 := \sum_{\mj{i}\in\Dcal}^{1\le i \le 4} G^{\mi1\mj1}_\eell G^{\mi2\mj2}_\eell G^{\mi3\mj3}_\eell G^{\mi4\mj4}_\eell V^\eell_{(\mi1\mi2)(\mi3\mi4)}
 	\end{equation*}
 \end{frame}
 
-\subsection{Expansão de largura larga}
+\subsection{Large-width expansion}
 
 \begin{frame}{Large-width expansion}
 	\begin{itemize}
@@ -275,13 +280,15 @@ no qual o vértice invertido é dado por
 	A equação (4.61) calculada na sessão anterior nos dá a terrível fórmula 
 	{\small
 	\begin{multline*}
-		\EE\left[\sigma_{j;\mi1}^\eell\sigma_{j;\mi2}^\eell\right] = \Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell}  \color{blue} + \frac{1}{8} \sum_{\mj{i}\in\mathcal{D}}^{1\le i \le 4}\Verticeinvb{\ell}1234\left( \text{\pmglyph{I-Y-Q}} \right) + O(v^2)
+		\EE\left[\sigma_{j;\mi1}^\eell\sigma_{j;\mi2}^\eell\right] = \Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell}  + \frac{1}{8} \sum_{\mj{i}\in\Dcal}^{1\le i \le 4}v_{\eell}^{(\mj1\mj2)(\mj3\mj4)}\Big( \text{\pmglyph{Y}} \Big) + O(v^2) =\\
+		=  \Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell} { \color{blue} + \frac{1}{8} \sum_{\mj{i}\in\Dcal}^{1\le i \le 4}\frac{1}{n_\ell}\Verticeinvb{\ell}1234\Big( \text{\pmglyph{Y}} \Big) } + O(\sfrac{1}{n_\ell^2}) = \\
+		= \Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell} + \text{\pmglyph{Q}}  + O(\sfrac{1}{n_\ell^2})
 	\end{multline*}
 	}
-	em que o hieróglifo \pmglyph{I-Y-Q} representa a exata sensação ao ver essa expressão. 
+	em que o hieróglifo \pmglyph{Y} representa a exata sensação ao ver essa expressão. 
 	\medskip
 	\begin{itemize}
-		\item 	A parte em azul é de ordem $\sfrac{1}{n}$, pois o vértice de quatro pontos é dessa ordem.
+		\item  \pmglyph{Y} tem um termo de ordem $n_\ell$, que se torna de ordem constante quando dividimos por $n_\ell$. \#Melholhar
 	\end{itemize}
 \end{frame}
 
@@ -321,19 +328,230 @@ no qual o vértice invertido é dado por
 	Para índices diferentes, a equação (4.63) nos dá o seguinte resultado:
 	{\small
 	\begin{multline*}
-		\EE\left[\sigma_{j;\mi1}^\eell\sigma_{j;\mi2}^\eell \sigma_{k;\mi3}^\eell\sigma_{k;\mi4}^\eell\right] - \EE\left[\sigma_{j;\mi1}^\eell\sigma_{j;\mi2}^\eell\right]\EE\left[\sigma_{k;\mi3}^\eell\sigma_{k;\mi4}^\eell\right] = \\
-		\frac{1}{4}\sum_{\mj{i}\in\mathcal{D}}^{1\le{i}\le4}\Verticeinvb{\ell}1234\left(\text{\pmglyph{a-F-\Hibp}}\right)  + O(\sfrac{1}{n})
+		\EE\left[\sigma_{j;\mi1}^\eell\sigma_{j;\mi2}^\eell \sigma_{k;\mi3}^\eell\sigma_{k;\mi4}^\eell\right] - \EE\left[\sigma_{j;\mi1}^\eell\sigma_{j;\mi2}^\eell\right]\EE\left[\sigma_{k;\mi3}^\eell\sigma_{k;\mi4}^\eell\right] = \\ =
+		\frac{1}{4}\sum_{\mj{i}\in\Dcal}^{1\le{i}\le4}v^{(\mj1\mj2)(\mj3\mj4)}_{\eell}\Big(\text{\pmglyph{a}}\Big)  + O(v^2) =\\
+		= \frac{1}{4}\sum_{\mj{i}\in\Dcal}^{1\le{i}\le4} \frac{1}{n_\ell}{\Verticeinvb{\ell}1234} \Big(\text{\pmglyph{a}}\Big)  + O(\sfrac{1}{n_\ell^2}) 
 	\end{multline*}
 	}
+	\begin{itemize} 
+		\item O termo \pmglyph{a} é de ordem constante, pois só contém integrais gaussianas dependentes de $G^\eell$.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	Voltando para nossa equação, separamos a soma de índices iguais e diferentes, e aplicamos $n_\ell = n$.
+	\small
+	\begin{multline*}
+		\frac{1}{n}\Vertice{\ell+1}1234 =  \left(\frac{C_W^\eellum}{n}\right)^2 \left\{\sum_{j=k}^{n}\Xi_{j;k}^\eell + \sum_{j\neq k}^{n}\Xi_{j;k}^\eell\right\} = \\
+		= \frac{{C_W^\eellum}^2}{n^2} \left\{\sum_{j=1}^{n}\Expectation{\sigma_\mi1\sigma_\mi2\sigma_\mi3\sigma_\mi4}{G^\eell} - \Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell}  \Expectation{\sigma_\mi3\sigma_\mi4}{G^\eell}  +  O(\sfrac{1}{n}) \right.\\ 
+		\left. +\sum_{j\neq k}^{n}\left(\frac{1}{4n}\sum_{\mj{i}\in\Dcal}^{1\le{i}\le4}\Verticeinvb{\ell}1234\left(\text{\pmglyph{a}}\right) + O(\sfrac{1}{n^2})\right)\right\} =
+	\end{multline*}
+\end{frame}
+
+\begin{frame} 
+	\small
+	\begin{multline*}
+		= \frac{{C_W^\eellum}^2}{n^2} \Bigg\{n\big[\Expectation{\sigma_\mi1\sigma_\mi2\sigma_\mi3\sigma_\mi4}{G^\eell} - \Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell}  \Expectation{\sigma_\mi3\sigma_\mi4}{G^\eell}  +  O(\sfrac{1}{n}) \big] \\ 
+		+(n^2-n)\left[\frac{1}{4n}\sum_{\mj{i}\in\Dcal}^{1\le{i}\le4}\Verticeinvb{\ell}1234\left(\text{\pmglyph{a}}\right) + O(\sfrac{1}{n^2})\right]\Bigg\} =\\
+		= {{C_W^\eellum}^2} \Bigg\{ \frac{1}{n}\big[\Expectation{\sigma_\mi1\sigma_\mi2\sigma_\mi3\sigma_\mi4}{G^\eell} - \Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell}  \Expectation{\sigma_\mi3\sigma_\mi4}{G^\eell} \big]  +  O(\sfrac{1}{n^2})\\
+		+ \frac{1}{4n}\left[\sum_{\mj{i}\in\Dcal}^{1\le{i}\le4}\Verticeinvb{\ell}1234\big(\text{\pmglyph{a}}\big)\right] + O(\sfrac{1}{n^2})\Bigg\}
+	\end{multline*}
+	
 \end{frame}
 
 \begin{frame}
 	\small
 	\begin{multline*}
-		\frac{1}{n}\Vertice{\ell+1}1234 =  \left(\frac{C_W^\eellum}{n}\right)^2 \left\{\sum_{j=k}^{n}\Xi_{j;k}^\eell + \sum_{j\neq k}^{n}\Xi_{j;k}^\eell\right\} = \\
-		= \frac{{C_W^\eellum}^2}{n^2} \left\{\sum_{j=1}^{n}\Expectation{\sigma_\mi1\sigma_\mi2\sigma_\mi3\sigma_\mi4}{G^\eell} - \Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell}  \Expectation{\sigma_\mi3\sigma_\mi4}{G^\eell}  +  O(\sfrac{1}{n}) \right.\\ 
-		\left. +\sum_{j\neq k}^{n}\left(\frac{1}{4}\sum_{\mj{i}\in\mathcal{D}}^{1\le{i}\le4}\Verticeinvb{\ell}1234\left(\text{\pmglyph{a-F-\Hibp}}\right) + O(\sfrac{1}{n^2})\right)\right\} 
+		 {{C_W^\eellum}^2} \Bigg\{ \frac{1}{n} {\color{blue}
+		 \big[\Expectation{\sigma_\mi1\sigma_\mi2\sigma_\mi3\sigma_\mi4}{G^\eell} - \Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell}  \Expectation{\sigma_\mi3\sigma_\mi4}{G^\eell} \big] }  \\
+		+ \frac{1}{4n}\left[ {\color{green}\sum_{\mj{i}\in\Dcal}^{1\le{i}\le4}\Verticeinvb{\ell}1234\big(\text{\pmglyph{a}}\big) }\right] \Bigg\} + O(\sfrac{1}{n^2})
 	\end{multline*}
+	
+\end{frame}
+
+\begin{frame}
+	Por hipótese de indução, temos que as partes em azul são de ordem constante.
+	{\small
+	\begin{multline*}
+		 \frac{1}{n}\Vertice{\ell+1}1234 = \frac{{C_W^\eellum}^2}{n} \Bigg\{  
+		 \left[{\color{blue} \begin{array}{l}
+		 \Expectation{\sigma_\mi1\sigma_\mi2\sigma_\mi3\sigma_\mi4}{G^\eell} \\
+		 - \Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell}  \Expectation{\sigma_\mi3\sigma_\mi4}{G^\eell} 
+		 \end{array} }
+\right]   \\
+		+ \frac{1}{4}\left[ \sum_{\mj{i}\in\Dcal}^{1\le{i}\le4}{\color{green}\Verticeinvb{\ell}1234\big(\text{\pmglyph{a}}\big) }\right] \Bigg\} + O(\sfrac{1}{n^2})
+	\end{multline*}
+	}
+	Logo, segue que 
+	\begin{equation*}\tag{4.91}
+		\frac{1}{n}\Vertice{\ell+1}1234 = O(\sfrac{1}{n}) 
+	\end{equation*}
+	o que completa a indução. \hfill $\qed$ 
+\end{frame}
+
+\section{Marginalization Rules}
+
+\begin{frame}
+\tableofcontents[currentsection]
+\end{frame}
+
+
+\begin{frame}
+	\begin{itemize}
+		\item Queremos calcular o valor esperado de uma função $F(z_{\Ical;\Acal})$, com $\Ical\subset \Ncal =: \{1,\ldots,n_\ell\}$ e $\Acal\subset \Dcal$.
+		\item Para conjuntos $X\subset Y$, vamos usar a notação $\overline{X}$ para denotar o conjunto complementar de $X$ em $Y$, notadamente $Y\setminus X$.
+		\item Vamos separar as variáveis de integração em dois conjuntos: $\Ical\times\Acal$ que é de interesse e o seu complementar $\overline{\Ical\times\Acal}$.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\begin{multline*}
+		\EE[F(z_{\Ical;\Acal})] = \int\left[{\prod_{(i,\alpha)\in \Ncal\times\Dcal}}\hspace*{-12pt} dz_{i;\alpha}^\eell\right] F(z_{\Ical;\Acal}) p(z_{\Ncal;\Dcal}\mid \Dcal)= \\=
+		\int\left[{\prod_{(i,\alpha)\in \Ical\times\Acal}}\hspace*{-12pt} dz_{i;\alpha}^\eell {\prod_{(j,\beta)\in \overline{\Ical\times\Acal}}} \hspace*{-12pt} dz_{j;\beta}^\eell\right] 
+		F(z_{\Ical;\Acal}) p(z_{\Ncal;\Dcal}\mid \Dcal)= \\=
+		\int\left[{\prod_{(i,\alpha)\in \Ical\times\Acal}} \hspace*{-12pt} dz_{i;\alpha}^\eell\right]F(z_{\Ical;\Acal})\int\left[ {\prod_{(j,\beta)\in \overline{\Ical\times\Acal}}} \hspace*{-12pt} dz_{j;\beta}^\eell\right] 
+		 p(z_{\Ncal;\Dcal}\mid \Dcal)= \\
+		 =\int\left[{\prod_{(i,\alpha)\in \Ical\times\Acal}}\hspace*{-12pt}  dz_{i;\alpha}^\eell\right]F(z_{\Ical;\Acal})p(z_{\Ical;\Acal}\mid \Acal)\tag{4.92}
+	\end{multline*}
+\end{frame}
+
+\begin{frame}
+	\begin{equation*}\tag{4.93}
+		p(z_{\Ical;\Acal}\mid \Acal) := \int\left[{\prod_{(j,\beta)\in \overline{\Ical\times\Acal}}} \hspace*{-12pt} dz_{j;\beta}^\eell\right] p(z_{\Ncal;\Dcal}\mid \Dcal) 
+	\end{equation*}
+\end{frame}
+
+\subsection{Marginalization over samples}
+
+
+\begin{frame}
+	\begin{itemize}
+	% 	\item Vamos considerar o caso em que $\Acal = \{\mi1,\mi2\}$ 
+	% {\small
+	% \begin{equation*}\tag{4.94}
+	% 	\EE[\zia{1}{1}^\eellum\zia{2}{2}^\eellum] = \delta_{i_1i_2}(C_b^\eellum + C_W^\eellum\Expectation{\sigma_{\mi1}\sigma_{\mi2}}{G^\eell} + O(\sfrac{1}{n_\ell})) 
+	% \end{equation*} 
+	% }
+	\item Ao invés de calcular $\Expectation{\sigma_{\mi1}\sigma_{\mi2}}{G^\eell}$ como uma integral $N_\Dcal$-dimensional, podemos calcular como uma integral dupla.
+	\item Da mesma forma, podemos calcular $\Expectation{\sigma_{\mi1}\sigma_{\mi2}\sigma_\mi3\sigma_\mi4}{G^\eell}$ como uma integral em no máximo 4 variáveis.
+	\item Para o cálculo de $\Vertice{\ell+1}1234$, podemos usar (4.90) e somar somente sobre os índices $\Acal = \{\mi1,\mi2,\mi3,\mi4\}$, lembrando de ajustar a métrica inversa $\Verticeinv{\ell}1234$ 
+	\end{itemize}
+
+\end{frame}
+
+\subsection{Marginalization over neurons}
+
+\begin{frame}
+	\begin{equation*}\tag{4.95}
+		-\frac{1}{8}\sum_{i,j}^{n_\ell} \sum_{\mi{i}\in\Dcal}^{1\le i \le 4} v^{(\mi1\mi2)(\mi3\mi4)}_{\eell} z_{i;\mi1}^\eell z_{i;\mi2}^\eell z_{j;\mi3}^\eell z_{j;\mi4}^\eell \sim O\left(\frac{n_\ell^2}{n_\ell}\right) = O(n)
+	\end{equation*}
+	\begin{equation*}\tag{4.96}
+		\frac{1}{2} \sum_{i}^{n_\ell}\sum_{\mi{i}\in\Dcal}^{1\le i \le 2} g^{\mi1\mi2}_{\eell} z_{i;\mi1}^\eell z_{i;\mi2}^\eell \sim  O(n)
+	\end{equation*}
+
+	\begin{itemize}
+		\item Como utilizamos $m_\ell \ll n_\ell$, os somatórios reduzem drasticamente o número de termos.
+		\item $(4.95) \sim O\left(\frac{m_\ell^2}{n_\ell}\right) = O\left(\frac{1}{n}\right)$
+		\item $(4.96) \sim O(m_\ell) = O(1)$
+	\end{itemize}
+\end{frame}
+
+\subsection{Running couplings with partial marginalizations}
+
+\begin{frame}
+	\begin{itemize}
+		\item Como estamos calculando apenas sobre um subconjunto de neurônios e amostras, temos que ajustar $g$ e $v$ de acordo.
+		\item Para simplificar, vamos considerar apenas um input $x$ e vamos derrubar os índices de amostra.
+	\end{itemize}
+	\begin{multline*}\tag{4.97}
+		p(z_1^\eell, \ldots, z_{m_\ell}^\eell ) \propto e^{-S(z_1^\eell, \ldots, z_{m_\ell}^\eell)}\\
+		= \exp\left(-\frac{g_{\eell,m_\ell}}{2}\sum_{i=1}^{m_\ell}  z_i^\eell z_i^\eell + \frac{v_{\eell{\color{gray},m_\ell}}}{8}\sum_{j,k=1}^{m_\ell}  z_j^\eell z_j^\eell z_k^\eell z_k^\eell\right)
+	\end{multline*}
+\end{frame}
+
+\begin{frame}
+	\begin{itemize}
+		\item Vamos integrar sobre os últimos $n_\ell - m_\ell$ neurônios, ignorando as constantes de normalização.
+	\end{itemize}\small
+	\begin{multline*}
+		e^{-S(z_1^\eell, \ldots, z_{m_\ell}^\eell)} \propto p(z_1^\eell, \ldots, z_{m_\ell}^\eell ) = \int\Big[\prod_{i=m_\ell+1}^{n_\ell} \hspace*{-10pt}dz_i^\eell\Big] p(z_1^\eell, \ldots, z_{n_\ell}^\eell ) \\ 
+		\propto \int\Big[\prod_{i=m_\ell+1}^{n_\ell} \hspace*{-10pt}dz_i^\eell\Big] \exp\left(-\frac{g_{\eell,n_\ell}}{2}\sum_{i=1}^{n_\ell}  z_i^\eell z_i^\eell + \frac{v_{\eell}}{8}\sum_{j,k=1}^{n_\ell}  z_j^\eell z_j^\eell z_k^\eell z_k^\eell\right)\\
+	\end{multline*}
+\end{frame}
+
+\begin{frame}
+	\begin{itemize}
+		\item Para simplificar, vamos sumir com os índices $\ell$.
+		\item Vamos modificar a notação $$\int \left[\prod_{i=a}^b dz_i\right] = \int_{i=a}^b \hspace{-10pt}dz_i$$
+		\item Vamos lembrar que $\exp(a+b) = \exp(a)\exp(b)$.
+		\item Vamos separar o somatório duplo $$\sum_{j,k=1}^n = \sum_{j,k=1}^{m} + \sum_{j=1}^{m}\sum_{k=m+1}^n + \sum_{j=m+1}^n\sum_{k=1}^{m} + \sum_{j,k=m+1}^n$$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+
+	\small
+	\begin{multline*}
+		 p(z_1^\eell, \ldots, z_{m_\ell}^\eell ) \propto \int_{i=m+1}^{n}\hspace{-10pt} dz_i \exp\left[-\frac{g}{2}\sum_{i=1}^{n}  z_i^2 + \frac{v}{8}\sum_{j,k=1}^{n}  z_j^2 z_k^2\right]=\\ 
+		 = \int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[-\frac{g}{2}\sum_{i=1}^{n}  z_i^2 \right] \exp\left[ \frac{v}{8}\sum_{j,k=1}^{n}  z_j^2 z_k^2\right]=\\ = \int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[-\frac{g}{2}\sum_{i=1}^{m}  z_i^2 -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] \exp\left[ \frac{v}{8}\sum_{j,k=1}^{n}  z_j^2 z_k^2\right]=\\
+		  = \int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[-\frac{g}{2}\sum_{i=1}^{m}  z_i^2 \right]\exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] \exp\left[ \frac{v}{8}\sum_{j,k=1}^{n}  z_j^2 z_k^2\right]=\\ 
+		   = \exp\left[-\frac{g}{2}\sum_{i=1}^{m}  z_i^2 \right]\int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] \exp\left[ \frac{v}{8}\sum_{j,k=1}^{n}  z_j^2 z_k^2\right]=\\ 
+	\end{multline*}
+\end{frame}
+
+\begin{frame}
+	\small
+	\begin{multline*}
+		= \exp\left[-\frac{g}{2}\sum_{i=1}^{m}  z_i^2 \right]\int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] \exp\left[ \frac{v}{8}\sum_{j,k=1}^{m}  z_j^2z_k^2 + \right.\\ % linha 1
+		\left. + \frac{v}{8}\sum_{j=1}^{m}\sum_{k=m+1}^{n} \hspace*{-6pt}z_j^2z_k^2 +\frac{v}{8}\sum_{j=m+1}^{n}\sum_{k=1}^{n}z_j^2z_k^2  + \frac{v}{8}\sum_{j,k=m+1}^{n}  z_j^2 z_k^2\right]=\\ % linha 2
+		= \exp\left[-\frac{g}{2}\sum_{i=1}^{m}  z_i^2 \right] \exp\left[ \frac{v}{8}\sum_{j,k=1}^{m}  z_j^2z_k^2 + \right]\times \\
+		\times \int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] 
+		\exp\left[ \frac{v}{8}\left(2\sum_{j=1}^{m}\sum_{k=m+1}^{n} \hspace*{-6pt}z_j^2z_k^2 + \hspace{-6pt}\sum_{j,k=m+1}^{n} \hspace{-6pt} z_j^2 z_k^2  \right)  \right]
+	\end{multline*}
+\end{frame}
+
+\begin{frame}
+	\begin{itemize}
+		\item Agora usamos $\exp(v\Sigma) \approx 1 + v\Sigma + O(v^2)$ para trocar a expoencial
+	\end{itemize}
+	\begin{multline*}
+		\exp\left[ \frac{v}{8}\left(2\sum_{j=1}^{m}\sum_{k=m+1}^{n} \hspace*{-6pt}z_j^2z_k^2 + \hspace{-6pt}\sum_{j,k=m+1}^{n} \hspace{-6pt} z_j^2 z_k^2  \right)  \right] \approx\\
+		\approx 1 + \frac{2v}{8}\sum_{j=1}^{m}\sum_{k=m+1}^{n} \hspace*{-6pt}z_j^2z_k^2 +  \frac{v}{8}\hspace{-6pt}\sum_{j,k=m+1}^{n} \hspace{-6pt} z_j^2 z_k^2   + O(v^2)
+	\end{multline*}
+\end{frame}
+
+\begin{frame}
+	\small
+	\begin{multline*}
+		p(z_1^\eell, \ldots, z_{m_\ell}^\eell ) \propto \exp\left[-\frac{g}{2}\sum_{i=1}^{m}  z_i^2  + \frac{v}{8}\sum_{j,k=1}^{m}  z_j^2z_k^2 + \right]\times\\
+		\times \int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] 
+		\left(1 + \frac{2v}{8}\sum_{j=1}^{m}\sum_{k=m+1}^{n} \hspace*{-6pt}z_j^2z_k^2 +  \frac{v}{8}\hspace{-6pt}\sum_{j,k=m+1}^{n} \hspace{-6pt} z_j^2 z_k^2   + O(v^2)\right)\\
+		= \exp\left[-\frac{g}{2}\sum_{i=1}^{m}  z_i^2  + \frac{v}{8}\sum_{j,k=1}^{m}  z_j^2z_k^2 + \right]\times \\
+		\times\left[1+ \frac{(n -m)}{4}\frac{v}{g}\left(\sum_{i=1}^m z_i^2\right) + \frac{v}{8g^2}\left[(n-m)^2 + 2(n-m)\right] + O(v^2)\right] (??)
+	\end{multline*}
+\end{frame}
+
+\begin{frame}
+	Comparando a expressão acima com a equação (4.97), temos que
+
+	\begin{equation*}\tag{4.100}
+		g_{\eell,m_\ell} = g_{\eell,n_\ell} - \frac{(n_\ell -m_\ell)}{4}\frac{v_{\eell}}{g_{\eell,n_\ell}}
+	\end{equation*}  
+\end{frame}
+
+
+\begin{frame}
+	\begin{equation*}\tag{4.101}
+		G^\eell = \frac{1}{g_{\eell,m_\ell}} + \frac{(m_\ell+2)}{2}\frac{v^\eell}{g^3_{\eell,m_\ell}} + O\left(v^2\right)
+	\end{equation*}
+
+	\begin{equation*}\tag{4.102}
+		\frac{1}{g_{\eell,m_\ell}} = G^\eell - \frac{(m_\ell+2)}{2}\frac{V^\eell}{n_{\ell-1}G ^\eell} + O\left(\frac{1}{n^2}\right)
+	\end{equation*}
+
+	\begin{equation*}
+		v^\eell = \frac{V^\eell}{n_{\ell-1}(G^\eell)^4 } + O\left(\frac{1}{n^2}\right)  
+	\end{equation*}
 \end{frame}
 
 \end{document}
