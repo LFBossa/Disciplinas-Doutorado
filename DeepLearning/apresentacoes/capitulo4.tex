@@ -487,24 +487,26 @@ no qual o vértice invertido é dado por
 		\item Vamos separar o somatório duplo $$\sum_{j,k=1}^n = \sum_{j,k=1}^{m} + \sum_{j=1}^{m}\sum_{k=m+1}^n + \sum_{j=m+1}^n\sum_{k=1}^{m} + \sum_{j,k=m+1}^n$$
 	\end{itemize}
 \end{frame}
-
+\newcommand{\redp}[1]{\textcolor<#1->{red}}
+\newcommand{\blup}[1]{\textcolor<#1->{blue}}
 \begin{frame}
 
 	\small
 	\begin{multline*}
-		 p(z_1^\eell, \ldots, z_{m_\ell}^\eell ) \propto \int_{i=m+1}^{n}\hspace{-10pt} dz_i \exp\left[-\frac{g}{2}\sum_{i=1}^{n}  z_i^2 + \frac{v}{8}\sum_{j,k=1}^{n}  z_j^2 z_k^2\right]=\\ 
-		 = \int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[-\frac{g}{2}\sum_{i=1}^{n}  z_i^2 \right] \exp\left[ \frac{v}{8}\sum_{j,k=1}^{n}  z_j^2 z_k^2\right]=\\ = \int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[-\frac{g}{2}\sum_{i=1}^{m}  z_i^2 -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] \exp\left[ \frac{v}{8}\sum_{j,k=1}^{n}  z_j^2 z_k^2\right]=\\
-		  = \int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[-\frac{g}{2}\sum_{i=1}^{m}  z_i^2 \right]\exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] \exp\left[ \frac{v}{8}\sum_{j,k=1}^{n}  z_j^2 z_k^2\right]=\\ 
-		   = \exp\left[-\frac{g}{2}\sum_{i=1}^{m}  z_i^2 \right]\int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] \exp\left[ \frac{v}{8}\sum_{j,k=1}^{n}  z_j^2 z_k^2\right]=\\ 
+		 p(z_1^\eell, \ldots, z_{m_\ell}^\eell ) \propto \int_{i=m+1}^{n}\hspace{-10pt} dz_i {\redp1\exp}\left[-\frac{g}{2}\sum_{i=1}^{n}  z_i^2 {\redp1+} \frac{v}{8}\sum_{j,k=1}^{n}  z_j^2 z_k^2\right]=\\ 
+		 = \int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[-\frac{g}{2}{\redp2{\sum_{i=1}^{n}}}  z_i^2 \right] \exp\left[ \frac{v}{8}\sum_{j,k=1}^{n}  z_j^2 z_k^2\right]=\\ 
+		 = \int_{i=m+1}^{n}\hspace{-12pt} dz_i {\blup4 \exp}\left[-\frac{g}{2}\sum_{\redp3{i=1}}^{\redp3 m}  z_i^2 {\blup4 -}\frac{g}{2}\sum_{\redp3{i=m+1}}^{\redp3 n}  z_i^2 \right] \exp\left[ \frac{v}{8}\sum_{j,k=1}^{n}  z_j^2 z_k^2\right]=\\
+		  = \int_{i=m+1}^{n}\hspace{-12pt} dz_i \blup5{ \exp\left[-\frac{g}{2}\sum_{i=1}^{m}  z_i^2 \right]}\exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] \exp\left[ \frac{v}{8}\sum_{j,k=1}^{n}  z_j^2 z_k^2\right]=\\ 
+		   = \blup6{\exp\left[-\frac{g}{2}\sum_{i=1}^{m}  z_i^2 \right]}\int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] \exp\left[ \frac{v}{8}\redp7{\sum_{j,k=1}^{n}  z_j^2 z_k^2}\right]=\\ 
 	\end{multline*}
 \end{frame}
 
 \begin{frame}
 	\small
 	\begin{multline*}
-		= \exp\left[-\frac{g}{2}\sum_{i=1}^{m}  z_i^2 \right]\int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] \exp\left[ \frac{v}{8}\sum_{j,k=1}^{m}  z_j^2z_k^2 + \right.\\ % linha 1
+		= \exp\left[-\frac{g}{2}\sum_{i=1}^{m}  z_i^2 \right]\int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] \exp\left[ \redp2{\frac{v}{8}\sum_{j,k=1}^{m}  z_j^2z_k^2 +} \right.\\ % linha 1
 		\left. + \frac{v}{8}\sum_{j=1}^{m}\sum_{k=m+1}^{n} \hspace*{-6pt}z_j^2z_k^2 +\frac{v}{8}\sum_{j=m+1}^{n}\sum_{k=1}^{n}z_j^2z_k^2  + \frac{v}{8}\sum_{j,k=m+1}^{n}  z_j^2 z_k^2\right]=\\ % linha 2
-		= \exp\left[-\frac{g}{2}\sum_{i=1}^{m}  z_i^2 \right] \exp\left[ \frac{v}{8}\sum_{j,k=1}^{m}  z_j^2z_k^2 + \right]\times \\
+		= \exp\left[-\frac{g}{2} \sum_{i=1}^{m}  z_i^2 \right] \redp3{\exp\left[ \frac{v}{8}\sum_{j,k=1}^{m}  z_j^2z_k^2 \right]}\times \\
 		\times \int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] 
 		\exp\left[ \frac{v}{8}\left(2\sum_{j=1}^{m}\sum_{k=m+1}^{n} \hspace*{-6pt}z_j^2z_k^2 + \hspace{-6pt}\sum_{j,k=m+1}^{n} \hspace{-6pt} z_j^2 z_k^2  \right)  \right]
 	\end{multline*}
