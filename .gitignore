@@ -6,4 +6,6 @@
 *.bbl
 *.sty
 *.eps
-AlgebraLinear/aula1604
+*.djvu
+AlgebraLinear/aula*
+__pycache__
