@@ -282,18 +282,28 @@ no qual o vértice invertido é dado por
 	\begin{multline*}
 		\EE\left[\sigma_{j;\mi1}^\eell\sigma_{j;\mi2}^\eell\right] = \Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell}  + \frac{1}{8} \sum_{\mj{i}\in\Dcal}^{1\le i \le 4}v_{\eell}^{(\mj1\mj2)(\mj3\mj4)}\Big( \text{\pmglyph{Y}} \Big) + O(v^2) =\\
 		=  \Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell} { \color{blue} + \frac{1}{8} \sum_{\mj{i}\in\Dcal}^{1\le i \le 4}\frac{1}{n_\ell}\Verticeinvb{\ell}1234\Big( \text{\pmglyph{Y}} \Big) } + O(\sfrac{1}{n_\ell^2}) = \\
-		= \Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell} + \text{\pmglyph{Q}}  + O(\sfrac{1}{n_\ell^2})
+	%	= \Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell} + \text{\pmglyph{Q}}  + O(\sfrac{1}{n_\ell^2})
 	\end{multline*}
 	}
 	em que o hieróglifo \pmglyph{Y} representa a exata sensação ao ver essa expressão. 
-	\medskip
-	\begin{itemize}
-		\item  \pmglyph{Y} tem um termo de ordem $n_\ell$, que se torna de ordem constante quando dividimos por $n_\ell$. \#Melholhar
-	\end{itemize}
+\small 
+\begin{multline*} \text{\pmglyph{Y}} = \Expectation{\sigma_{\mi1} \sigma_{\mi2} ( z_{\mj1}z_{\mj2} - g_{\mj1 \mj2} ) ( z_{\mj3} z_{\mj4} - g_{\mj3 \mj4}) }{g} \\
+ + 2n \Expectation{\sigma_{\mi1} \sigma_{\mi2} ( z_{\mj1} z_{\mj2} - g_{\mj1 \mj2}) }{g} g_{\mj3 \mj4} - 2 \Expectation{ \sigma_{\mi1} \sigma_{\mi2} }{g} g_{\mj1 \mj3} g_{\mj2 \mj4} \end{multline*}
 \end{frame}
 
 \begin{frame}
-	Assim, a métrica da camada $\ell+1$ é dada por
+	\begin{itemize}
+		\item  \pmglyph{Y} tem um termo de ordem $n_\ell$, que se torna de ordem constante quando dividimos por $n_\ell$. 
+		\item Esse termo de ordem constante vamos chamar de \pmglyph{Q}.
+	\end{itemize}
+	\begin{equation*}
+		\EE\left[\sigma_{j;\mi1}^\eell\sigma_{j;\mi2}^\eell\right] = \Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell} + \text{\pmglyph{Q}} + O(\sfrac{1}{n_\ell}) +  O(\sfrac{1}{n_\ell^2})
+	\end{equation*}
+\end{frame}
+
+
+\begin{frame}
+	Assim, a métrica da camada $\ell+1$ é dada por\footnote{Isso segundo os cara, eu acho que falta uma sujeirinha \pmglyph{Q} aqui.\\\vspace*{18pt}}
 	\begin{multline*} 
 		\Gnormal{\ell+1}12 = C_b^\eellum + C_W^\eellum\frac{1}{n_\ell}\sum_{j=1}^{n_\ell} \bigg[\Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell} + O(\sfrac{1}{n}) \bigg] \\
 		= C_b^\eellum + C_W^\eellum{\color{red}\Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell} } + O\left(\sfrac{1}{n}\right)
@@ -332,6 +342,9 @@ no qual o vértice invertido é dado por
 		\frac{1}{4}\sum_{\mj{i}\in\Dcal}^{1\le{i}\le4}v^{(\mj1\mj2)(\mj3\mj4)}_{\eell}\Big(\text{\pmglyph{a}}\Big)  + O(v^2) =\\
 		= \frac{1}{4}\sum_{\mj{i}\in\Dcal}^{1\le{i}\le4} \frac{1}{n_\ell}{\Verticeinvb{\ell}1234} \Big(\text{\pmglyph{a}}\Big)  + O(\sfrac{1}{n_\ell^2}) 
 	\end{multline*}
+	\begin{equation*}
+		\text{\pmglyph{a}} = \Expectation{\sigma_{\mi1}\sigma_{\mi2}(z_{mj1}z_{\mj2} - g_{\mj1\mj2}) }{g}\Expectation{\sigma_{\mi3}\sigma_{\mi4}(z_{mj3}z_{\mj4} - g_{\mj3\mj4}) }{g} 
+	\end{equation*}
 	}
 	\begin{itemize} 
 		\item O termo \pmglyph{a} é de ordem constante, pois só contém integrais gaussianas dependentes de $G^\eell$.
@@ -379,7 +392,7 @@ no qual o vértice invertido é dado por
 		 - \Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell}  \Expectation{\sigma_\mi3\sigma_\mi4}{G^\eell} 
 		 \end{array} }
 \right]   \\
-		+ \frac{1}{4}\left[ \sum_{\mj{i}\in\Dcal}^{1\le{i}\le4}{\color{green}\Verticeinvb{\ell}1234\big(\text{\pmglyph{a}}\big) }\right] \Bigg\} + O(\sfrac{1}{n^2})
+		+ \frac{1}{4}\left[ \sum_{\mj{i}\in\Dcal}^{1\le{i}\le4}{\color{blue}\Verticeinvb{\ell}1234\big(\text{\pmglyph{a}}\big) }\right] \Bigg\} + O(\sfrac{1}{n^2})
 	\end{multline*}
 	}
 	Logo, segue que 
@@ -493,11 +506,11 @@ no qual o vértice invertido é dado por
 
 	\small
 	\begin{multline*}
-		 p(z_1^\eell, \ldots, z_{m_\ell}^\eell ) \propto \int_{i=m+1}^{n}\hspace{-10pt} dz_i {\redp1\exp}\left[-\frac{g}{2}\sum_{i=1}^{n}  z_i^2 {\redp1+} \frac{v}{8}\sum_{j,k=1}^{n}  z_j^2 z_k^2\right]=\\ 
-		 = \int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[-\frac{g}{2}{\redp2{\sum_{i=1}^{n}}}  z_i^2 \right] \exp\left[ \frac{v}{8}\sum_{j,k=1}^{n}  z_j^2 z_k^2\right]=\\ 
-		 = \int_{i=m+1}^{n}\hspace{-12pt} dz_i {\blup4 \exp}\left[-\frac{g}{2}\sum_{\redp3{i=1}}^{\redp3 m}  z_i^2 {\blup4 -}\frac{g}{2}\sum_{\redp3{i=m+1}}^{\redp3 n}  z_i^2 \right] \exp\left[ \frac{v}{8}\sum_{j,k=1}^{n}  z_j^2 z_k^2\right]=\\
-		  = \int_{i=m+1}^{n}\hspace{-12pt} dz_i \blup5{ \exp\left[-\frac{g}{2}\sum_{i=1}^{m}  z_i^2 \right]}\exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] \exp\left[ \frac{v}{8}\sum_{j,k=1}^{n}  z_j^2 z_k^2\right]=\\ 
-		   = \blup6{\exp\left[-\frac{g}{2}\sum_{i=1}^{m}  z_i^2 \right]}\int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] \exp\left[ \frac{v}{8}\redp7{\sum_{j,k=1}^{n}  z_j^2 z_k^2}\right]=\\ 
+		 p(z_1^\eell, \ldots, z_{m_\ell}^\eell ) \propto \int_{i=m+1}^{n}\hspace{-10pt} dz_i {\redp1\exp}\left[-\frac{g}{2}\sum_{i=1}^{n}  z_i^2 {\redp1+} \frac{v}{8}\sum_{j,k=1}^{n}  z_j^2 z_k^2\right]=\\ % linha 1
+		 = \int_{i=m+1}^{n}\hspace{-12pt} dz_i {\redp2\exp}\left[-\frac{g}{2}{\blup3{\sum_{i=1}^{n}}}  z_i^2 \right] {\redp2\exp}\left[ \frac{v}{8}\sum_{j,k=1}^{n}  z_j^2 z_k^2\right]=\\ % linha 2
+		 = \int_{i=m+1}^{n}\hspace{-12pt} dz_i {\redp5 \exp}\left[-\frac{g}{2}\sum_{\blup4{i=1}}^{\blup4 m}  z_i^2 {\redp5 -}\frac{g}{2}\sum_{\blup4{i=m+1}}^{\blup4 n}  z_i^2 \right] \exp\left[ \frac{v}{8}\sum_{j,k=1}^{n}  z_j^2 z_k^2\right]=\\ % linha 3
+		  = \int_{i=m+1}^{n}\hspace{-12pt} dz_i \blup7{ \exp\left[-\frac{g}{2}\sum_{i=1}^{m}  z_i^2 \right]}{\redp6\exp}\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] \exp\left[ \frac{v}{8}\sum_{j,k=1}^{n}  z_j^2 z_k^2\right]=\\ %linha 4
+		   = \blup8{\exp\left[-\frac{g}{2}\sum_{i=1}^{m}  z_i^2 \right]}\int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] \exp\left[ \frac{v}{8}\redp9{\sum_{j,k=1}^{n}  z_j^2 z_k^2}\right]=\\ 
 	\end{multline*}
 \end{frame}
 
@@ -505,10 +518,10 @@ no qual o vértice invertido é dado por
 	\small
 	\begin{multline*}
 		= \exp\left[-\frac{g}{2}\sum_{i=1}^{m}  z_i^2 \right]\int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] \exp\left[ \redp2{\frac{v}{8}\sum_{j,k=1}^{m}  z_j^2z_k^2 +} \right.\\ % linha 1
-		\left. + \frac{v}{8}\sum_{j=1}^{m}\sum_{k=m+1}^{n} \hspace*{-6pt}z_j^2z_k^2 +\frac{v}{8}\sum_{j=m+1}^{n}\sum_{k=1}^{n}z_j^2z_k^2  + \frac{v}{8}\sum_{j,k=m+1}^{n}  z_j^2 z_k^2\right]=\\ % linha 2
+		\left. \blup4{ + \frac{v}{8}\sum_{j=1}^{m}\sum_{k=m+1}^{n} \hspace*{-6pt}z_j^2z_k^2 +\frac{v}{8}\sum_{j=m+1}^{n}\sum_{k=1}^{n}z_j^2z_k^2  }+ \frac{v}{8}\sum_{j,k=m+1}^{n}  z_j^2 z_k^2\right]=\\ % linha 2
 		= \exp\left[-\frac{g}{2} \sum_{i=1}^{m}  z_i^2 \right] \redp3{\exp\left[ \frac{v}{8}\sum_{j,k=1}^{m}  z_j^2z_k^2 \right]}\times \\
 		\times \int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] 
-		\exp\left[ \frac{v}{8}\left(2\sum_{j=1}^{m}\sum_{k=m+1}^{n} \hspace*{-6pt}z_j^2z_k^2 + \hspace{-6pt}\sum_{j,k=m+1}^{n} \hspace{-6pt} z_j^2 z_k^2  \right)  \right]
+		\exp\left[ \frac{v}{8}\left(\blup5{2\sum_{j=1}^{m}\sum_{k=m+1}^{n} \hspace*{-6pt}z_j^2z_k^2 }+ \hspace{-6pt}\sum_{j,k=m+1}^{n} \hspace{-6pt} z_j^2 z_k^2  \right)  \right]
 	\end{multline*}
 \end{frame}
 
@@ -523,21 +536,139 @@ no qual o vértice invertido é dado por
 \end{frame}
 
 \begin{frame}
-	\small
+
+	{\footnotesize
 	\begin{multline*}
 		p(z_1^\eell, \ldots, z_{m_\ell}^\eell ) \propto \exp\left[-\frac{g}{2}\sum_{i=1}^{m}  z_i^2  + \frac{v}{8}\sum_{j,k=1}^{m}  z_j^2z_k^2 + \right]\times\\
 		\times \int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] 
-		\left(1 + \frac{2v}{8}\sum_{j=1}^{m}\sum_{k=m+1}^{n} \hspace*{-6pt}z_j^2z_k^2 +  \frac{v}{8}\hspace{-6pt}\sum_{j,k=m+1}^{n} \hspace{-6pt} z_j^2 z_k^2   + O(v^2)\right)\\
-		= \exp\left[-\frac{g}{2}\sum_{i=1}^{m}  z_i^2  + \frac{v}{8}\sum_{j,k=1}^{m}  z_j^2z_k^2 + \right]\times \\
-		\times\left[1+ \frac{(n -m)}{4}\frac{v}{g}\left(\sum_{i=1}^m z_i^2\right) + \frac{v}{8g^2}\left[(n-m)^2 + 2(n-m)\right] + O(v^2)\right] (??)
+		\left(1+ \underbrace{\frac{2v}{8}\sum_{j=1}^{m}\sum_{k=m+1}^{n} \hspace*{-6pt}z_j^2z_k^2}_{(II)} +  \underbrace{\frac{v}{8}\hspace{-6pt}\sum_{j,k=m+1}^{n} \hspace{-6pt} z_j^2 z_k^2}_{(III)}  + O(v^2)\right)
+	\end{multline*}}
+	Vamos aplicar a propriedade distribuitiva e resolver as integrais $(II)$ e $(III)$ separadamente.
+\end{frame}
+
+\begin{frame}
+
+	\small
+	\begin{multline*}
+		(II) = \int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] \frac{2v}{8}\sum_{j=1}^{m}\sum_{k=m+1}^{n} \hspace*{-6pt}z_j^2z_k^2 = \\ % linha 1
+		 \frac{v}{4}\int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right]\left[\sum_{j=1}^{m}z_j^2\right]\left[\sum_{k=m+1}^{n}z_k^2\right] \\ % linha 2
+		 \frac{v}{4}\left[\sum_{j=1}^{m}z_j^2\right]\underbrace{\int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right]\left[\sum_{k=m+1}^{n}z_k^2\right]}_{(ii)}
+	\end{multline*}
+\end{frame}
+
+
+\begin{frame}
+	Para resolver $(ii)$, vamos usar a linearidade da exponencial:	{\small
+	\begin{multline*}
+		(ii) = \int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right]\left[\sum_{k=m+1}^{n}z_k^2\right]  = \\ % linha 1
+		\sum_{k=m+1}^{n} \int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] z_k^2 =: 
+		\sum_{k=m+1}^{n} I_k\\ % linha 2
+	\end{multline*}}
+	Vamos usar a propriedade da exponencial e o teorema de Fubini para calcular $I_k$.
+\end{frame}
+
+\begin{frame}
+	
+	{\small
+	\begin{multline*}
+		I_k = \int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] z_k^2 = \int_{i=m+1}^{n}\hspace{-12pt} dz_i \prod_{i=m+1}^{n}\exp\left[ -\frac{g}{2}  z_i^2 \right] z_k^2 = \\
+		= \int dz_k \ z_k^2 \exp\left[-\frac{g}{2}z_k^2\right] \prod_{\stackrel{i=m+1}{i\neq k}}^{n}\int dz_i\exp\left[ -\frac{g}{2}  z_i^2 \right] = \\ 
+		\frac{\sqrt{\pi}}{2g^{3/2}} \cdot \text{Constante} = \frac{1}{g}\frac{C_1}{\sqrt{g}} \\
+	\end{multline*}
+	}
+	Voltando para $(ii)$, temos que
+	\begin{equation*}
+		(ii) = \sum_{k=m+1}^{n} I_k = (n-m)I_k = \frac{(n-m)}{g}\frac{C_1}{\sqrt{g}}  
+	\end{equation*}
+\end{frame}
+
+\begin{frame}
+	Voltando para $(II)$, temos que
+	\begin{multline*}
+		(II) = \frac{v}{4}\left[\sum_{j=1}^{m}z_j^2\right]\left[\sum_{k=m+1}^{n}I_k\right] = \frac{v}{4}\left[\sum_{j=1}^{m}z_j^2\right]\left[\frac{(n-m)}{g}\frac{C_1}{\sqrt{g}}\right] = \\ 
+		= \frac{(n-m)}{4}\frac{v}{h}\frac{C_1}{\sqrt{g}}\left[\sum_{j=1}^{m}z_j^2\right]
+	\end{multline*}
+
+	Vamos calcular $(III)$ agora, separando o somatório de índices iguais e diferentes.
+\end{frame}
+
+\begin{frame}
+
+	\small
+	\begin{multline*}
+		(III) = \int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] \frac{v}{8}\hspace{-6pt}\sum_{j,k=m+1}^{n} \hspace{-6pt} z_j^2 z_k^2 = \\ % linha 1
+		= \frac{v}{8}\int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right]\left[\sum_{\nu=m+1}^{n}z_\nu^4 + \sum_{\stackrel{\mu,\nu=m+1}{\mu\neq\nu}}^{n}z_\nu^2z_\mu^2\right]  \\ % linha 2 
+		= \frac{v}{8}\left[\sum_{\nu=m+1}^{n} \underbrace{\int_{i=m+1}^{n}\hspace{-12pt} dz_i\exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right]z_\nu^4}_{(iii.1)}\right. + \\ 
+		\left.\sum_{\stackrel{\mu,\nu=m+1}{\mu\neq\nu}}^{n}\underbrace{\int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right]z_\nu^2z_\mu^2}_{(iii.2)}\right]  % linha 3
 	\end{multline*}
 \end{frame}
 
 \begin{frame}
-	Comparando a expressão acima com a equação (4.97), temos que
+	Para resolver $(iii.1)$, vamos usar a propriedade da exponencial e o teorema de Fubini:
+	{\small
+	\begin{multline*}
+		(iii.1) = \int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right]z_\nu^4 = \int_{i=m+1}^{n}\hspace{-12pt} dz_i \prod_{i=m+1}^{n}\exp\left[ -\frac{g}{2}  z_i^2 \right]z_\nu^4 = \\ 
+		= \int dz_\nu z_\nu^4 \exp\left[-\frac{g}{2}z_\nu^2\right] \prod_{\stackrel{i=m+1}{i\neq\nu}}^{n}\int dz_i\exp\left[ -\frac{g}{2}  z_i^2 \right] = \\  
+		=\frac{3\sqrt{\pi}}{4g^{5/2}} \cdot \text{Constante} = \frac{1}{g^2}\frac{C_2}{\sqrt{g}} 
+	\end{multline*}}
+	Vamos calcular $(iii.2)$ agora.
+\end{frame}
 
+\begin{frame}
+	Para resolver $(iii.2)$, vamos usar a propriedade da exponencial e o teorema de Fubini:
+	{\small
+	\begin{multline*}
+		(iii.2) = \int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right]z_\nu^2z_\mu^2 = \int_{i=m+1}^{n}\hspace{-12pt} dz_i \prod_{i=m+1}^{n}\exp\left[ -\frac{g}{2}  z_i^2 \right]z_\nu^2z_\mu^2 = \\ 
+		= \int dz_\nu z_\nu^2 \exp\left[-\frac{g}{2}z_\nu^2\right] \int dz_\mu z_\mu^2 \exp\left[-\frac{g}{2}z_\mu^2\right] \prod_{\stackrel{i=m+1}{i\neq\nu,\mu}}^{n}\int dz_i\exp\left[ -\frac{g}{2}  z_i^2 \right] = \\  
+		=\frac{\sqrt{\pi}}{2g^{3/2}}\frac{\sqrt{\pi}}{2g^{3/2}} \cdot \text{Constante} = \frac{1}{g^3}C_3
+	\end{multline*}}
+	Vamos voltar para $(III)$ agora.
+\end{frame}
+
+\begin{frame}
+	Voltando para $(III)$, temos que
+	{\small
+	\begin{multline*}
+		(III) = \frac{v}{8}\left[\sum_{\nu=m+1}^{n} (iii.1)\right] + \frac{v}{8}\left[\sum_{\stackrel{\mu,\nu=m+1}{\mu\neq\nu}}^{n} (iii.2)\right] = \\ 
+		= \frac{v}{8}\left[\sum_{\nu=m+1}^{n} \frac{1}{g^2}\frac{C_2}{\sqrt{g}}\right] + \frac{v}{8}\left[\sum_{\stackrel{\mu,\nu=m+1}{\mu\neq\nu}}^{n} \frac{1}{g^3}C_3\right] = \\ 
+		= \frac{v}{8}\left[\frac{(n-m)}{g^2}\frac{C_2}{\sqrt{g}} + \frac{(n-m)^2 - (n-m)}{g^3}C_3\right]
+	\end{multline*}}
+	Agora, vamos juntar os resultados de $(II)$ e $(III)$.
+\end{frame}
+
+\begin{frame}
+	\footnotesize
+	\begin{multline*}
+		\exp\left[-\frac{g}{2}\sum_{i=1}^{m}  z_i^2  + \frac{v}{8}\sum_{j,k=1}^{m}  z_j^2z_k^2 + \right]\times\\ % linha 1
+		\times \int_{i=m+1}^{n}\hspace{-12pt} dz_i \exp\left[ -\frac{g}{2}\sum_{i=m+1}^{n}  z_i^2 \right] 
+		\left(1+ \frac{2v}{8}\sum_{j=1}^{m}\sum_{k=m+1}^{n} \hspace*{-6pt}z_j^2z_k^2 +  \frac{v}{8}\hspace{-6pt}\sum_{j,k=m+1}^{n} \hspace{-6pt} z_j^2 z_k^2 + O(v^2)\right) \\ % linha 2
+	= \exp\left[-\frac{g}{2}\sum_{i=1}^{m}  z_i^2  + \frac{v}{8}\sum_{j,k=1}^{m}  z_j^2z_k^2 + \right]\times\\
+	\times\left\{1+\frac{(n-m)}{4}\frac{v}{h}\frac{C_1}{\sqrt{g}}\left[\sum_{j=1}^{m}z_j^2\right] + \frac{v}{8}\left[\frac{(n-m)}{g^2}\frac{C_2}{\sqrt{g}} + \frac{(n-m)^2 - (n-m)}{g^3}C_3\right] + O(v^2)\right\} \\ % linha 3
+\textcolor<1->{gray}{\times \left\{1+\frac{(n-m)}{4}\frac{v}{g}\left[\sum_{j=1}^{m}z_j^2\right] + \frac{v}{8g^2}\left[ (n-m)^2 +2(n-m)\right] + O(v^2)\right\} }
+	\end{multline*}
+\end{frame}
+
+\begin{frame}
+	Utilizando umas aproximações bem aproximadas, podemos escrever
+	\footnotesize
+	\begin{multline*}
+		\exp\left[-\frac{g_{\eell,n_\ell}}{2}\sum_{i=1}^{m}  z_i^2   \blup{2}{+ \frac{v_\eell}{8}\sum_{j,k=1}^{m}  z_j^2z_k^2 } \right]\times\\ % linha 1
+		\times \left\{1+\frac{(n_\ell-m_\ell)}{4}\frac{v_\eell}{g_{\eell,n_\ell}}\left[\sum_{j=1}^{m}z_j^2\right] \blup{2}{+ \frac{v_\eell}{8g_{\eell,n_\ell}^2}\left[ (n-m)^2 +2(n-m)\right] + O(v^2)}\right\}\\
+		\approx \exp\left[-\frac{g_{\eell,n_\ell}}{2}\sum_{i=1}^{m}  z_i^2 + \ldots \right]\times \left\{1+\frac{(n_\ell-m_\ell)}{4}\frac{v_\eell}{g_{\eell,n_\ell}}\left[\sum_{j=1}^{m}z_j^2\right] + \ldots  \right\}\\
+		\approx \exp\left[-\frac{g_{\eell,n_\ell}}{2}\sum_{i=1}^{m}  z_i^2 \ldots \right]\exp \left[\frac{(n_\ell-m_\ell)}{4}\frac{v_\eell}{g_{\eell,n_\ell}}\left[\sum_{j=1}^{m}z_j^2\right] \right]\\
+		= \exp\left[\left(-\frac{g_{\eell,n_\ell}}{2} + \frac{(n_\ell-m_\ell)}{4}\frac{v_\eell}{g_{\eell,n_\ell}}\right)\sum_{j=1}^{m}z_j^2 \right]
+	\end{multline*}
+\end{frame}
+
+
+\begin{frame}
+	Comparando o termo da expressão acima que multiplica $\sum_{j=1}^{m}z_j^2$ com o mesmo termo equação (4.97), temos que 
+	\[
+	-\frac{g_{\eell,n_\ell}}{2} + \frac{(n_\ell-m_\ell)}{4}\frac{v_\eell}{g_{\eell,n_\ell}} = -\frac{g_{\eell,m_\ell}}{2}
+	\]
+	o que nos leva a
 	\begin{equation*}\tag{4.100}
-		g_{\eell,m_\ell} = g_{\eell,n_\ell} - \frac{(n_\ell -m_\ell)}{4}\frac{v_{\eell}}{g_{\eell,n_\ell}}
+		g_{\eell,m_\ell} = g_{\eell,n_\ell} - \frac{(n_\ell -m_\ell)}{4}\frac{v_{\eell}}{g_{\eell,n_\ell}} + O(v^2)
 	\end{equation*}  
 \end{frame}
 
@@ -554,6 +685,14 @@ no qual o vértice invertido é dado por
 	\begin{equation*}
 		v^\eell = \frac{V^\eell}{n_{\ell-1}(G^\eell)^4 } + O\left(\frac{1}{n^2}\right)  
 	\end{equation*}
+\end{frame}
+
+\begin{frame}
+	\small
+	\begin{multline*}\tag{4.47}
+		\EE[\zia11\zia22] = \delta_{i_1 i_2}\times\\\times\left[g_{\mi1\mi2} + \frac{1}{2} \sum_{\mj{i}\in\Dcal}^{1\le{i}\le4} v^{(\mj1\mj2)(\mj3\mj4)}(ng_{\mi1\mj1}g_{\mi2\mj2}g_{\mj3\mj4} +2g_{\mi1\mj1}g_{\mi2\mj3}g_{\mj2\mj4})\right]
+	\end{multline*}
+	 
 \end{frame}
 
 \end{document}
