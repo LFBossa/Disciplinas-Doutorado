@@ -670,29 +670,39 @@ no qual o vértice invertido é dado por
 	\begin{equation*}\tag{4.100}
 		g_{\eell,m_\ell} = g_{\eell,n_\ell} - \frac{(n_\ell -m_\ell)}{4}\frac{v_{\eell}}{g_{\eell,n_\ell}} + O(v^2)
 	\end{equation*}  
+	Outra maneira de obter essa relação é utilizando a equação (4.47).
 \end{frame}
 
 
 \begin{frame}
-	\begin{equation*}\tag{4.101}
-		G^\eell = \frac{1}{g_{\eell,m_\ell}} + \frac{(m_\ell+2)}{2}\frac{v^\eell}{g^3_{\eell,m_\ell}} + O\left(v^2\right)
-	\end{equation*}
-
-	\begin{equation*}\tag{4.102}
-		\frac{1}{g_{\eell,m_\ell}} = G^\eell - \frac{(m_\ell+2)}{2}\frac{V^\eell}{n_{\ell-1}G ^\eell} + O\left(\frac{1}{n^2}\right)
-	\end{equation*}
-
-	\begin{equation*}
-		v^\eell = \frac{V^\eell}{n_{\ell-1}(G^\eell)^4 } + O\left(\frac{1}{n^2}\right)  
-	\end{equation*}
-\end{frame}
-
-\begin{frame}
-	\small
+	Especializando a equação (4.47) para $i_1=i_2$ e somando sombre $m_\ell$ índices, temos que
+	\footnotesize
 	\begin{multline*}\tag{4.47}
-		\EE[\zia11\zia22] = \delta_{i_1 i_2}\times\\\times\left[g_{\mi1\mi2} + \frac{1}{2} \sum_{\mj{i}\in\Dcal}^{1\le{i}\le4} v^{(\mj1\mj2)(\mj3\mj4)}(ng_{\mi1\mj1}g_{\mi2\mj2}g_{\mj3\mj4} +2g_{\mi1\mj1}g_{\mi2\mj3}g_{\mj2\mj4})\right]
+		\EE[\zia11\zia22] = \delta_{i_1 i_2}\times\\\times\left[g_{\mi1\mi2} + \frac{1}{2} \sum_{\mj{i}\in\Dcal}^{1\le{i}\le4} v^{(\mj1\mj2)(\mj3\mj4)}(ng_{\mi1\mj1}g_{\mi2\mj2}g_{\mj3\mj4} +2g_{\mi1\mj1}g_{\mi2\mj3}g_{\mj2\mj4})\right] 
 	\end{multline*}
 	 
+	\begin{multline*}\tag{4.101}
+		\EE[z_i z_i] = g^{\eell,m_\ell} + \frac{1}{2} v^\eell(m_\ell+2)(g^{\eell,m_\ell})^3  = \delta_{ii}G^\eell \Leftrightarrow\\%O\left(\frac{1}{n^2}\right)\\
+		G^\eell = \frac{1}{g_{\eell,m_\ell}} + \frac{ v^\eell(m_\ell+2)}{2(g^{\eell,m_\ell})^3} + O\left(v^2\right)
+	\end{multline*}
+\end{frame}
+
+\begin{frame}
+	Isolando $g_{\eell,m_\ell}$ temos a equação (4.102):
+	\begin{equation*}\tag{4.102}
+		\frac{1}{g_{\eell,m_\ell}} = G^\eell - \frac{(m_\ell+2)}{2}\frac{V^\eell}{n_{\ell-1}(G^\eell)^4} + O\left(\frac{1}{n^2}\right)
+	\end{equation*}
+	na qual utilizamos relação
+	\begin{equation*}\tag{4.103}
+		v_\eell = \frac{V^\eell}{n_{\ell-1}(G^\eell)^4} + O\left(\frac{1}{n^2}\right)
+	\end{equation*}
+	obtida de 
+	\footnotesize
+	$$g_\eell = G_\eell + O(v) \ (4.82) \qquad V_\eell = V_\eell/n_{\ell-1} + O(v^2)\ (4.83)$$
+\end{frame}
+
+\begin{frame}
+	\includegraphics[width=\linewidth]{Thats_all_folks.png}
 \end{frame}
 
 \end{document}
