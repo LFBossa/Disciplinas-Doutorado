@@ -28,7 +28,7 @@
 % This is a beamer template inspired by unofficial Oxford University Beamer Template, made by Clara Eleonore Pavillet.
 \title{RG Flow of Preactivations}
 \author{Luiz Fernando Bossa}
-\date{\today}
+\date{11 de junho de 2025}
 \institute{Universidade Federal de Santa Catarina}
 
 
@@ -70,6 +70,8 @@
 \newcommand{\Expectation}[2]{\left\langle #1 \right\rangle_{#2}}
 \newcommand{\zia}[2]{z_{i_{#1};\mi{#2}}}
 
+\newcommand{\redp}[1]{\textcolor<#1->{red}}
+\newcommand{\blup}[1]{\textcolor<#1->{blue}}
 
 
 \begin{document}
@@ -364,8 +366,8 @@ no qual o vértice invertido é dado por
 \begin{frame} 
 	\small
 	\begin{multline*}
-		= \frac{{C_W^\eellum}^2}{n^2} \Bigg\{n\big[\Expectation{\sigma_\mi1\sigma_\mi2\sigma_\mi3\sigma_\mi4}{G^\eell} - \Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell}  \Expectation{\sigma_\mi3\sigma_\mi4}{G^\eell}  +  O(\sfrac{1}{n}) \big] \\ 
-		+(n^2-n)\left[\frac{1}{4n}\sum_{\mj{i}\in\Dcal}^{1\le{i}\le4}\Verticeinvb{\ell}1234\left(\text{\pmglyph{a}}\right) + O(\sfrac{1}{n^2})\right]\Bigg\} =\\
+		= \frac{{C_W^\eellum}^2}{\blup{2}{n^2}} \Bigg\{\blup{2}{n}\big[\Expectation{\sigma_\mi1\sigma_\mi2\sigma_\mi3\sigma_\mi4}{G^\eell} - \Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell}  \Expectation{\sigma_\mi3\sigma_\mi4}{G^\eell}  +  O(\sfrac{1}{n}) \big] \\ 
+		+\blup{2}{(n^2-n)}\left[\frac{1}{4n}\sum_{\mj{i}\in\Dcal}^{1\le{i}\le4}\Verticeinvb{\ell}1234\left(\text{\pmglyph{a}}\right) + O(\sfrac{1}{n^2})\right]\Bigg\} =\\
 		= {{C_W^\eellum}^2} \Bigg\{ \frac{1}{n}\big[\Expectation{\sigma_\mi1\sigma_\mi2\sigma_\mi3\sigma_\mi4}{G^\eell} - \Expectation{\sigma_\mi1\sigma_\mi2}{G^\eell}  \Expectation{\sigma_\mi3\sigma_\mi4}{G^\eell} \big]  +  O(\sfrac{1}{n^2})\\
 		+ \frac{1}{4n}\left[\sum_{\mj{i}\in\Dcal}^{1\le{i}\le4}\Verticeinvb{\ell}1234\big(\text{\pmglyph{a}}\big)\right] + O(\sfrac{1}{n^2})\Bigg\}
 	\end{multline*}
@@ -500,8 +502,6 @@ no qual o vértice invertido é dado por
 		\item Vamos separar o somatório duplo $$\sum_{j,k=1}^n = \sum_{j,k=1}^{m} + \sum_{j=1}^{m}\sum_{k=m+1}^n + \sum_{j=m+1}^n\sum_{k=1}^{m} + \sum_{j,k=m+1}^n$$
 	\end{itemize}
 \end{frame}
-\newcommand{\redp}[1]{\textcolor<#1->{red}}
-\newcommand{\blup}[1]{\textcolor<#1->{blue}}
 \begin{frame}
 
 	\small
@@ -654,8 +654,8 @@ no qual o vértice invertido é dado por
 	\begin{multline*}
 		\exp\left[-\frac{g_{\eell,n_\ell}}{2}\sum_{i=1}^{m}  z_i^2   \blup{2}{+ \frac{v_\eell}{8}\sum_{j,k=1}^{m}  z_j^2z_k^2 } \right]\times\\ % linha 1
 		\times \left\{1+\frac{(n_\ell-m_\ell)}{4}\frac{v_\eell}{g_{\eell,n_\ell}}\left[\sum_{j=1}^{m}z_j^2\right] \blup{2}{+ \frac{v_\eell}{8g_{\eell,n_\ell}^2}\left[ (n-m)^2 +2(n-m)\right] + O(v^2)}\right\}\\
-		\approx \exp\left[-\frac{g_{\eell,n_\ell}}{2}\sum_{i=1}^{m}  z_i^2 + \ldots \right]\times \left\{1+\frac{(n_\ell-m_\ell)}{4}\frac{v_\eell}{g_{\eell,n_\ell}}\left[\sum_{j=1}^{m}z_j^2\right] + \ldots  \right\}\\
-		\approx \exp\left[-\frac{g_{\eell,n_\ell}}{2}\sum_{i=1}^{m}  z_i^2 \ldots \right]\exp \left[\frac{(n_\ell-m_\ell)}{4}\frac{v_\eell}{g_{\eell,n_\ell}}\left[\sum_{j=1}^{m}z_j^2\right] \right]\\
+		\approx \exp\left[-\frac{g_{\eell,n_\ell}}{2}\sum_{i=1}^{m}  z_i^2 + \ldots \right]\times \left\{\redp{3}{1+\frac{(n_\ell-m_\ell)}{4}\frac{v_\eell}{g_{\eell,n_\ell}}\left[\sum_{j=1}^{m}z_j^2\right] }+ \ldots  \right\}\\
+		\approx \exp\left[-\frac{g_{\eell,n_\ell}}{2}\sum_{i=1}^{m}  z_i^2 \ldots \right]\redp{4}{\exp \left[\frac{(n_\ell-m_\ell)}{4}\frac{v_\eell}{g_{\eell,n_\ell}}\left[\sum_{j=1}^{m}z_j^2\right]\right]}\\
 		= \exp\left[\left(-\frac{g_{\eell,n_\ell}}{2} + \frac{(n_\ell-m_\ell)}{4}\frac{v_\eell}{g_{\eell,n_\ell}}\right)\sum_{j=1}^{m}z_j^2 \right]
 	\end{multline*}
 \end{frame}
