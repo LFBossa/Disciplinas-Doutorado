@@ -21,8 +21,10 @@ Livro texto: [The Principles of Deep Learning Theory](https://arxiv.org/abs/2106
 - [Introduction to Online Convex Optimization](https://arxiv.org/pdf/1909.05207)
 - [ECE 598MR: Statistical Learning Theory (Fall 2014)](https://maxim.ece.illinois.edu/teaching/fall14/schedule.html)
 - [Sasha Rakhlin - Professor @ MIT | Statistics and Data Science Center, IDSS](https://www.mit.edu/~rakhlin/)
-- [Benign overfitting in overparametrized models](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/7BCB89D860CEDDD5726088FAD64F2A5A/S0962492921000027a.pdf/deep-learning-a-statistical-viewpoint.pdf)
+- [*Benign overfitting in overparametrized models*](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/7BCB89D860CEDDD5726088FAD64F2A5A/S0962492921000027a.pdf/deep-learning-a-statistical-viewpoint.pdf)
 - [Mathematics of Machine Learning](https://ocw.mit.edu/courses/18-657-mathematics-of-machine-learning-fall-2015/pages/readings/)
+- [High-Dimensional Probability](https://www.math.uci.edu/~rvershyn/papers/HDP-book/HDP-book.html#)
+- [Train faster, generalize better: Stability of stochastic gradient descent](https://proceedings.mlr.press/v48/hardt16.pdf)
 
 
 # Neural Nets
@@ -37,6 +39,7 @@ Livro texto: [The Principles of Deep Learning Theory](https://arxiv.org/abs/2106
 4) [Slides Sontag](https://drive.google.com/file/d/1V92dqLg0L3pz5awyvKIavv_FlqtN3Wuz/view) baseados em Eduardo Sontag [Feedforward Nets for Interpolation and Classification](https://www.sciencedirect.com/science/article/pii/002200009290039L?via%3Dihub) [pdf](./referencias/sontag_nets.pdf)
 5) Gallant & White [There exists a NN that doesnt make avoidable mistakes](./referencias/gallant_white_NN_avoidable_mistakes.pdf)
 6) [Convergência e complexidade do algoritmo de treinamento de perceptron](https://drive.google.com/file/d/1q3B4ClM9YHQkrcomj5_3bwkGYCydjCw9/view)
+7) [Train faster, generalize better: Stability of stochastic gradient descent](https://arxiv.org/pdf/1509.01240)
 
 ## Artigos para ler
 
