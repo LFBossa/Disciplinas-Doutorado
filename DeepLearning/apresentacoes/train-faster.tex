@@ -41,21 +41,7 @@
 \frametitle{Sumário}
 \tableofcontents
 \end{frame}
-
-\section{Introdução}
-\begin{frame}
-\tableofcontents[currentsection]
-\end{frame}
-
-\begin{frame}
-\frametitle{Introdução}
-\begin{itemize}
-    \item O método de otimização mais utilizado na prática de aprendizado de máquina é o método do gradiente estocástico (SGM). 
-    \item O SGM visa minimizar o risco empírico de um modelo, calculando repetidamente o gradiente de uma função de perda em um único exemplo de treinamento, ou um lote de poucos exemplos, e atualizando os parâmetros do modelo de acordo. 
-    \item Argumentamos que o SGM é algoritmicamente estável no sentido de Bousquet e Elisseeff. 
-    \item Nossos resultados estabelecem que: Qualquer modelo treinado com o método do gradiente estocástico em um tempo razoável atinge um pequeno erro de generalização. 
-\end{itemize}
-\end{frame}
+ 
 
 \section{Estabilidade de algoritmos iterativos randomizados}
 \begin{frame}
@@ -196,6 +182,11 @@ Alternativamente, podemos limitar \(\delta_{t+1}\) como
 Para um tamanho de passo não negativo \(\alpha > 0\) e uma função \(f:\Omega \rightarrow \mathbb{R}\), definimos a regra de atualização do gradiente \(G_{f,\alpha}\) como
 $$ G_{f,\alpha}(w) = w - \alpha\nabla f(w). $$ 
 \end{definition}
+Dada uma amostra $S=(z_1,\ldots,z_n)$, podemos fazer as atualizações da seguinte maneira:
+\begin{itemize}
+    \item Escolher $i$ de maneira uniforme em $[n]$ e calcular o gradiente em $z_i$
+    \item Escolher uma permutação aleatória de de $[n]$, fixar essa permutação e fazer o gradiente de maneira sucessiva nessa ordem.
+\end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -283,92 +274,184 @@ $$ \EE[\delta_{T}] \le \sum_{t=1}^{T} \frac{2\alpha_t L}{n} = \frac{2L}{n}\sum_{
  $$ \EE|f(w_{T};z) - f(w'_{T};z)| \le L\EE[\delta_{T}] \le \frac{2L^2}{n}\sum_{t=1}^{T}\alpha_{t} $$
  \item Como $\epsilon_{stab} $ é o mínimo dentre os valores possíveis, segue o resultado.
     \end{itemize}
+    \qed
+\end{frame}
+
+\begin{frame}{Otimização Fortemente Convexa}
+    \begin{itemize}
+        \item Assuma que a função de perda \(f(w;z)\) é fortemente convexa com respeito a \(w\), para todo \(z\).
+        \item Suponha $\Omega$ compacto e convexo, e que podemos calcular a projeção sobre $\Omega$, cuja qual denotaremos por 
+        \begin{equation*}
+            \Pi_{\Omega}(v) = \arg\min_{w\in\Omega}\|w-v\|^2
+        \end{equation*}
+        \item Gradiente estocástico com projeção é definido como
+        \begin{equation*} \tag{3.5}
+            w_{t+1} = \Pi_{\Omega}(w_t - \alpha_t \nabla f(w_t;z_t))
+        \end{equation*}
+    \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Teorema 3.9: Otimização Fortemente Convexa}
+    \frametitle{Otimização Fortemente Convexa}
+    \begin{itemize}
+        \item Risco empírico com termo de regularização:
+        \begin{equation*}\tag{3.6}
+            R_{S,\mu}[w] := \frac{1}{n}\sum_{i=1}^{n}f(w;z_i) + \frac{\mu}{2}\|w\|^2
+        \end{equation*}
+        \item O minimizador de (3.6) ocorre dentro da bola de raio $r=\sqrt{2/\mu}$, então podemos tomar $\Omega$ como sendo essa bola e a projeção vira uma operação de escala. 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Otimização Fortemente Convexa}
+    \begin{itemize}
+        \item Vamos trocar a função de perda \(f(w;z)\) por sua versão regularizada \(f(w;z) + \frac{\mu}{2}\|w\|^2\).
+        \item Também vamos tomar a constante de Lipschitz como
+        \begin{equation*}\tag{3.7}
+            L = \sup_{w\in\Omega}\sup_{z}\|\nabla f(w;z)\|_2
+        \end{equation*}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Otimização Fortemente Convexa}
 \begin{theorem}[3.9]
-Assuma que a função de perda \(f(\cdot;z)\) é \(\gamma\)-fortemente convexa e \(\beta\)-suave para todo z.  Então, SGM satisfaz estabilidade uniforme com
+Assuma que a função de perda $f(\ \cdot\ ;z)$ é \(\gamma\)-fortemente convexa e \(\beta\)-suave para todo z.  Então, SGM satisfaz estabilidade uniforme com
 $$ \epsilon_{stab} \le \frac{2L^2}{\gamma n}. $$ 
 \end{theorem}
 \end{frame}
 
 \begin{frame}
-\frametitle{Demonstração do Teorema 3.9}
-\begin{proof}
-A demonstração é análoga à do Teorema 3.8.  Com probabilidade \(1/n\), o exemplo é diferente. A recorrência para \(\EE\delta_{t+1}\) é:
-$$ \EE\delta_{t+1} \le (1-\frac{1}{n})(1-\alpha\gamma)\EE\delta_{t} + \frac{1}{n}((1-\alpha\gamma)\EE\delta_{t} + 2\alpha L) $$ 
-$$ = (1-\alpha\gamma)\EE\delta_{t} + \frac{2\alpha L}{n} $$ 
-Desdobrando a recursão:
-$$ \EE\delta_{T} \le \frac{2L\alpha}{n}\sum_{t=0}^{T}(1-\alpha\gamma)^{t} \le \frac{2L}{\gamma n}. $$ 
-O resultado segue aplicando a condição de Lipschitz. 
-\end{proof}
+\frametitle{Demonstração do Teorema 3.9} 
+A demonstração é análoga à do Teorema 3.8, usaremos a mesma notação.
+\begin{itemize}
+    \item Usando Lipschitz em \(f(\cdot;z)\):
+    \begin{equation*}\tag{3.8}
+        \EE|f(w_{T};z) - f(w'_{T};z)| \le L\EE[\delta_T]
+    \end{equation*}
+    \item Note que, como a projeção não aumenta distâncias,
+    \begin{align*}
+        \delta_t &= \|w_t - w_t^\prime\| \\ &= \|\Pi_{\Omega}(w_t - \alpha_t \nabla f(w_t;z_t)) - \Pi_{\Omega}(w'_t - \alpha_t \nabla f(w'_t;z'_t))\| \\
+        &\le \|w_t - \alpha_t \nabla f(w_t;z_t) -  w'_t - \alpha_t \nabla f(w'_t;z'_t)\| 
+    \end{align*}
+    
+\end{itemize}
 \end{frame}
 
-\begin{frame}
-\frametitle{Teorema 3.10}
-\begin{theorem}
+\begin{frame}{Demonstração do Teorema 3.9} 
+    \begin{itemize} 
+    \item   Com probabilidade \(1-\frac{1}{n}\), temos que \(G_t\) e \(G'_t\) são idênticas, e nossas hipóteses permitem aplicar o Lema 3.7(3) para concluir que \(G_{f,\alpha}\) é \((1-\alpha\gamma)\)-expansiva.
+    \item Com probabilidade \(\frac{1}{n}\), a amostra escolhida é diferente, e usamos que \(G_t\) e \(G'_t\) são \((\alpha L)\)-limitadas (Lema 3.3);
+    \end{itemize}
+    \begin{align*}\tag{3.9}
+        \EE[\delta_{t+1}] &\le \left(1-\frac{1}{n}\right)\EE[(1-\alpha\gamma)\delta_t] + \frac{1}{n}\EE[(1-\alpha\gamma)\delta_t + 2\alpha L] \\
+        &= (1-\frac{1}{n})(1-\alpha\gamma)\EE[\delta_t] + \frac{1}{n}(1-\alpha\gamma)\EE[\delta_t] + \frac{2\alpha L}{n}   \\
+        &= (1-\alpha\gamma)\EE[\delta_t] + \frac{2\alpha L}{n}     
+    \end{align*}
+\end{frame}
+
+\begin{frame}{Demonstração do Teorema 3.9} 
+    Desenvolvendo essa recursão, obtemos
+    \begin{align*}
+        \EE[\delta_T] &\le (1-\alpha\gamma)\EE[\delta_{T-1}] + \frac{2\alpha L}{n} \\
+        &\le (1-\alpha\gamma)\left((1-\alpha\gamma)\EE[\delta_{T-2}] + \frac{2\alpha L}{n}\right) + \frac{2\alpha L}{n}\\ 
+        &= (1-\alpha\gamma)^2\EE[\delta_{T-2}] + \frac{2\alpha L}{n}\left((1-\alpha\gamma) + 1\right) \\
+        &\vdots \\
+        &\le (1-\alpha\gamma)^{T}\EE[\delta_0] + \frac{2\alpha L}{n}\sum_{t=0}^{T}(1-\alpha\gamma)^t
+    \end{align*}
+\end{frame}
+
+
+\begin{frame}{Demonstração do Teorema 3.9}
+    Como \(\EE[\delta_0]=0\), e o somatório é uma soma parcial da série geométrica, temos
+    \begin{align*}
+        \EE[\delta_T] &\le \frac{2\alpha L}{n}\sum_{t=0}^{T}(1-\alpha\gamma)^t \\
+        &< \frac{2\alpha L}{n}\cdot\frac{1}{\alpha\gamma} =\frac{2L}{\gamma n}
+\end{align*}
+Voltando para (3.3), $$\epsilon_{stab} \le  L\EE[\delta_{T}] \le \frac{2L^2}{\gamma n}$$
+\qed
+\end{frame}
+
+\begin{frame}{Fortemente convexa + passos decrescentes}
+\begin{theorem}[3.10]
 Assuma que a função de perda \(f(\cdot;z) \in [0,1]\) é \(\gamma\)-fortemente convexa, tem gradientes limitados por L, e é \(\beta\)-suave para todo z.  Suponha que executamos SGM com tamanhos de passo \(\alpha_{t} = \frac{1}{\gamma t}\). Então, SGM tem estabilidade uniforme de
 $$ \epsilon_{stab} \le \frac{2L^2 + \beta\rho}{\gamma n} $$
 onde \(\rho = \sup_{w\in\Omega}\sup_{z}f(w;z)\). 
 \end{theorem}
 \end{frame}
 
-\begin{frame}
-\frametitle{Demonstração do Teorema 3.10}
-\begin{proof}
-Quando \(t > \frac{\beta}{\gamma}\), as iterações são contrativas. Para \(t \ge t_0 := \frac{\beta}{\gamma}\):
-$$ \EE[\delta_{t+1}] \le (1-\alpha_t\gamma)\EE[\delta_t] + \frac{2\alpha_t L}{n} = (1-\frac{1}{t})\EE[\delta_t] + \frac{2L}{\gamma tn} $$ 
-Assumindo \(\delta_{t_0}=0\) e expandindo a recursão:
-$$ \EE[\delta_T] \le \sum_{t=t_0}^{T} \left\{ \prod_{s=t+1}^{T} (1-\frac{1}{s}) \right\} \frac{2L}{\gamma tn} = \sum_{t=t_0}^{T} \frac{t}{T} \frac{2L}{\gamma tn} = \frac{T-t_0+1}{T} \cdot \frac{2L}{\gamma n} $$
-O resultado segue do Lema 3.11 com o fato de que \(t_0 = \frac{\beta}{\gamma}\).
-\end{proof}
-\end{frame}
+% \begin{frame}
+% \frametitle{Demonstração do Teorema 3.10}
+% \begin{proof}
+% Quando \(t > \frac{\beta}{\gamma}\), as iterações são contrativas. Para \(t \ge t_0 := \frac{\beta}{\gamma}\):
+% $$ \EE[\delta_{t+1}] \le (1-\alpha_t\gamma)\EE[\delta_t] + \frac{2\alpha_t L}{n} = (1-\frac{1}{t})\EE[\delta_t] + \frac{2L}{\gamma tn} $$ 
+% Assumindo \(\delta_{t_0}=0\) e expandindo a recursão:
+% $$ \EE[\delta_T] \le \sum_{t=t_0}^{T} \left\{ \prod_{s=t+1}^{T} (1-\frac{1}{s}) \right\} \frac{2L}{\gamma tn} = \sum_{t=t_0}^{T} \frac{t}{T} \frac{2L}{\gamma tn} = \frac{T-t_0+1}{T} \cdot \frac{2L}{\gamma n} $$
+% O resultado segue do Lema 3.11 com o fato de que \(t_0 = \frac{\beta}{\gamma}\).
+% \end{proof}
+% \end{frame}
 
 \begin{frame}
-\frametitle{Lema 3.11: Otimização Não-Convexa}
-\begin{lemma}
-Assuma que a função de perda \(f(\cdot;z)\) é não negativa e L-Lipschitz para todo z.  Então, para todo \(z \in Z\) e todo \(t_0 \in \{0,1,\ldots,n\}\), temos
+\frametitle{Otimização Não-Convexa}
+\begin{lemma}[3.11]
+Assuma que a função de perda \(f( \cdot ;z)\) é não negativa e L-Lipschitz para todo z.  Então, para todo \(z \in Z\) e todo \(t_0 \in [n]\), temos
 $$ \EE|f(w_T;z) - f(w'_T;z)| \le \frac{t_0}{n}\sup_{w,z}f(w;z) + L\EE[\delta_T|\delta_{t_0}=0]. $$ 
 \end{lemma}
 \end{frame}
 
 \begin{frame}
-\frametitle{Demonstração do Lema 3.11}
-\begin{proof}
-Seja \(\mathcal{E} = 1[\delta_{t_0}=0]\) o evento que \(\delta_{t_0}=0\). Temos:
-\begin{align*}
-\EE|f(w_T;z) - f(w'_T;z)| &= \mathbb{P}\{\mathcal{E}\}\EE[|f(w_T;z) - f(w'_T;z)\|\mathcal{E}] + \mathbb{P}\{\mathcal{E}^c\}\EE[|f(w_T;z) - f(w'_T;z)\|\mathcal{E}^c] \\
-&\le \EE[|f(w_T;z) - f(w'_T;z)\|\mathcal{E}] + \mathbb{P}\{\mathcal{E}^c\} \cdot \sup_{w,z}f(w;z) \\
-&\le L\EE[\|w_T - w'_T\\|\mathcal{E}] + \mathbb{P}\{\mathcal{E}^c\} \cdot \sup_{w,z}f(w;z).
-\end{align*} 
-Resta limitar \(\mathbb{P}\{\mathcal{E}^c\}\). Seja I o índice do primeiro passo de tempo em que SGM usa o exemplo diferente. Note que quando \(I > t_0\), então \(\delta_{t_0}=0\). 
-\end{proof}
+\frametitle{Demonstração do Lema 3.11} 
+Seja \(\mathcal{E} = \mathbf{1}[\delta_{t_0}=0]\) o evento que \(\delta_{t_0}=0\) -- ie, até o passo $t_0$, as atualizações são idênticas. Temos:
+{\small
+\begin{multline*}
+\EE|f(w_T;z) - f(w'_T;z)| =\\
+ \mathbb{P}\{\mathcal{E}\}\EE[|f(w_T;z) - f(w'_T;z)|\mid\mathcal{E}] + \mathbb{P}\{\mathcal{E}^c\}\EE[|f(w_T;z) - f(w'_T;z)|\mid\mathcal{E}^c] \\
+\le \EE[|f(w_T;z) - f(w'_T;z)|\mid\mathcal{E}] + \mathbb{P}\{\mathcal{E}^c\} \cdot \sup_{w,z}f(w;z) \\
+\le L\EE[\|w_T- w_T^\prime\| \mid \mathcal{E}] + \mathbb{P}\{\mathcal{E}^c\} \cdot \sup_{w,z}f(w;z) 
+\end{multline*} }
+Resta limitar \(\mathbb{P}\{\mathcal{E}^c\}\). 
+\end{frame}
+
+\begin{frame}
+    \begin{itemize}
+        \item Seja $i^*\in[n]$ a posição onde as amostras diferem e $I$ a variável aleatória que assume o índice da primeira iteração na qual a amostra $z_{i^*}$ é escolhida. 
+        \item O evento \(\mathcal{E}^c = \{\delta_{t_0}\neq 0\}\)  está contido no evento \(\{I \le t_0\}\), pois se tomamos a amostra diferente, então nesse passo ela gera gradientes diferentes e as sequências de atualizações divergem.
+    \end{itemize}
+    Assim, temos
+$$ \mathbb{P}\{\mathcal{E}^c\} = \mathbb{P}\{\delta_{t_0}\neq 0\} \le \mathcal{P}\{I \le t_0\} $$ 
+\end{frame}
+
+\begin{frame}
+    \begin{itemize}
+        \item Na regra da permutação aleatória, $I$ é uniforme sobre $[n]$, então
+$$ \mathbb{P}\{I \le t_0\} = \frac{t_0}{n} $$ 
+        \item Na regra da seleção aleatória, $I$ é uniforme sobre \([n]\) com probabilidade \(1/n\) de escolher qualquer amostra. Assim, temos
+        $$\mathbb{P}\{I \le t_0\} = \bigcup_{i=1}^{t_0} \mathbb{P}\{I = i\} \le \sum_{i=1}^{t_0} \mathbb{P}\{I = i\} = \frac{t_0}{n} $$
+    \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Teorema 3.12}
-\begin{theorem}
-Assuma que \(f(\cdot;z) \in [0,1]\) é uma função de perda L-Lipschitz e \(\beta\)-suave para todo z.  Então, SGM tem estabilidade uniforme com
+\begin{theorem}[3.12]
+Assuma que \(f(\cdot;z) \in [0,1]\) é uma função de perda L-Lipschitz e \(\beta\)-suave para todo z.  Suponha que executamos SGM por $T$ passos com tamanho de passos $\alpha_t \le c/t$ monotonicamente não-crescente.
+Então, SGM tem estabilidade uniforme com
 $$ \epsilon_{stab} \le \frac{1+1/\beta c}{n-1}(2cL^2)^{\frac{1}{\beta c+1}}T^{\frac{\beta c}{\beta c+1}} $$ 
 Em particular, omitindo fatores constantes, obtemos
-$$ \epsilon_{stab} \le \frac{T^{1-1/(\beta c+1)}}{n} $$ 
+$$ \epsilon_{stab} \lessapprox  \frac{T^{1-1/(\beta c+1)}}{n} $$ 
 \end{theorem}
 \end{frame}
 
-\begin{frame}
-\frametitle{Demonstração do Teorema 3.12}
-\begin{proof}
-Pelo Lema 3.11, para todo \(t_0 \in \{1,\ldots,n\}\):
-$$ \EE|f(w_T;z) - f(w'_T;z)| \le \frac{t_0}{n} + L\EE[\delta_T|\delta_{t_0}=0] $$ 
-Seja \(\Delta_t = \EE[\delta_t|\delta_{t_0}=0]\). Para \(t \ge t_0\):
-$$ \Delta_{t+1} \le (1-\frac{1}{n})(1+\alpha_t\beta)\Delta_t + \frac{2\alpha_t L}{n} \le \exp((1-1/n)\frac{c\beta}{t})\Delta_t + \frac{2cL}{tn} $$ 
-Desdobrando a recorrência e usando \(\Delta_{t_0}=0\):
-$$ \Delta_T \le \sum_{t=t_0+1}^{T} \exp((1-\frac{1}{n})\beta c \log(\frac{T}{t})) \frac{2cL}{tn} = \frac{2cL}{n} T^{\beta c(1-1/n)} \sum_{t=t_0+1}^{T} t^{-\beta c(1-1/n)-1} $$ 
-$$ \le \frac{2L}{\beta(n-1)}(\frac{T}{t_0})^{\beta c} $$ 
-Minimizando a expressão para \(\EE|f(w_T;z) - f(w'_T;z)|\) em relação a \(t_0\), obtemos o resultado. 
-\end{proof}
-\end{frame}
+% \begin{frame}
+% \frametitle{Demonstração do Teorema 3.12} 
+% Pelo Lema 3.11, para todo \(t_0 \in \{1,\ldots,n\}\):
+% $$ \EE|f(w_T;z) - f(w'_T;z)| \le \frac{t_0}{n} + L\EE[\delta_T|\delta_{t_0}=0] $$ 
+% Seja \(\Delta_t = \EE[\delta_t|\delta_{t_0}=0]\). Para \(t \ge t_0\):
+% $$ \Delta_{t+1} \le (1-\frac{1}{n})(1+\alpha_t\beta)\Delta_t + \frac{2\alpha_t L}{n} \le \exp((1-1/n)\frac{c\beta}{t})\Delta_t + \frac{2cL}{tn} $$ 
+% Desdobrando a recorrência e usando \(\Delta_{t_0}=0\):
+% $$ \Delta_T \le \sum_{t=t_0+1}^{T} \exp((1-\frac{1}{n})\beta c \log(\frac{T}{t})) \frac{2cL}{tn} = \frac{2cL}{n} T^{\beta c(1-1/n)} \sum_{t=t_0+1}^{T} t^{-\beta c(1-1/n)-1} $$ 
+% $$ \le \frac{2L}{\beta(n-1)}(\frac{T}{t_0})^{\beta c} $$ 
+% Minimizando a expressão para \(\EE|f(w_T;z) - f(w'_T;z)|\) em relação a \(t_0\), obtemos o resultado.  
+% \end{frame}
 
 
 \section{Operações que induzem estabilidade}
@@ -377,130 +460,164 @@ Minimizando a expressão para \(\EE|f(w_T;z) - f(w'_T;z)|\) em relação a \(t_0
 \end{frame}
 
 \begin{frame}
-\frametitle{Definição 4.1: Decaimento de Peso}
-\begin{definition}
+\frametitle{Decaimento de Parâmetros}
+\begin{definition}[4.1]
 Seja \(f:\Omega \rightarrow \Omega\) uma função diferenciável. Definimos a atualização de gradiente com decaimento de peso na taxa \(\mu\) como
 $$ G_{f,\mu,\alpha}(w) = (1-\alpha\mu)w - \alpha\nabla f(w). $$ 
 \end{definition}
+
+\begin{itemize}
+    \item 
+    Essa atualização é obtida de $$\nabla\left(f(w) + \frac{\mu}{2}\|w\|^2\right) = \nabla f(w) + \mu w$$
+\end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Lema 4.2}
-\begin{lemma}
+\begin{lemma}[4.2]
 Assuma que f é \(\beta\)-suave. Então, \(G_{f,\mu,\alpha}\) é \((1+\alpha(\beta-\mu))\)-expansiva. 
-\end{lemma}
-\end{frame}
-
-\begin{frame}
-\frametitle{Demonstração do Lema 4.2}
-\begin{proof}
-Seja \(G = G_{f,\mu,\alpha}\). Pela desigualdade triangular e nossa suposição de suavidade,
+\end{lemma}  
+Pela desigualdade triangular + suavidade,
+{\small
 \begin{align*}
-\|G(v) - G(w)\| &\le (1-\alpha\mu)\|v-w\| + \alpha\|\nabla f(w) - \nabla f(v)\| \\
+\|G_{f,\mu,\alpha}(v) - G_{f,\mu,\alpha}(w)\| &\le (1-\alpha\mu)\|v-w\| + \alpha\|\nabla f(w) - \nabla f(v)\| \\
 &\le (1-\alpha\mu)\|v-w\| + \alpha\beta\|w-v\| \\
 &= (1-\alpha\mu+\alpha\beta)\|v-w\|.
-\end{align*} 
-\end{proof}
+\end{align*}  
+}
+\begin{itemize}
+    \item Regularização nos adiciona suavidade.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Recorte do Gradiente}
+    \begin{itemize}
+        \item Precisamos evitar valores de gradiente com a norma muito grande, pois isso pode levar a saltos grandes nas atualizações.
+        \item Assim, podemos fazer o recorte do gradiente, 
+        $$\nabla_C f(w) = \begin{cases}
+        \nabla f(w) & \text{se } \|\nabla f(w)\| \le C \\ C
+\frac{\nabla f(w)}{\|\nabla f(w)\|} & \text{se } \|\nabla f(w)\| > C
+        \end{cases}$$
+    \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Definição 4.3: Operador de Dropout}
-\begin{definition}
-Dizemos que um mapa randomizado \(D:\Omega \rightarrow \Omega\) é um operador de dropout com taxa de dropout s se para cada \(v \in D\) temos \(\EE\|Dv\| = s\|v\|\). 
+\frametitle{Operador de Dropout}
+\begin{itemize}
+    \item O operador de dropout é uma técnica amplamente utilizada em redes neurais para prevenir overfitting. Ao invés de utilizamos todo o gradiente, zeramos algumas de suas componentes aleatoriamente.
+\end{itemize}
+\begin{definition}[4.3]
+Dizemos que uma função aleatória \(D:\Omega \rightarrow \Omega\) é um operador de dropout com taxa de dropout $s$ se para cada \(v \in D\) temos \(\EE[\|Dv\|]= s\|v\|\). 
+Para $f:\Omega \to \Omega$ diferenciável, definimos a atualização de dropout \(DG_{f,\alpha}\) como
+$$ DG_{f,\alpha}(v) = v - \alpha D\nabla f(v). $$
 \end{definition}
 \end{frame}
 
 \begin{frame}
-\frametitle{Lema 4.4}
-\begin{lemma}
+\frametitle{Operador de Dropout}
+\begin{lemma}[4.4]
 Assuma que f é L-Lipschitz. Então, a atualização de dropout \(DG_{f,\alpha}\) com taxa de dropout s é \((\alpha s L)\)-limitada. 
-\end{lemma}
+\end{lemma}  
+Lipschitz + linearidade da expectativa,
+$$ \EE\|G_{f,\alpha}(v) - v\| = \alpha\EE\|D\nabla f(v)\| = \alpha s\EE\|\nabla f(v)\| \le \alpha s L. $$  
 \end{frame}
 
-\begin{frame}
-\frametitle{Demonstração do Lema 4.4}
-\begin{proof}
-Pela nossa suposição de Lipschitz e linearidade da expectativa,
-$$ \EE\|G_{f,\alpha}(v) - v\| = \alpha\EE\|D\nabla f(v)\| = \alpha s\EE\|\nabla f(v)\| \le \alpha s L. $$ 
-\end{proof}
+\begin{frame}{Projeções e Passos Proximais}
+    
 \end{frame}
 
 \begin{frame}
 \frametitle{Definição 4.5: Regra de Atualização Proximal}
-\begin{definition}
+\begin{definition}[4.5]
 Para um tamanho de passo não negativo \(\alpha \ge 0\) e uma função \(f:\Omega \rightarrow \mathbb{R}\), definimos a regra de atualização proximal \(P_{f,\alpha}\) como
-$$ P_{f,\alpha}(w) = \arg\min_{v} \frac{1}{2}\|w-v\|^2 + \alpha f(v). $$ 
+\begin{equation*}
+    P_{f,\alpha}(w) = \arg\min_{v} \frac{1}{2}\|w-v\|^2 + \alpha f(v)\tag{4.1}
+\end{equation*} 
 \end{definition}
-\end{frame}
 
-\begin{frame}
-\frametitle{Lema 4.6}
-\begin{lemma}
+ 
+\begin{lemma}[4.6]
 Se f é convexa, a atualização proximal (4.1) é 1-expansiva. 
 \end{lemma}
 \end{frame}
+ 
 
-\begin{frame}
-\frametitle{Demonstração do Lema 4.6}
-\begin{proof}
-Defina \(P_{\nu}(w) = \arg\min_v \frac{1}{2\nu}\|w-v\|^2 + f(v)\).  Usando esta desigualdade, temos
-\begin{align*}
-\|v-w\|^2 &= \|[P_{\nu}(v)-P_{\nu}(w)] + [Q_{\nu}(v)-Q_{\nu}(w)]\|^2 \\
-&= \|P_{\nu}(v)-P_{\nu}(w)\|^2 + 2\langle P_{\nu}(v)-P_{\nu}(w),Q_{\nu}(v)-Q_{\nu}(w)\rangle + \|Q_{\nu}(v)-Q_{\nu}(w)\|^2 \\
-&\ge \|P_{\nu}(v)-P_{\nu}(w)\|^2
-\end{align*}
-completando assim a demonstração. 
-\end{proof}
-\end{frame}
+% \begin{frame}
+% \frametitle{Demonstração do Lema 4.6}
+% \begin{proof}
+% Defina \(P_{\nu}(w) = \arg\min_v \frac{1}{2\nu}\|w-v\|^2 + f(v)\).  Usando esta desigualdade, temos
+% \begin{align*}
+% \|v-w\|^2 &= \|[P_{\nu}(v)-P_{\nu}(w)] + [Q_{\nu}(v)-Q_{\nu}(w)]\|^2 \\
+% &= \|P_{\nu}(v)-P_{\nu}(w)\|^2 + 2\langle P_{\nu}(v)-P_{\nu}(w),Q_{\nu}(v)-Q_{\nu}(w)\rangle + \|Q_{\nu}(v)-Q_{\nu}(w)\|^2 \\
+% &\ge \|P_{\nu}(v)-P_{\nu}(w)\|^2
+% \end{align*}
+% completando assim a demonstração. 
+% \end{proof}
+% \end{frame}
 
-\begin{frame}
-\frametitle{Teorema 4.7: Média de Modelos}
-\begin{theorem}
-Assuma que \(f:\Omega \rightarrow [0,1]\) é uma função convexa, L-Lipschitz e \(\beta\)-suave decomponível e que executamos SGD com tamanhos de passo \(\alpha_t \le \alpha \le 2/\beta\) por T passos. 
+\begin{frame}{Média de Modelos}
+    \begin{itemize}
+        \item A ideia aqui é tomar a média dos parâmetros $w_t$.
+    \end{itemize}
+\begin{theorem}[4.7]
+Assuma que \(f:\Omega \rightarrow [0,1]\) é uma função convexa, $L$-Lipschitz e \(\beta\)-suave e que executamos SGD com tamanhos de passo \(\alpha_t \le \alpha \le 2/\beta\) por $T$ passos. Então, a média das $T$ primeiras iterações do SGD tem estabilidade uniforme de
+$$ \epsilon_{stab} \le \frac{\alpha T L^2}{n} $$
 \end{theorem}
 \end{frame}
 
-\begin{frame}
-\frametitle{Demonstração do Teorema 4.7}
-\begin{proof}
-Seja \(\bar{w}_T = \frac{1}{T}\sum_{t=1}^T w_t\) a média das iterações do gradiente estocástico.  Usando o Lema 3.8, o desvio entre \(\bar{w}_t\) e \(\bar{w}'_t\) obedece
-$$ \delta_t \le (1-1/n)\delta_{t-1} + \frac{1}{n}(\delta_{t-1} + 2\alpha L \frac{T-t+1}{T}) $$ 
-o que implica
-$$ \delta_T \le \frac{2\alpha L}{n} \sum_{t=1}^T \frac{T-t+1}{T} = \frac{\alpha L(T+1)}{n}. $$ 
-Como f é L-Lipschitz, temos
-$$ \EE|f(\bar{w}_T) - f(\bar{w}'_T)| \le L\|\bar{w}_T - \bar{w}'_T\| \le \frac{\alpha(T+1)L^2}{n}. $$ 
-A afirmação segue pela nossa definição de estabilidade uniforme.
-\end{proof}
-\end{frame}
+% \begin{frame}
+% \frametitle{Demonstração do Teorema 4.7}
+% \begin{proof}
+% Seja \(\bar{w}_T = \frac{1}{T}\sum_{t=1}^T w_t\) a média das iterações do gradiente estocástico.  Usando o Lema 3.8, o desvio entre \(\bar{w}_t\) e \(\bar{w}'_t\) obedece
+% $$ \delta_t \le (1-1/n)\delta_{t-1} + \frac{1}{n}(\delta_{t-1} + 2\alpha L \frac{T-t+1}{T}) $$ 
+% o que implica
+% $$ \delta_T \le \frac{2\alpha L}{n} \sum_{t=1}^T \frac{T-t+1}{T} = \frac{\alpha L(T+1)}{n}. $$ 
+% Como f é L-Lipschitz, temos
+% $$ \EE|f(\bar{w}_T) - f(\bar{w}'_T)| \le L\|\bar{w}_T - \bar{w}'_T\| \le \frac{\alpha(T+1)L^2}{n}. $$ 
+% A afirmação segue pela nossa definição de estabilidade uniforme.
+% \end{proof}
+% \end{frame}
 
 \section{Minimização de Risco Convexo}
 \begin{frame}
 \tableofcontents[currentsection]
 \end{frame}
 
+
 \begin{frame}
-\frametitle{Lema 5.1}
+\frametitle{Minimização de Risco Convexo}
+\begin{itemize}
+    \item Erro de otimização
+    $$\epsilon_{opt}(w) :=\EE[R_S[w] - R_S[w_\star^S]]$$
+    com $w_\star^S$ sendo o minimizador do risco empírico.
+    \item Pelo Teorema 2.2
+    $$\EE[R[w]] \le \EE[R_S[w]] + \epsilon_{stab} = \EE[ R_S[w_\star^S]] + \epsilon_{opt}(w) + \epsilon_{stab}$$
+    \item Tentamos minimizar $\epsilon_{opt}$ sem aumentar muito $\epsilon_{stab}$.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Lema 5.1}
 \begin{lemma}
-Seja \(w_*\) o minimizador do risco da população e \(w_*^S\) o minimizador do risco empírico dado um conjunto de dados amostrado S. Então \(\EE[R_S[w_*^S]] \le R[w_*]\). 
+Seja \(w_*\) o minimizador do risco da população e \(w_*^S\) o minimizador do risco empírico dado um conjunto de dados $S$. Então \(\EE[R_S[w_*^S]] \le R[w_*]\). 
 \end{lemma}
 \end{frame}
 
 \begin{frame}
-\frametitle{Demonstração do Lema 5.1}
-\begin{proof}
+\frametitle{Demonstração do Lema 5.1}  
 \begin{align*}
 R[w_*] &= \inf_w R[w] = \inf_w \EE_z[f(w;z)] \\
-&= \inf_w \EE_S[\frac{1}{n}\sum_{i=1}^n f(w;z_i)] \\
-&\ge \EE_S[\inf_w \frac{1}{n}\sum_{i=1}^n f(w;z_i)] \quad \text{(pela desigualdade de Jensen)} \\
-&= \EE_S[\frac{1}{n}\sum_{i=1}^n f(w_*^S;z_i)] = \EE[R_S[w_*^S]].
-\end{align*} 
-\end{proof}
+&= \inf_w \EE_S\left[\frac{1}{n}\sum_{i=1}^n f(w;z_i)\right] \\
+&\ge\inf_w \EE_S\left[ \frac{1}{n}\sum_{i=1}^n f(w_*^S;z_i)\right]  \\
+&= \EE_S\left[\frac{1}{n}\sum_{i=1}^n f(w_*^S;z_i)\right] = \EE[R_S[w_*^S]].
+\end{align*}  
 \end{frame}
 
-\begin{frame}
-\frametitle{Teorema 5.2 (Nemirovski e Yudin)}
-\begin{theorem}
-Assuma que executamos o gradiente estocástico descendente com tamanho de passo constante \(\alpha\) em uma função convexa \(R[w]=\EE_z[f(w;z)]\).  Então temos
+\begin{frame}{Melhor resultado até então}
+\begin{theorem}[5.2 - Nemirovski e Yudin]
+Assuma que executamos o SDG com tamanho de passo constante \(\alpha\) em uma função convexa \(R[w]=\EE_z[f(w;z)]\).
+Assuma que $\|\nabla f(w;z)\|\le L$ e $\|w_0 - w\| \le D$. Denote $\bar{w}_T$ a média das $T$ iterações do algoritmo.
+Então temos
 $$ R[\bar{w}_T] \le R[w_*] + \frac{1}{2}\frac{D^2}{T\alpha} + \frac{1}{2}L^2\alpha. $$ 
 \end{theorem}
 \end{frame}
@@ -508,15 +625,18 @@ $$ R[\bar{w}_T] \le R[w_*] + \frac{1}{2}\frac{D^2}{T\alpha} + \frac{1}{2}L^2\alp
 \begin{frame}
 \frametitle{Corolário 5.3}
 \begin{block}{Corolário 5.3}
-Seja f uma função de perda convexa satisfazendo \(\|\nabla f(w,z)\| \le L\) e seja \(w_*\) um minimizador do risco da população \(R[w] = \EE_z f(w;z)\).  Então, a média \(\bar{w}_n\) das iterações satisfaz
+Seja $f$ uma função de perda convexa satisfazendo \(\|\nabla f(w,z)\| \le L\) e seja \(w_*\) um minimizador do risco da população \(R[w] = \EE_z[ f(w;z)]\). Suponha que fazemos uma única passagem de SDG sobre $S=(z_1,\ldots,z_n)$ com um passo adequado e começando de $w_0$ próximo de $w_*$ a menos de $D$.
+Então, a média \(\bar{w}_n\) das iterações satisfaz
 $$ \EE[R[\bar{w}_n]] \le R[w_*] + \frac{DL}{\sqrt{n}}. $$ 
 \end{block}
 \end{frame}
 
 \begin{frame}
 \frametitle{Proposição 5.4}
-\begin{block}{Proposição 5.4}
-Seja S uma amostra de tamanho n. Seja f uma função de perda convexa \(\beta\)-suave satisfazendo \(\|\nabla f(w,z)\| \le L\) e seja \(w_*^S\) um minimizador do risco empírico.  Então, a média \(\bar{w}_T\) sobre as iterações satisfaz
+\begin{block}{Proposição 5.4 - Resultado d`Os Cara}
+Seja $S$ uma amostra de tamanho $n$. Seja $f$ uma função de perda convexa \(\beta\)-suave satisfazendo \(\|\nabla f(w,z)\| \le L\) e seja \(w_*^S\) um minimizador do risco empírico.  
+Suponha que rodamos $T$ iterações de SDG com um passo adequado e começando de $w_0$ próximo de $w_*$ a menos de $D$.
+Então, a média \(\bar{w}_T\) sobre as iterações satisfaz
 $$ \EE[R[\bar{w}_T]] \le \EE[R_S[w_*^S]] + \frac{DL}{\sqrt{n}}\sqrt{\frac{n+2T}{T}}. $$ 
 \end{block}
 \end{frame}
@@ -528,6 +648,14 @@ Aplicando o Teorema 5.2 ao risco empírico \(R_S\), obtemos o erro de otimizaç�
 $$ \EE[R[\bar{w}_T]] \le \EE[R_S[w_*^S]] + \frac{1}{2}\frac{D^2}{T\alpha} + \frac{1}{2}L^2(1+\frac{2T}{n})\alpha. $$ 
 Escolhendo \(\alpha = \frac{D\sqrt{n}}{L\sqrt{T(n+2T)}}\) resulta no limite fornecido na proposição. 
 \end{proof}
+\end{frame}
+
+\begin{frame}{Resultados}
+    \begin{itemize}
+        \item Os resultados não são diretamente comparáveis, pois um usa o risco populacional e o outro o risco empírico.
+        \item Se $T=n$, eles perdem por um fator $\sqrt{3}$
+        \item A aproximação deles permite $T>n$, e quando $T$ vai pro infinito, perdem apenas por $\sqrt{2}$.
+    \end{itemize}
 \end{frame}
 
 
