@@ -1,0 +1,370 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{positioning,calc}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{listings}
+\usepackage{fontawesome}
+\usetheme{mtmufsc} %%%%%%%%Use this template
+\renewcommand{\qedsymbol}{$\blacksquare$}
+% This is a beamer template inspired by unofficial Oxford University Beamer Template, made by Clara Eleonore Pavillet.
+\title{Princípio do Máximo e EDPs Elípticas}
+\author{Luiz Fernando Bossa}
+\date{7 de novembro de 2025}
+\institute{Universidade Federal de Santa Catarina}
+ 
+\newcommand{\RR}{\mathbb{R}} 
+\newcommand{\dR}{\partial R}
+\newcommand{\simpleitem}[1]{
+    \begin{itemize}
+        \item #1
+    \end{itemize}}
+
+\begin{document}
+
+\frame{\titlepage}
+% https://arxiv.org/pdf/2104.13478
+
+\section{EDPs Elípticas}
+
+\begin{frame}{Formulação do Problema}
+\begin{itemize}
+    \item  Seja $R \subset \RR^n$ um domínio limitado com fronteira $\dR$ suave. 
+    \item  Considere a equação diferencial parcial
+    \end{itemize} \medskip
+    {\small\begin{equation*}\tag{4.1}
+        a(x,y)\frac{\partial^2 u}{\partial x^2} + 2b(x,y)\frac{\partial^2 u}{\partial x \partial y} + c(x,y)\frac{\partial^2 u}{\partial y^2}  = d(x,y,u,u_x,u_y)
+    \end{equation*}}
+    \begin{itemize}
+     \item     A equação é dita elíptica em $R$ se $b^2 - ac < 0$ em $R$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Notação e convenções}
+
+\begin{itemize}[<+->]
+    \item $R = [0,a]\times[0,b]$;
+    \item $x_i = i\cdot h$, $y_j = j\cdot k$;
+    \item $R_\delta$ e $\dR_\delta$ são as versões discretizadas do interior e da borda de $R$;
+    \item $U_{i,j}$ é a aproximação da solução em $(x_i,y_j)$  
+    \item O laplaciano discreto é dado por
+    \[\Delta_\delta U_{i,j} := \frac{U_{i+1,j}-2U_{i,j} + U_{i-1,j}}{h^2} +  \frac{U_{i,j+1}-2U_{i,j} + U_{i,j-1}}{k^2}  \]
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Princípio do Máximo}
+
+\begin{block}{Teorema 4.1 (Princípio do Máximo)}
+    Seja $V(x,y)$ uma função discreta (de malha) definida sobre $R_\delta\cup\dR_\delta$.
+    \begin{enumerate}[(a)]
+        \item Se $\Delta_\delta V \ge 0$ em $R_\delta$, então 
+        \[\max_{(x,y)\in R_\delta} V(x,y) \le \max_{(x,y)\in \dR_\delta} V(x,y),\]
+        isto é, o máximo de $V$ acontece na borda.
+        \item Se $\Delta_\delta V \le 0$ em $R_\delta$,
+        \[\min_{(x,y)\in R_\delta} V(x,y) \ge \min_{(x,y)\in \dR_\delta} V(x,y),\]
+        isto é, o mínimo de $V$ acontece na borda.
+    \end{enumerate}
+\end{block}
+    
+\end{frame}
+
+\begin{frame}{Demonstração}
+\begin{itemize}[<+->]
+    \item Demonstração por contradição para o caso (a).
+    \item Suponha que o máximo geral acontece em \[P_0 := (x_r,y_s) \in R_\delta.\]
+    \item Denote por $M_0$ o valor de $V(P_0)$.
+    \item Temos que 
+    \begin{align*}
+        M_0 &\ge V(P) & \forall P\in R_\delta \\
+        M_0 &> V(P) &  \forall P\in\dR_\delta \label{HP}\tag{H.P}
+    \end{align*} 
+\end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Demonstração}
+    \begin{columns}[T]
+        \column{0.55\textwidth}{
+
+            \begin{itemize}
+                \item Defina
+                \begin{align*}
+                    P_1 &= (x_{r+1},y_s)\\
+                    P_2 &= (x_{r-1},y_s)\\
+                    P_3 &= (x_{r},y_{s+1})\\
+                    P_4 &= (x_{r},y_{s-1})\\
+                \end{align*}
+                e veja que podemos escrever 
+            \end{itemize}}
+        \column{0.4\textwidth}{
+\pause
+        \begin{tikzpicture}
+        \draw[gray!45,dashed] (-1.8,-1.8) grid (1.8,1.8);
+            % 1. Define todos os pontos como coordenadas
+            \coordinate (P0) at (0,0);
+            \coordinate (P1) at (1,0);
+            \coordinate (P2) at (-1,0);
+            \coordinate (P3) at (0,1);
+            \coordinate (P4) at (0,-1);
+        
+            % 2. Adiciona os labels (nodes) para fora de cada coordenada
+            \node[above right] at (P0) {$P_0$};
+            \node[right,fill=white] at (P1) {$P_1$};
+            \node[left,fill=white] at (P2) {$P_2$};
+            \node[above,fill=white] at (P3) {$P_3$};
+            \node[below,fill=white] at (P4) {$P_4$};
+        
+            % Desenha as linhas que formam os eixos
+            \draw (P1) -- (P2) (P3) -- (P4);
+        
+            % 3. Coloca um ponto de 1pt de diâmetro (0.5pt de raio) em cada coordenada
+            % Usando um loop para ser mais eficiente
+            \foreach \i in {0,1,2,3,4} {
+                \draw[fill=black] (P\i) circle (1pt);
+            }
+        \end{tikzpicture} }
+\end{columns}\pause\small
+\[
+\Delta_\delta V(P_0) = \frac{V(P_1)+V(P_2)}{h^2}+\frac{V(P_3)+V(P_4)}{k^2} - 2\left(\frac{1}{h^2}+\frac{1}{k^2}\right)V(P_0)
+\]
+\end{frame}
+
+\begin{frame}{Demonstração}
+    \simpleitem{Isolando tudo o que depende de $P_0$ temos}\small\pause
+    \[
+2\left(\frac{1}{h^2}+\frac{1}{k^2}\right)V(P_0) + \Delta_\delta V(P_0) = \frac{V(P_1)+V(P_2)}{h^2}+\frac{V(P_3)+V(P_4)}{k^2} 
+\] \normalsize\pause
+\simpleitem{Como $\Delta_\delta V(P_0) \ge 0$, temos}
+\small
+\[
+2\left(\frac{1}{h^2}+\frac{1}{k^2}\right)V(P_0)  \le \frac{V(P_1)+V(P_2)}{h^2}+\frac{V(P_3)+V(P_4)}{k^2} 
+\]\normalsize\pause
+\simpleitem{Isolando $V(P_0) = M_0$}\footnotesize
+\begin{equation}
+M_0 \le  \left(\frac{1}{h^2}+\frac{1}{k^2}\right)^{-1}\left(\frac1{h^2}\frac{V(P_1)+V(P_2)}{2}+\frac1{k^2}\frac{V(P_3)+V(P_4)}{2} \right)
+\tag{4.19}
+\end{equation}
+\end{frame}
+
+
+ \begin{frame}{Demonstração}
+ \simpleitem{Como $M_0$ é o máximo no interior (e por hipótese também na borda), em particular:}
+ \begin{equation*}\tag{$\star$}\label{estrela}
+     V(P_i) \le  M_0  \quad i=1,\ldots,4 
+ \end{equation*} 
+ Assim
+ \small
+ \[
+ \frac{V(P_1)+V(P_2)}{2} \le M_0 \quad \text{e} \quad \frac{V(P_3)+V(P_4)}{2} \le M_0
+ \]\pause
+\normalsize
+ \simpleitem{Supondo que a desigualdade é estrita para algum $i$, então uma das desigualdades acima também vira estrita e vale:}\small
+\begin{multline*}
+\frac1{h^2}\frac{V(P_1)+V(P_2)}{2}+\frac1{k^2}\frac{V(P_3)+V(P_4)}{2} < \\ < \frac1{h^2}M_0+\frac1{k^2}M_0 = \left(\frac1{h^2}+\frac1{k^2} \right)M_0
+\end{multline*}
+\end{frame}
+
+\begin{frame}{Demonstração}
+\simpleitem{Substituindo a desigualdade estrita em (4.19)}
+\small
+\begin{multline*}
+M_0 \le  \left(\frac{1}{h^2}+\frac{1}{k^2}\right)^{-1}\left(\frac1{h^2}\frac{V(P_1)+V(P_2)}{2}+\frac1{k^2}\frac{V(P_3)+V(P_4)}{2} \right) <  \\ <
+\left(\frac{1}{h^2}+\frac{1}{k^2}\right)^{-1}\left(\frac1{h^2}+\frac1{k^2} \right)M_0 = M_0
+\end{multline*}\normalsize
+chegamos em uma contradição $M_0 < M_0$.\pause
+\simpleitem{Logo, em \eqref{estrela} só pode valer a igualdade, e para  todo $i=1,\ldots,4$ tem que valer $V(P_i) = M_0$. }
+\end{frame}
+
+\begin{frame}{Demonstração}
+    \simpleitem{Agora basta repetir o argumento para cada um dos $P_i$}
+    \centering
+    \begin{tikzpicture}
+        \draw[gray!45,dashed] (-1.8,-1.8) grid (2.5,2.5);
+            % 1. Define todos os pontos como coordenadas
+            \coordinate (P0) at (0,0);
+            \coordinate (P1) at (1,0);
+            \coordinate (P2) at (-1,0);
+            \coordinate (P3) at (0,1);
+            \coordinate (P4) at (0,-1);
+            \coordinate (P5) at (2,0);
+            \coordinate (P6) at (1,1);
+            \coordinate (P7) at (1,-1);
+        
+            % 2. Adiciona os labels (nodes) para fora de cada coordenada
+            \onslide<1>{
+            \node[above right] at (P0) {$P_0$};
+            }
+            \onslide<2->{
+            \node[above right] at (P0) {$M_0$};
+            }
+            \onslide<2>{
+            \node[right,fill=white] at (P1) {$P_1$};
+            \node[left,fill=white] at (P2) {$P_2$};
+            \node[above,fill=white] at (P3) {$P_3$};
+            \node[below,fill=white] at (P4) {$P_4$};
+            }
+            \onslide<3->{
+            \node[above right,fill=white] at (P1) {$M_0$};
+            \node[left,fill=white] at (P2) {$M_0$};
+            \node[above,fill=white] at (P3) {$M_0$};
+            \node[below,fill=white] at (P4) {$M_0$};
+            }
+            % Desenha as linhas que formam os eixos
+            \draw (P1) -- (P2) (P3) -- (P4);
+        
+            % 3. Coloca um ponto de 1pt de diâmetro (0.5pt de raio) em cada coordenada
+            % Usando um loop para ser mais eficiente
+            \foreach \i in {0,1,2,3,4} {
+                \draw[fill=black] (P\i) circle (1pt);
+            }
+            \onslide<4->{
+            \foreach \i in {5,6,7} {
+                \draw[fill=black] (P\i) circle (1pt);
+                }
+                
+            \draw (P1) -- (P5) (P6) -- (P7);
+            }
+            \onslide<5->{
+            \node[right,fill=white] at (P5) {$M_0$};
+            \node[above,fill=white] at (P6) {$M_0$};
+            \node[below,fill=white] at (P7) {$M_0$};
+            }
+        \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Demonstração}
+\begin{itemize} 
+    \item Chegamos assim a conclusão de que $V\equiv M_0$ em todo o domínio, incluindo a borda.
+    \item Mas isso entra em contradição com a hipótese principal \eqref{HP}, de que $M_0$ é estritamente maior que os valores na borda.
+    \item Segue que o máximo da função deve acontecer na borda. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Demonstração}
+\begin{itemize}[<+->]
+    \item Suponha que $V$ satisfaz as hipóteses de (b), defina $G := -V$
+    \item Note que vale
+    \[
+        \Delta_\delta G =  \Delta_\delta (-V) =  -\Delta_\delta V \ge 0
+    \]
+    \item Logo, por (a), temos 
+    \[
+      \max_{R_\delta} G(x,y) \le \max_{\dR_\delta} G(x,y)
+    \]
+    \item Como $\max G = \max -V = -\min V$, temos 
+    \[
+    -\min_{R_\delta} V(x,y) \le -\min_{\dR_\delta} V(x,y)
+    \]
+    e segue (b).
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Teorema}
+\begin{block}{Teorema 4.2}
+Seja $V(x,y)$ uma função discreta (de malha) definida sobre $R_\delta\cup\dR_\delta$. Então
+\begin{equation*}\tag{4.20}
+\max_{R_\delta} |V(x,y)| \le \max_{\dR_\delta} |V(x,y)| + \frac{a^2}{2}\max_{\dR_\delta}|\Delta_\delta V(x,y)|    
+\end{equation*}
+\end{block}
+\end{frame}
+
+\begin{frame}{Demonstração}
+    \begin{itemize}[<+->]
+        \item Considere $\phi(x,y) = x^2/2$
+        \item Veja que dentro do domínio,
+        \[0\le \phi(x,y)\le a^2/2\quad\text{e}\quad\Delta_\delta \phi(x,y) = 1\]
+        \item Seja $N_0 := \max_{R_\delta} |\Delta_\delta V(x,y)|$
+        \item Defina $V_+$ e $V_-$ por 
+        \[
+        V_\pm(x,y) := \pm V(x,y) + N_0\phi(x,y)
+        \]
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Demonstração}
+    \begin{itemize}[<+->]
+    \item Calculando o laplaciano e usando a linearidade
+    \begin{multline*}
+    \Delta_\delta V_\pm(x,y) = \Delta_\delta\big( \pm V(x,y) + N_0\phi(x,y)\big) = \\ = \pm \Delta_\delta V(x,y) + N_0\Delta_\delta\phi(x,y) =    \pm \Delta_\delta V(x,y) + N_0 
+    \end{multline*} 
+    \item Para qualquer $\zeta\in\RR$ vale $\mp\zeta \le |\zeta|$, logo pela definição de $N_0$
+    \begin{align*}
+        \mp \Delta_\delta V(x,y) \le |\Delta_\delta V(x,y)| &\le N_0 \\
+        \mp  \Delta_\delta V(x,y) \pm  \Delta_\delta V(x,y) &\le N_0 \pm  \Delta_\delta V(x,y)\\
+        0 &\le  \Delta_\delta V(x,y) + N_0
+    \end{align*}
+    \end{itemize}    
+\end{frame}
+\begin{frame}{Demonstração}
+    \begin{itemize}
+        \item Aplicando o Princípio do Máximo para $V_\pm$, temos que o máximo acontece na borda, ou seja
+        \begin{multline*}\tag{$\dagger$}
+        V_\pm(x,y) \le \max_{\dR_\delta} V_\pm(x,y) =  \max_{\dR_\delta} \big( \pm V(x,y) + N_0\phi(x,y)\big) \\ \le  \max_{\dR_\delta} \big(\pm V(x,y)\big) + N_0\frac{a^2}{2} \\ \le  \max_{\dR_\delta} \big|V(x,y)\big| + N_0\frac{a^2}{2}               
+        \end{multline*}
+        pois $\pm V \le |V|$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Demonstração}
+    \begin{itemize}[<+->]
+        \item Note que $N_0, \phi \ge 0$, logo 
+        \[
+        \pm V(x,y) \le  \pm V(x,y) +N_0\phi(x,y) = V_\pm(x,y)
+        \]
+        \item Colando a desigualdade acima com $(\dagger)$ temos
+        \[
+        \pm V(x,y) \le  \max_{\dR_\delta} \big| V(x,y)\big| + N_0\frac{a^2}{2}  
+        \]
+        \item O lado direito não depende de $R_\delta$, então podemos tomar o máximo do lado esquerdo sobre o interior do domínio, segue o teorema.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Colorário}
+\begin{block}{Corolário 4.1}
+        O sistema de equações lineares formado pela discretização da EDP elípica
+        \[
+        AU = r
+        \]
+        tem uma única solução. 
+\end{block}
+    
+\end{frame}
+
+\begin{frame}{Demonstração}
+\begin{itemize}[<+->]
+    \item Vamos provar que $AU = 0$ tem somente a solução zero, o que prova $A$ injetora. Como $A$ é quadrada, injetora implica inversível. 
+    \item Considere o sistema homogêneo
+    \begin{align}
+        -\Delta_\delta U_{i,j} &=0 & \text{em } R_\delta \tag{4.9} \\
+        U_{i,j} &= 0 & \text{em } \dR_\delta \tag{4.10} 
+    \end{align}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Demonstração 1}
+    \begin{itemize}[<+->]
+        \item Aplicando o Teorema 4.2 para $U_{i,j}$ temos
+        \[
+        \max_{R_\delta} |U_{i,j}| \le \underbrace{\max_{\dR_\delta} |U_{i,j}|}_{(4.10)} + \frac{a^2}{2}\underbrace{\max_{R_\delta} |\Delta_\delta U_{i,j}|}_{(4.9)} = 0 + \frac{a^2}{2}0 = 0
+        \]
+        \item Segue que $|U_{i,j}| = 0$ e logo $U_{i,j} = 0$.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Demonstração 2}
+    \begin{itemize}[<+->]
+        \item Sabemos que  $\Delta_\delta U_{i,j} = 0$ em $R_\delta$;
+        \item Aplicando o Princípio do Máximo, podemos usar tanto (a) quanto (b), logo o máximo e o mínimo de $U_{i,j}$ acontecem na borda;
+        \item Mas isso significa que $\max U_{i,j} = \min U_{i,j} = 0$, de modo que $U$ é zero.
+    \end{itemize}
+\end{frame}
+\end{document}
+
+
