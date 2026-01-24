@@ -1,6 +1,6 @@
 using MLJ 
 using Random
-
+using DataFrames
 
 # Carregando os modelos 
 
@@ -12,8 +12,7 @@ DecisionTreeClassifier = @load DecisionTreeClassifier pkg=DecisionTree
 
 X, y = @load_iris # a table and a vector from the iris dataset
 
-
-## TODO mudar a abordagem para dataframe
+Dataset = hcat(DataFrame(X), DataFrame(y = y))
 
 # define function to split data (source: Huda Nassar)
 
@@ -32,82 +31,104 @@ end
 
 Random.seed!(26)
 
-train_index = perclass_splits(y, 0.84)
+train_index = perclass_splits(y, 0.7)
 
 test_index = setdiff(1:length(y), train_index)
 
-y_train = y[train_index]
+X = df[:, Not(:Quality)]
+y = df[:, :Quality]
+train_index, test_index = partition(eachindex(y), 0.7, shuffle=true, rng=Random.MersenneTwister(26))
 
-y_test = y[test_index]
+# y_train = y[train_index]
 
-X_train_dict = Dict{Symbol, Vector{Float64}}()
-X_test_dict = Dict{Symbol, Vector{Float64}}()
+# y_test = y[test_index]
 
-for key in keys(X)
-    X_train_dict[key] = X[key][train_index]
-    X_test_dict[key] = X[key][test_index]
-end
+# X_train = Dataset[train_index, Not(:y)]
 
-X_train = NamedTuple(X_train_dict)
-X_test = NamedTuple(X_test_dict)
+# X_test = Dataset[test_index, Not(:y)]
 
 
 ## Modelo 1: SVC
 
 model1 = SVC()
-mach1 = machine(model1, X_train, y_train)
-fit!(mach1)
+mach1 = machine(model1, X, y)
+fit!(mach1, rows=train_index)
 
-predict1 = predict(mach1, X_test)
+predict1 = predict(mach1, rows=test_index)
 
-confusion_matrix(y_test, predict1)
+confusion_matrix(y[test_index], predict1)
 
 ## Modelo 2: KNN
 
-model2 = KNNClassifier(K=3) 
-mach2 = machine(model2, X_train, y_train)
-fit!(mach2)
-predict2 = predict_mode(mach2, X_test)
+model2 = KNNClassifier(K=6) 
+mach2 = machine(model2, X, y)
+fit!(mach2, rows=train_index)
+predict2 = predict_mode(mach2, rows=test_index)
 
-confusion_matrix(y_test, predict2)
+confusion_matrix(y[test_index], predict2)
+
 
 ## Modelo 3: Neural Network
 
-model3 = NeuralNetworkClassifier(builder = MLJFlux.MLP(; hidden = (5,)), epochs = 100)
-mach3 = machine(model3, X_train, y_train)
-fit!(mach3)
-predict3 = predict_mode(mach3, X_test)
+model3 = NeuralNetworkClassifier(builder = MLJFlux.MLP(; hidden = (10,10,15,)), epochs = 100)
+mach3 = machine(model3, X, y)
+fit!(mach3, rows=train_index)
+predict3 = predict_mode(mach3, rows=test_index)
 
-confusion_matrix(y_test, predict3)
+test_index
+confusion_matrix(y[test_index], predict3)
 
 ## Modelo 4: Gaussian Naive Bayes
 
 model4 = GaussianNBClassifier()
-mach4 = machine(model4, X_train, y_train)
-fit!(mach4)
-predict4 = predict_mode(mach4, X_test)
+mach4 = machine(model4, X, y)
+fit!(mach4, rows=train_index)
+predict4 = predict_mode(mach4, rows=test_index)
 
-confusion_matrix(y_test, predict4)
-
+confusion_matrix(y[test_index], predict4)
+misclassification_rate(y[test_index], predict4)
 
 ## Modelo 5: Decision Tree
 
-model5 = DecisionTreeClassifier(max_depth = 3)
-mach5 = machine(model5, X_train, y_train)
-fit!(mach5)
-predict5 = predict_mode(mach5, X_test)
+model5 = DecisionTreeClassifier(max_depth = 6)
+mach5 = machine(model5, X, y)
+fit!(mach5, rows=train_index)
+predict5 = predict_mode(mach5, rows=test_index)
 
-confusion_matrix(y_test, predict5)
-
-for label ∈ unique(predict5)
-    println("Label: $label")
-    println("Count: ", count(==(label), predict5))
+confusion_matrix(y[test_index], predict5)
+ 
+## constroi Y e C para o ensemble
+function constructYC(classifiers, X_test, y_test)
+    n = length(y_test)
+    T = length(classifiers)
+    unique_classes = levels(y_test)
+    K = length(unique_classes)
+    class_dict = Dict(c => i for (i, c) in enumerate(unique_classes))
+    class_to_index = x -> class_dict[x]
+    Y = zeros(K, T, n)
+    C = class_to_index.(y_test)
+    for t in 1:T
+        pred = nothing
+        try
+            pred = predict_mode(classifiers[t], X_test)
+        catch
+            pred = predict(classifiers[t], X_test)
+        end
+        pred_index = class_to_index.(pred)
+        for i in 1:n
+            k = pred_index[i]
+            Y[k, t, i] = 1
+        end
+       
+    end 
+    return Y, C
 end
 
-X_test_dict
+classifiers = [mach1, mach2, mach3, mach4, mach5]
 
-using DataFrames
+Y, C = constructYC(classifiers, X[test_index,:], y[test_index])
 
-X_test_df = DataFrame(X_test)
+sum(Y; dims=3) # verifica se cada classificador atribuiu uma classe a cada ponto
 
-predict_mode(mach2, X_test_df)  # KNN mean probabilities
+
+ω2,ξ2,fun2 = Ensemble2(Y,C,0.1)
