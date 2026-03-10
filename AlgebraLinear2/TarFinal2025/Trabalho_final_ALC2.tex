@@ -1,0 +1,1942 @@
+\documentclass[11pt]{article}
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+    
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Keep aspect ratio if custom image width or height is specified
+    \setkeys{Gin}{keepaspectratio}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+
+    \usepackage{iftex}
+    \ifPDFTeX
+        \usepackage[T1]{fontenc}
+        \IfFileExists{alphabeta.sty}{
+              \usepackage{alphabeta}
+          }{
+              \usepackage[mathletters]{ucs}
+              \usepackage[utf8x]{inputenc}
+          }
+    \else
+        \usepackage{fontspec}
+        \usepackage{unicode-math}
+    \fi
+    \usepackage[normalem]{ulem} 
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics
+                         % to support a larger range
+    \makeatletter % fix for old versions of grffile with XeLaTeX
+    \@ifpackagelater{grffile}{2019/11/01}
+    {
+      % Do nothing on new versions
+    }
+    {
+      \def\Gread@@xetex#1{%
+        \IfFileExists{"\Gin@base".bb}%
+        {\Gread@eps{\Gin@base.bb}}%
+        {\Gread@@xetex@aux#1}%
+      }
+    }
+    \makeatother
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage{array}     % table support for pandoc >= 2.11.3
+    \usepackage{calc}      % table minipage width calculation for pandoc >= 2.11.1
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{soul}      % strikethrough (\st) support for pandoc >= 3.0.0
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % common color for the border for error outputs.
+    \definecolor{outerrorbackground}{HTML}{FFDFDF}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \makeatletter
+    \newsavebox\pandoc@box
+    \newcommand*\pandocbounded[1]{%
+      \sbox\pandoc@box{#1}%
+      % scaling factors for width and height
+      \Gscale@div\@tempa\textheight{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+      \Gscale@div\@tempb\linewidth{\wd\pandoc@box}%
+      % select the smaller of both
+      \ifdim\@tempb\p@<\@tempa\p@
+        \let\@tempa\@tempb
+      \fi
+      % scaling accordingly (\@tempa < 1)
+      \ifdim\@tempa\p@<\p@
+        \scalebox{\@tempa}{\usebox\pandoc@box}%
+      % scaling not needed, use as it is
+      \else
+        \usebox{\pandoc@box}%
+      \fi
+    }
+    \makeatother
+
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{Trabalho final ALC2}
+    \author{Luiz Fernando Bossa\thanks{l.f.bossa@posgrad.ufsc.br} \and Prof. Fermín S. V. Bazán}
+    \date{Dezembro 2025}
+    
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\@namedef{PY@tok@w}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\@namedef{PY@tok@c}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cp}{\def\PY@tc##1{\textcolor[rgb]{0.61,0.40,0.00}{##1}}}
+\@namedef{PY@tok@k}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kt}{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\@namedef{PY@tok@o}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ow}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@nb}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nf}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@ne}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.80,0.25,0.22}{##1}}}
+\@namedef{PY@tok@nv}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@no}{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\@namedef{PY@tok@nl}{\def\PY@tc##1{\textcolor[rgb]{0.46,0.46,0.00}{##1}}}
+\@namedef{PY@tok@ni}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.44,0.44,0.44}{##1}}}
+\@namedef{PY@tok@na}{\def\PY@tc##1{\textcolor[rgb]{0.41,0.47,0.13}{##1}}}
+\@namedef{PY@tok@nt}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nd}{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@s}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sd}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@si}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.64,0.35,0.47}{##1}}}
+\@namedef{PY@tok@se}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.36,0.12}{##1}}}
+\@namedef{PY@tok@sr}{\def\PY@tc##1{\textcolor[rgb]{0.64,0.35,0.47}{##1}}}
+\@namedef{PY@tok@ss}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sx}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@m}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@gh}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gu}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gd}{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\@namedef{PY@tok@gi}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.52,0.00}{##1}}}
+\@namedef{PY@tok@gr}{\def\PY@tc##1{\textcolor[rgb]{0.89,0.00,0.00}{##1}}}
+\@namedef{PY@tok@ge}{\let\PY@it=\textit}
+\@namedef{PY@tok@gs}{\let\PY@bf=\textbf}
+\@namedef{PY@tok@ges}{\let\PY@bf=\textbf\let\PY@it=\textit}
+\@namedef{PY@tok@gp}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@go}{\def\PY@tc##1{\textcolor[rgb]{0.44,0.44,0.44}{##1}}}
+\@namedef{PY@tok@gt}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\@namedef{PY@tok@err}{\def\PY@bc##1{{\setlength{\fboxsep}{\string -\fboxrule}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}}
+\@namedef{PY@tok@kc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kd}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kr}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@bp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@fm}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@vc}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vg}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vi}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vm}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sa}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sb}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sc}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@dl}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s2}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sh}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s1}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@mb}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mf}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mh}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mi}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@il}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mo}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ch}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cm}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cpf}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@c1}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cs}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb.
+    \makeatletter
+        \newbox\Wrappedcontinuationbox
+        \newbox\Wrappedvisiblespacebox
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}}
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}}
+        \newcommand*\Wrappedcontinuationindent {3ex }
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox}
+        % Take advantage of the already applied Pygments mark-up to insert
+        % potential linebreaks for TeX processing.
+        %        {, <, #, %, $, ' and ": go to next line.
+        %        _, }, ^, &, >, - and ~: stay at end of broken line.
+        % Use of \textquotesingle for straight quote.
+        \newcommand*\Wrappedbreaksatspecials {%
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}%
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}%
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}%
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}%
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}%
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}%
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}%
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}%
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}%
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}%
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}%
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}%
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}%
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}%
+        }
+        % Some characters . , ; ? ! / are not pygmentized.
+        % This macro makes them "active" and they will insert potential linebreaks
+        \newcommand*\Wrappedbreaksatpunct {%
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}%
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}%
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}%
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}%
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}%
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}%
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}%
+            \catcode`\.\active
+            \catcode`\,\active
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active
+            \lccode`\~`\~
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        {\ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+\begin{document}
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{uxe1lgebra-linear-computacional-2---trabalho-final}{%
+\section*{Álgebra Linear Computacional 2 - Trabalho
+Final}\label{uxe1lgebra-linear-computacional-2---trabalho-final}}
+
+    \hypertarget{questuxe3o-1}{%
+\subsection*{Questão 1}\label{questuxe3o-1}}
+
+    Sem perda de generalidade, podemos tomar \(x, y\) normalizados com
+\(\|x\|_2=1\) e \(\|y\|_2=1\).
+
+Se \(x = \begin{pmatrix} \alpha \\ u \end{pmatrix}\) com \(\alpha\)
+escalar e \(u \in \mathbb{R}^{n-1}\), temos:
+
+\[Ax = \lambda x \iff \begin{bmatrix} \lambda & v^T \\ 0 & T_{22} \end{bmatrix} \begin{bmatrix} \alpha \\ u \end{bmatrix} = \begin{bmatrix} \lambda \alpha + v^T u \\ T_{22} u \end{bmatrix} = \lambda \begin{bmatrix} \alpha \\ u \end{bmatrix}\]
+
+Isso implica no sistema: \[
+\begin{cases}
+\lambda \alpha + v^T u = \lambda \alpha \implies v^T u = 0 \\
+T_{22} u = \lambda u \iff (T_{22} - \lambda I)u = 0
+\end{cases}
+\]
+
+Como \(T_{22} - \lambda I\) é inversível (pois
+\(\lambda \notin \lambda(T_{22})\)), temos \(u = 0\) e logo
+\(x = (\alpha, 0) \implies x = e_1\) (considerando \(\alpha=1\)).
+
+Seja \(y = \begin{pmatrix} \beta \\ w \end{pmatrix}\), \(\beta\) escalar
+e \(w\in \mathbb{R}^{n-1}\). Da igualdade \(y^* A = \lambda y^*\)
+
+\[(\beta^* \ w^*) \begin{bmatrix} \lambda & v^T \\ 0 & T_{22} \end{bmatrix} = \lambda (\beta^* \ w^*)\]
+
+segue o sistema \[
+\begin{cases}
+\lambda \beta^* = \lambda \beta^* \\
+\beta^* v^T + w^* T_{22} = \lambda w^*
+\end{cases}
+\]
+
+\(\iff w^*(T_{22} - \lambda I) = -\beta^* v^T \implies w^* = -\beta^* v^T (T_{22} - \lambda I)^{-1}\)
+
+Escolhendo \(\beta = 1\), temos
+\(y = \begin{pmatrix} 1 \\ w \end{pmatrix}\).
+
+Veja que \(\|y\|_2^2 = 1^2 + \|w\|_2^2\).
+
+Normalizando \(y\), temos \(\hat{y} = \frac{y}{\|y\|}\).
+
+Agora:
+
+\[\tag{$\dagger$}
+s(\lambda) = |\hat{y}^* x| = \frac{|y^* x|}{\|y\|} = \frac{1}{\sqrt{1 + \|w\|_2^2}} = \frac{1}{\sqrt{1 + \|(T_{22} - \lambda I)^{-1} v\|_2^2}}\]
+
+    Conforme visto em sala, para o caso em questão,
+\[ \sigma = \text{sep}(\lambda, T_{22}) = \sigma_{\min}(T_{22}-\lambda I)\]
+
+Mas da desigualdade da norma, temos
+\[ \|(T_{22} - \lambda I)^{-1} v\|_2^2 \le  \|(T_{22} - \lambda I)^{-1}\|_2^2\| v\|_2^2  = \frac1{\sigma^2_{\min}(T_{22}-\lambda I)}\|v\|_2^2 = \frac{\|v\|^2_2}{\sigma^2}\]
+
+    Assim, substituindo essa desigualdade em \((\dagger)\) temos
+
+\[\frac{1}{\sqrt{1 + \|(T_{22} - \lambda I)^{-1} v\|_2^2}} \le \frac{1}{\sqrt{1 + \frac{\|v\|^2_2}{\sigma^2}}} = \frac{1}{\sqrt{\frac{\sigma^2 + \|v\|^2_2}{\sigma^2}}} =  \frac{\sigma}{\sqrt{\sigma^2 + \|v\|^2_2}} \]
+
+    \hypertarget{questuxe3o-2}{%
+\subsection*{Questão 2}\label{questuxe3o-2}}
+
+    Como \(\|q\| = 1\), temos \(q^*q =1\) e podemos escrever
+\(\lambda = q*\lambda q\).
+
+Logo
+\[\tag{1}\rho - \lambda = q^*\lambda q - q^*Aq = q^*(\lambda I - A)q\]
+
+Como \(v\) é autovetor associado a \(\lambda\), podemos escrever
+\((\lambda I - A)v=0\). Somando esse zero em (1) temos
+
+\[\rho - \lambda = q^*(\lambda I - A)(q-v) \tag{2}\]
+
+Tomando o módulo e usando Cauchy-Schwartz e a desigualdade de norma de
+operador, temos
+\[|\rho-\lambda|\le \|q\|\|(\lambda I - A)(q-v)\| \le 1\cdot \|\lambda I - A\|\|q-v\| \tag{3}\]
+
+Agora, para \(\|\lambda I - A\|\) temos a desigualdade triangular
+\[\|\lambda I - A\| \le \|\lambda I\| + \|A\|\]
+
+Como \(\lambda\) é autovalor de \(A\), então \(|\lambda|\le \|A\|\).
+Logo \[\|\lambda I - A\| \le \|A\| + \|A\| = 2\|A\| \tag{4}\]
+
+Colando essa desigualdae (4) em (3), segue o resultado.
+
+    \hypertarget{questuxe3o-3}{%
+\subsection*{Questão 3}\label{questuxe3o-3}}
+
+    Como os \(\mathsf{v}_j\) são ortogonais, então a norma de \(x_k\) ao
+quadrado é a soma dos quadrados das coordenadas:
+
+\[\|x_k\|^2 = \sum_{j=1}^k \left(\frac{\mathsf{u}_j^\top b}{\sigma_j}\right)^2\]
+
+Assim, para \(k+1\) temos
+
+\[\|x_{k+1}\|^2_2 = \sum_{j=1}^{k+1} \left(\frac{\mathsf{u}_j^\top b}{\sigma_j}\right)^2 = \sum_{j=1}^{k} \left(\frac{\mathsf{u}_j^\top b}{\sigma_j}\right)^2 + \left(\frac{\mathsf{u}_{k+1}^\top b}{\sigma_{k+1}}\right)^2  = \|x_k\|^2_2 + \left(\frac{\mathsf{u}_{k+1}^\top b}{\sigma_{k+1}}\right)^2 \ge \|x_k\|^2_2\]
+
+Agora note que o espaço coluna \(\mathcal{S}_k = R(V_k)\) forma uma
+sequência encaixada de subespaços, com
+\[\mathcal{S}_k\subseteq \mathcal{S}_{k+1}.\]
+
+Para qualquer função positiva, vale que se \(A\subseteq B\), então o
+mínimo sobre \(A\) é maior ou igual ao mínimo sobre \(B\). Em
+particular, vale para a norma.
+
+Assim,
+\[\min_{x\in \mathcal{S}_{k}} \|Ax-b\| \ge \min_{x\in \mathcal{S}_{k+1}} \|Ax-b\|\]
+ou seja, \[\|r_{k}\|_2 \ge \|r_{k+1}\|_2\]
+
+    Seja \[A = \sum_{j=1}^n \sigma_ju_jv_j^\top\] a decomposição SVD de
+\(A\). Defina \[A^{[k]} = \sum_{j=1}^k \sigma_ju_jv_j^\top \] a
+aproximação de posto \(k\) para \(A\). A teoria da SVD garante que
+\[\min_{\text{rank}(B)\le k} \|A-B\|_F = \sigma_{k+1}\] e esse valor
+mínimo é atingido em \(A^{[k]}\).
+
+Como \(A_k\) tem posto \(k\), então em particular o valor da diferença
+da norma de \(A\) e \(A_k\) não pode ser menor do que o \(\sigma_{k+1}\)
+acima, logo \[\gamma_k = \|A-A_k\| \ge \sigma_{k+1} \]
+
+Agora note que \(P_k\) é uma matriz de projeção, que projeta em
+\(R(V_k) = \mathcal{S}_k\)
+
+Note que \[A-A_k = A-AP_k = A(I-P_k) =: AQ_k\]
+
+com \(Q_k\) sendo a projeção em \(\mathcal{S}_k^\perp\). Como
+\(\mathcal{S}_k\subseteq \mathcal{S}_{k+1}\),
+\(\mathcal{S}_{k+1}^\perp \subseteq \mathcal{S}_{k}^\perp\).
+
+Assim,
+
+\[\gamma_{k} = \|A-A_{k} \| = \|AQ_{k}\| = \sup^{\|x\|=1}_{x\in\mathcal{S}_{k}^\perp}{\|Ax\|} \ge \sup^{\|x\|=1}_{x\in\mathcal{S}_{k+1}^\perp}{\|Ax\|} = \gamma_{k+1}\]
+
+    \hypertarget{questuxe3o-4}{%
+\subsection*{Questão 4}\label{questuxe3o-4}}
+
+Reconstruindo a imagem borrada utilizando a linguagem de programação \texttt{julia}. 
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{using}\PY{+w}{ }\PY{n}{LinearAlgebra}
+\PY{k}{using}\PY{+w}{ }\PY{n}{SparseArrays}
+\PY{k}{using}\PY{+w}{ }\PY{n}{Random}
+\PY{k}{using}\PY{+w}{ }\PY{n}{Plots}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Instalando pacotes
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{using}\PY{+w}{ }\PY{n}{Pkg}\PY{p}{;}\PY{+w}{ }\PY{n}{Pkg}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{Images}\PY{l+s}{\PYZdq{}}\PY{p}{,}\PY{+w}{ }\PY{l+s}{\PYZdq{}}\PY{l+s}{HTTP}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{p}{,}\PY{+w}{ }\PY{n}{io}\PY{o}{=}\PY{n+nb}{devnull}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Baixando a imagem
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{using}\PY{+w}{ }\PY{n}{HTTP}
+\PY{k}{using}\PY{+w}{ }\PY{n}{Images}
+
+\PY{n}{url}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{l+s}{\PYZdq{}}\PY{l+s}{https://raw.githubusercontent.com/LFBossa/Disciplinas\PYZhy{}Doutorado/refs/heads/main/AlgebraLinear2/lenaG.png}\PY{l+s}{\PYZdq{}}
+\PY{n}{filename}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{l+s}{\PYZdq{}}\PY{l+s}{lenaG.png}\PY{l+s}{\PYZdq{}}\PY{+w}{ }\PY{c}{\PYZsh{} Use the correct filename}
+\PY{n}{HTTP}\PY{o}{.}\PY{n}{download}\PY{p}{(}\PY{n}{url}\PY{p}{,}\PY{+w}{ }\PY{n}{filename}\PY{p}{)}\PY{+w}{ }\PY{c}{\PYZsh{} Download the file}
+\PY{n}{lena\PYZus{}img}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{load}\PY{p}{(}\PY{n}{filename}\PY{p}{)}\PY{+w}{ }\PY{c}{\PYZsh{} Use ImageIO.load to read the image}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\textcolor{ansi-cyan-intense}{\textbf{┌ }}\textcolor{ansi-cyan-intense}{\textbf{Info: }}Downloading
+\textcolor{ansi-cyan-intense}{\textbf{│ }}  source =
+"https://raw.githubusercontent.com/LFBossa/Disciplinas-
+Doutorado/refs/heads/main/AlgebraLinear2/lenaG.png"
+\textcolor{ansi-cyan-intense}{\textbf{│ }}  dest = "lenaG.png"
+\textcolor{ansi-cyan-intense}{\textbf{│ }}  progress = 1.0
+\textcolor{ansi-cyan-intense}{\textbf{│ }}  time\_taken = "0.1 s"
+\textcolor{ansi-cyan-intense}{\textbf{│ }}  time\_remaining = "0.0 s"
+\textcolor{ansi-cyan-intense}{\textbf{│ }}  average\_speed = "331.736 KiB/s"
+\textcolor{ansi-cyan-intense}{\textbf{│ }}  downloaded = "31.847 KiB"
+\textcolor{ansi-cyan-intense}{\textbf{│ }}  remaining = "0 bytes"
+\textcolor{ansi-cyan-intense}{\textbf{└ }}  total = "31.847 KiB"
+    \end{Verbatim}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_15_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c}{\PYZsh{} funções auxiliares}
+\PY{n}{N}\PY{p}{,}\PY{+w}{ }\PY{n}{N}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{size}\PY{p}{(}\PY{n}{lena\PYZus{}img}\PY{p}{)}
+
+\PY{n}{imagem2vetor}\PY{p}{(}\PY{n}{img}\PY{p}{)}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{convert}\PY{p}{(}\PY{k+kt}{Array}\PY{p}{\PYZob{}}\PY{k+kt}{Float64}\PY{p}{\PYZcb{}}\PY{p}{,}\PY{n}{img}\PY{p}{[}\PY{o}{:}\PY{p}{]}\PY{p}{)}
+\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{vetor}\PY{p}{)}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{Gray}\PY{o}{.}\PY{p}{(}\PY{n}{reshape}\PY{p}{(}\PY{n}{vetor}\PY{p}{,}\PY{+w}{ }\PY{n}{N}\PY{p}{,}\PY{+w}{ }\PY{n}{N}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{lena\PYZus{}vec}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{imagem2vetor}\PY{p}{(}\PY{n}{lena\PYZus{}img}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Função para criar a matriz de blur.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{l+s}{\PYZdq{}\PYZdq{}\PYZdq{}}
+\PY{l+s}{    blur(N, band=3, sigma=0.7)}
+
+\PY{l+s}{Problema de teste: desfoque de imagem digital (digital image deblurring).}
+
+\PY{l+s}{A matriz A é uma matriz simétrica duplamente bloco Toeplitz de dimensão N*N\PYZhy{}por\PYZhy{}N*N}
+\PY{l+s}{que modela o desfoque de uma imagem N\PYZhy{}por\PYZhy{}N por uma função de espalhamento de ponto Gaussiana.}
+\PY{l+s}{Ela é armazenada no formato de matriz esparsa.}
+
+\PY{l+s}{Em cada bloco Toeplitz, apenas elementos da matriz dentro de uma distância band\PYZhy{}1}
+\PY{l+s}{da diagonal são não\PYZhy{}nulos (ou seja, band é a meia\PYZhy{}largura de banda).}
+\PY{l+s}{Se band não for especificado, band = 3 é usado.}
+
+\PY{l+s}{O parâmetro sigma controla a largura da função de espalhamento de ponto Gaussiana}
+\PY{l+s}{e, portanto, a quantidade de suavização (quanto maior o sigma, mais larga a função}
+\PY{l+s}{e mais mal posto o problema). Se sigma não for especificado, sigma = 0.7 é usado.}
+\PY{l+s}{\PYZdq{}\PYZdq{}\PYZdq{}}
+\PY{k}{function}\PY{+w}{ }\PY{n}{blur}\PY{p}{(}\PY{n}{N}\PY{o}{::}\PY{k+kt}{Int}\PY{p}{,}\PY{+w}{ }\PY{n}{band}\PY{o}{::}\PY{k+kt}{Int}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,}\PY{+w}{ }\PY{n}{sigma}\PY{o}{::}\PY{k+kt}{Real}\PY{o}{=}\PY{l+m+mf}{0.7}\PY{p}{)}
+\PY{+w}{    }\PY{c}{\PYZsh{} Initialization.}
+\PY{+w}{    }\PY{n}{band}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{min}\PY{p}{(}\PY{n}{band}\PY{p}{,}\PY{+w}{ }\PY{n}{N}\PY{p}{)}
+
+\PY{+w}{    }\PY{c}{\PYZsh{} Construct the matrix as a Kronecker product.}
+\PY{+w}{    }\PY{c}{\PYZsh{} z vector contains the Gaussian values for the diagonals.}
+\PY{+w}{    }\PY{c}{\PYZsh{} MATLAB: z = [exp(\PYZhy{}((0:band\PYZhy{}1).\PYZca{}2)/(2*sigma\PYZca{}2)),zeros(1,N\PYZhy{}band)];}
+\PY{+w}{    }\PY{n}{z\PYZus{}vals}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{exp}\PY{o}{.}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{0}\PY{o}{:}\PY{n}{band}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{.\PYZca{}}\PY{l+m+mi}{2}\PY{p}{)}\PY{+w}{ }\PY{o}{./}\PY{+w}{ }\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{sigma}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+
+\PY{+w}{    }\PY{c}{\PYZsh{} Construct the 1D Toeplitz matrix using spdiagm}
+\PY{+w}{    }\PY{c}{\PYZsh{} Diagonal 0 gets z\PYZus{}vals[1]}
+\PY{+w}{    }\PY{c}{\PYZsh{} Diagonals +k and \PYZhy{}k get z\PYZus{}vals[k+1]}
+\PY{+w}{    }\PY{n}{diags}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{k+kt}{Pair}\PY{p}{\PYZob{}}\PY{k+kt}{Int}\PY{p}{,}\PY{+w}{ }\PY{k+kt}{Vector}\PY{p}{\PYZob{}}\PY{k+kt}{Float64}\PY{p}{\PYZcb{}}\PY{p}{\PYZcb{}}\PY{p}{[}\PY{p}{]}
+\PY{+w}{    }\PY{n}{push!}\PY{p}{(}\PY{n}{diags}\PY{p}{,}\PY{+w}{ }\PY{l+m+mi}{0}\PY{+w}{ }\PY{o}{=\PYZgt{}}\PY{+w}{ }\PY{n}{fill}\PY{p}{(}\PY{n}{z\PYZus{}vals}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{+w}{ }\PY{n}{N}\PY{p}{)}\PY{p}{)}
+
+\PY{+w}{    }\PY{k}{for}\PY{+w}{ }\PY{n}{k}\PY{+w}{ }\PY{k}{in}\PY{+w}{ }\PY{l+m+mi}{1}\PY{o}{:}\PY{p}{(}\PY{n}{band}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{+w}{        }\PY{n}{val}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{z\PYZus{}vals}\PY{p}{[}\PY{n}{k}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}
+\PY{+w}{        }\PY{n}{push!}\PY{p}{(}\PY{n}{diags}\PY{p}{,}\PY{+w}{ }\PY{n}{k}\PY{+w}{ }\PY{o}{=\PYZgt{}}\PY{+w}{ }\PY{n}{fill}\PY{p}{(}\PY{n}{val}\PY{p}{,}\PY{+w}{ }\PY{n}{N}\PY{o}{\PYZhy{}}\PY{n}{k}\PY{p}{)}\PY{p}{)}
+\PY{+w}{        }\PY{n}{push!}\PY{p}{(}\PY{n}{diags}\PY{p}{,}\PY{+w}{ }\PY{o}{\PYZhy{}}\PY{n}{k}\PY{+w}{ }\PY{o}{=\PYZgt{}}\PY{+w}{ }\PY{n}{fill}\PY{p}{(}\PY{n}{val}\PY{p}{,}\PY{+w}{ }\PY{n}{N}\PY{o}{\PYZhy{}}\PY{n}{k}\PY{p}{)}\PY{p}{)}
+\PY{+w}{    }\PY{k}{end}
+
+\PY{+w}{    }\PY{n}{A\PYZus{}1d}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{spdiagm}\PY{p}{(}\PY{n}{N}\PY{p}{,}\PY{+w}{ }\PY{n}{N}\PY{p}{,}\PY{+w}{ }\PY{n}{diags}\PY{o}{...}\PY{p}{)}
+
+\PY{+w}{    }\PY{c}{\PYZsh{} A = (1/(2*pi*sigma\PYZca{}2))*kron(A,A);}
+\PY{+w}{    }\PY{n}{A}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{/}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n+nb}{pi}\PY{o}{*}\PY{n}{sigma}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}\PY{+w}{ }\PY{o}{*}\PY{+w}{ }\PY{n}{kron}\PY{p}{(}\PY{n}{A\PYZus{}1d}\PY{p}{,}\PY{+w}{ }\PY{n}{A\PYZus{}1d}\PY{p}{)}
+
+
+\PY{+w}{    }\PY{k}{return}\PY{+w}{ }\PY{n}{A}
+\PY{k}{end}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+blur
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{function}\PY{+w}{ }\PY{n}{ortogonalizar}\PY{p}{(}\PY{n}{U}\PY{o}{::}\PY{k+kt}{Vector}\PY{p}{\PYZob{}}\PY{o}{\PYZlt{}:}\PY{k+kt}{AbstractVector}\PY{p}{\PYZcb{}}\PY{p}{,}\PY{+w}{ }\PY{n}{v}\PY{o}{::}\PY{k+kt}{AbstractVector}\PY{p}{)}
+\PY{+w}{  }\PY{c}{\PYZsh{} Ortogonaliza v diante do conjunto Q, usando Gram\PYZhy{}Schimidt}
+\PY{+w}{    }\PY{n}{u}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{copy}\PY{p}{(}\PY{n}{v}\PY{p}{)}
+\PY{+w}{    }\PY{k}{for}\PY{+w}{ }\PY{n}{q}\PY{+w}{ }\PY{k}{in}\PY{+w}{ }\PY{n}{U}
+\PY{+w}{        }\PY{n}{u}\PY{+w}{ }\PY{o}{\PYZhy{}=}\PY{+w}{ }\PY{p}{(}\PY{n}{dot}\PY{p}{(}\PY{n}{q}\PY{p}{,}\PY{+w}{ }\PY{n}{u}\PY{p}{)}\PY{p}{)}\PY{+w}{ }\PY{o}{*}\PY{+w}{ }\PY{n}{q}
+\PY{+w}{    }\PY{k}{end}
+\PY{+w}{    }\PY{n}{nrm}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{norm}\PY{p}{(}\PY{n}{u}\PY{p}{)}
+\PY{+w}{    }\PY{k}{return}\PY{+w}{ }\PY{n}{nrm}\PY{+w}{ }\PY{o}{\PYZgt{}}\PY{+w}{ }\PY{l+m+mf}{1e\PYZhy{}12}\PY{+w}{ }\PY{o}{?}\PY{+w}{ }\PY{n}{u}\PY{+w}{ }\PY{o}{/}\PY{+w}{ }\PY{n}{nrm}\PY{+w}{ }\PY{o}{:}\PY{+w}{ }\PY{n}{zeros}\PY{p}{(}\PY{n}{length}\PY{p}{(}\PY{n}{u}\PY{p}{)}\PY{p}{)}
+\PY{k}{end}
+
+\PY{k}{function}\PY{+w}{ }\PY{n}{ortogonalizar}\PY{p}{(}\PY{n}{V}\PY{o}{::}\PY{k+kt}{Dict}\PY{p}{,}\PY{+w}{ }\PY{n}{v}\PY{o}{::}\PY{k+kt}{AbstractVector}\PY{p}{)}
+\PY{+w}{  }\PY{c}{\PYZsh{} Ortogonaliza v diante do conjunto Q, usando Gram\PYZhy{}Schimidt}
+\PY{+w}{    }\PY{n}{u}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{copy}\PY{p}{(}\PY{n}{v}\PY{p}{)}
+\PY{+w}{    }\PY{n}{n}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{length}\PY{p}{(}\PY{n}{V}\PY{p}{)}
+\PY{+w}{    }\PY{k}{for}\PY{+w}{ }\PY{n}{i}\PY{+w}{ }\PY{k}{in}\PY{+w}{ }\PY{l+m+mi}{1}\PY{o}{:}\PY{n}{n}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{+w}{ }\PY{c}{\PYZsh{}  V começa em 0}
+\PY{+w}{        }\PY{n}{q}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{V}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+\PY{+w}{        }\PY{n}{u}\PY{+w}{ }\PY{o}{\PYZhy{}=}\PY{+w}{ }\PY{p}{(}\PY{n}{dot}\PY{p}{(}\PY{n}{q}\PY{p}{,}\PY{+w}{ }\PY{n}{u}\PY{p}{)}\PY{p}{)}\PY{+w}{ }\PY{o}{*}\PY{+w}{ }\PY{n}{q}
+\PY{+w}{    }\PY{k}{end}
+\PY{+w}{    }\PY{n}{nrm}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{norm}\PY{p}{(}\PY{n}{u}\PY{p}{)}
+\PY{+w}{    }\PY{k}{return}\PY{+w}{ }\PY{n}{nrm}\PY{+w}{ }\PY{o}{\PYZgt{}}\PY{+w}{ }\PY{l+m+mf}{1e\PYZhy{}12}\PY{+w}{ }\PY{o}{?}\PY{+w}{ }\PY{n}{u}\PY{+w}{ }\PY{o}{/}\PY{+w}{ }\PY{n}{nrm}\PY{+w}{ }\PY{o}{:}\PY{+w}{ }\PY{n}{zeros}\PY{p}{(}\PY{n}{length}\PY{p}{(}\PY{n}{u}\PY{p}{)}\PY{p}{)}
+\PY{k}{end}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+ortogonalizar (generic function with 2 methods)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{function}\PY{+w}{ }\PY{n}{bidiaglanczos}\PY{p}{(}\PY{n}{A}\PY{p}{,}\PY{+w}{ }\PY{n}{u1}\PY{o}{::}\PY{k+kt}{Vector}\PY{p}{,}\PY{+w}{ }\PY{n}{k}\PY{o}{::}\PY{k+kt}{Number}\PY{p}{;}\PY{+w}{ }\PY{n}{ortog}\PY{o}{=}\PY{n+nb}{false}\PY{p}{)}
+\PY{+w}{  }\PY{c}{\PYZsh{} realiza k passos da bidiagonalização}
+\PY{+w}{  }\PY{n}{m}\PY{p}{,}\PY{+w}{ }\PY{n}{n}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{size}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+\PY{+w}{  }\PY{n}{α}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{k+kt}{Array}\PY{p}{\PYZob{}}\PY{k+kt}{Float64}\PY{p}{\PYZcb{}}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{)}\PY{+w}{ }\PY{c}{\PYZsh{} inicializa um array vazio}
+\PY{+w}{  }\PY{n}{β}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{p}{[}\PY{+w}{ }\PY{l+m+mf}{.0}\PY{+w}{ }\PY{p}{]}
+\PY{+w}{  }\PY{n}{U}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{p}{[}\PY{+w}{ }\PY{n}{u1}\PY{+w}{ }\PY{p}{]}
+\PY{+w}{  }\PY{n}{V}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{k+kt}{Dict}\PY{p}{(}\PY{+w}{ }\PY{l+m+mi}{0}\PY{+w}{ }\PY{o}{=\PYZgt{}}\PY{+w}{ }\PY{n}{zeros}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{)}\PY{+w}{ }\PY{c}{\PYZsh{} Começando os índices em 0}
+\PY{+w}{  }\PY{k}{for}\PY{+w}{ }\PY{n}{j}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{l+m+mi}{1}\PY{o}{:}\PY{n}{k}
+\PY{+w}{    }\PY{n}{qj}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{A}\PY{o}{\PYZsq{}}\PY{o}{*}\PY{n}{U}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{+w}{ }\PY{o}{\PYZhy{}}\PY{+w}{  }\PY{n}{β}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{o}{*}\PY{n}{V}\PY{p}{[}\PY{n}{j}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+\PY{+w}{    }\PY{n}{aj}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{norm}\PY{p}{(}\PY{n}{qj}\PY{p}{)}
+\PY{+w}{    }\PY{n}{vj}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{qj}\PY{o}{/}\PY{n}{aj}
+\PY{+w}{    }\PY{n}{push!}\PY{p}{(}\PY{n}{α}\PY{p}{,}\PY{+w}{ }\PY{n}{aj}\PY{p}{)}\PY{+w}{  }\PY{c}{\PYZsh{} salva a\PYZus{}j}
+\PY{+w}{    }\PY{k}{if}\PY{+w}{ }\PY{n}{ortog}\PY{+w}{ }\PY{o}{==}\PY{+w}{ }\PY{n+nb}{true}
+\PY{+w}{      }\PY{n}{vj}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{ortogonalizar}\PY{p}{(}\PY{n}{V}\PY{p}{,}\PY{n}{vj}\PY{p}{)}
+\PY{+w}{    }\PY{k}{end}
+\PY{+w}{    }\PY{n}{V}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{vj}\PY{+w}{     }\PY{c}{\PYZsh{} salva v\PYZus{}j}
+
+\PY{+w}{    }\PY{n}{pj}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{A}\PY{o}{*}\PY{n}{V}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{+w}{ }\PY{o}{\PYZhy{}}\PY{+w}{ }\PY{n}{aj}\PY{o}{*}\PY{n}{U}\PY{p}{[}\PY{n}{j}\PY{p}{]}
+\PY{+w}{    }\PY{n}{bj1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{norm}\PY{p}{(}\PY{n}{pj}\PY{p}{)}
+\PY{+w}{    }\PY{n}{push!}\PY{p}{(}\PY{n}{β}\PY{p}{,}\PY{+w}{ }\PY{n}{bj1}\PY{p}{)}\PY{+w}{ }\PY{c}{\PYZsh{} salva b\PYZus{}\PYZob{}j+1\PYZcb{}}
+\PY{+w}{    }\PY{n}{uj1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{pj}\PY{o}{/}\PY{n}{bj1}
+\PY{+w}{    }\PY{k}{if}\PY{+w}{ }\PY{n}{ortog}\PY{+w}{ }\PY{o}{==}\PY{+w}{ }\PY{n+nb}{true}
+\PY{+w}{      }\PY{n}{uj1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{ortogonalizar}\PY{p}{(}\PY{n}{U}\PY{p}{,}\PY{n}{uj1}\PY{p}{)}
+\PY{+w}{    }\PY{k}{end}
+\PY{+w}{    }\PY{n}{push!}\PY{p}{(}\PY{n}{U}\PY{p}{,}\PY{n}{uj1}\PY{p}{)}\PY{+w}{  }\PY{c}{\PYZsh{} salva u\PYZus{}\PYZob{}j+1\PYZcb{}}
+\PY{+w}{  }\PY{k}{end}
+\PY{+w}{  }\PY{c}{\PYZsh{} retorna vetores alfa e beta e matrizes U e V}
+\PY{+w}{  }\PY{k}{return}\PY{+w}{ }\PY{n}{α}\PY{p}{,}\PY{+w}{ }\PY{n}{β}\PY{p}{[}\PY{l+m+mi}{2}\PY{o}{:}\PY{k}{end}\PY{p}{]}\PY{p}{,}\PY{+w}{ }\PY{n}{hcat}\PY{p}{(}\PY{n}{U}\PY{o}{...}\PY{p}{)}\PY{p}{,}\PY{+w}{ }\PY{n}{hcat}\PY{p}{(}\PY{p}{[}\PY{n}{V}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{+w}{ }\PY{k}{for}\PY{+w}{ }\PY{n}{j}\PY{o}{=}\PY{l+m+mi}{1}\PY{o}{:}\PY{n}{k}\PY{p}{]}\PY{o}{...}\PY{p}{)}
+\PY{k}{end}
+
+\PY{k}{function}\PY{+w}{ }\PY{n}{bidiaglanczos}\PY{p}{(}\PY{n}{A}\PY{p}{,}\PY{+w}{ }\PY{n}{k}\PY{o}{::}\PY{k+kt}{Number}\PY{p}{;}\PY{+w}{ }\PY{n}{ortog}\PY{o}{=}\PY{n+nb}{false}\PY{p}{)}
+\PY{+w}{  }\PY{c}{\PYZsh{} realiza k passos da bidiagonalização}
+\PY{+w}{  }\PY{n}{m}\PY{p}{,}\PY{+w}{ }\PY{n}{n}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{size}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+\PY{+w}{  }\PY{n}{u1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{rand}\PY{p}{(}\PY{n}{m}\PY{p}{)}\PY{+w}{       }\PY{c}{\PYZsh{} vetor inicial aleatório}
+\PY{+w}{  }\PY{n}{u1}\PY{+w}{ }\PY{o}{/=}\PY{+w}{ }\PY{n}{norm}\PY{p}{(}\PY{n}{u1}\PY{p}{)}\PY{+w}{     }\PY{c}{\PYZsh{} normaliza qk}
+\PY{+w}{  }\PY{k}{return}\PY{+w}{ }\PY{n}{bidiaglanczos}\PY{p}{(}\PY{n}{A}\PY{p}{,}\PY{+w}{ }\PY{n}{u1}\PY{p}{,}\PY{+w}{ }\PY{n}{k}\PY{p}{;}\PY{+w}{ }\PY{n}{ortog}\PY{p}{)}
+\PY{k}{end}
+
+
+
+\PY{k}{function}\PY{+w}{ }\PY{n}{bidiaglanczos}\PY{p}{(}\PY{n}{A}\PY{p}{,}\PY{+w}{ }\PY{n}{u1}\PY{o}{::}\PY{k+kt}{Vector}\PY{p}{;}\PY{+w}{ }\PY{n}{ortog}\PY{o}{=}\PY{n+nb}{false}\PY{p}{)}
+\PY{+w}{  }\PY{n}{m}\PY{p}{,}\PY{+w}{ }\PY{n}{n}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{size}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+\PY{+w}{  }\PY{k}{return}\PY{+w}{ }\PY{n}{bidiaglanczos}\PY{p}{(}\PY{n}{A}\PY{p}{,}\PY{+w}{ }\PY{n}{u1}\PY{p}{,}\PY{+w}{ }\PY{n}{n}\PY{p}{;}\PY{+w}{ }\PY{n}{ortog}\PY{p}{)}
+\PY{k}{end}
+
+
+\PY{k}{function}\PY{+w}{ }\PY{n}{bidiaglanczos}\PY{p}{(}\PY{n}{A}\PY{p}{;}\PY{+w}{ }\PY{n}{ortog}\PY{o}{=}\PY{n+nb}{false}\PY{p}{)}
+\PY{+w}{  }\PY{n}{m}\PY{p}{,}\PY{+w}{ }\PY{n}{n}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{size}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+\PY{+w}{  }\PY{k}{return}\PY{+w}{ }\PY{n}{bidiaglanczos}\PY{p}{(}\PY{n}{A}\PY{p}{,}\PY{n}{n}\PY{p}{;}\PY{+w}{ }\PY{n}{ortog}\PY{p}{)}
+\PY{k}{end}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+bidiaglanczos (generic function with 4 methods)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \hypertarget{reconstruindo-a-imagem}{%
+\subsection*{Reconstruindo a imagem}\label{reconstruindo-a-imagem}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{function}\PY{+w}{ }\PY{n}{GKB2}\PY{p}{(}\PY{n}{A}\PY{p}{,}\PY{+w}{ }\PY{n}{b}\PY{o}{::}\PY{k+kt}{Vector}\PY{p}{,}\PY{+w}{ }\PY{n}{k}\PY{o}{::}\PY{k+kt}{Number}\PY{+w}{ }\PY{p}{;}\PY{+w}{ }\PY{n}{ortog}\PY{o}{=}\PY{n+nb}{false}\PY{p}{)}
+\PY{+w}{  }\PY{c}{\PYZsh{} realiza k passos da bidiagonalização}
+\PY{+w}{  }\PY{n}{tol}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{l+m+mf}{1e\PYZhy{}14}
+\PY{+w}{  }\PY{n}{m}\PY{p}{,}\PY{+w}{ }\PY{n}{n}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{size}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+
+\PY{+w}{  }\PY{c}{\PYZsh{} Inicializando}
+\PY{+w}{  }\PY{n}{β1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{norm}\PY{p}{(}\PY{n}{b}\PY{p}{)}
+\PY{+w}{  }\PY{n}{u1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{b}\PY{o}{/}\PY{n}{β1}
+\PY{+w}{  }\PY{n}{r1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{A}\PY{o}{\PYZsq{}}\PY{n}{u1}
+\PY{+w}{  }\PY{n}{α1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{norm}\PY{p}{(}\PY{n}{r1}\PY{p}{)}
+\PY{+w}{  }\PY{n}{v1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{r1}\PY{o}{/}\PY{n}{α1}
+
+\PY{+w}{  }\PY{n}{α}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{p}{[}\PY{+w}{ }\PY{n}{α1}\PY{+w}{ }\PY{p}{]}
+\PY{+w}{  }\PY{n}{β}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{p}{[}\PY{+w}{ }\PY{n}{β1}\PY{+w}{ }\PY{p}{]}
+\PY{+w}{  }\PY{n}{U}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{p}{[}\PY{+w}{ }\PY{n}{u1}\PY{+w}{ }\PY{p}{]}
+\PY{+w}{  }\PY{n}{V}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{p}{[}\PY{+w}{ }\PY{n}{v1}\PY{+w}{ }\PY{p}{]}
+\PY{+w}{  }\PY{k}{for}\PY{+w}{ }\PY{n}{j}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{l+m+mi}{1}\PY{o}{:}\PY{n}{k}
+\PY{+w}{    }\PY{n}{pj1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{A}\PY{o}{*}\PY{n}{V}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{+w}{ }\PY{o}{\PYZhy{}}\PY{+w}{ }\PY{n}{α}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{o}{*}\PY{n}{U}\PY{p}{[}\PY{n}{j}\PY{p}{]}
+\PY{+w}{    }\PY{n}{bj1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{norm}\PY{p}{(}\PY{n}{pj1}\PY{p}{)}
+\PY{+w}{    }\PY{k}{if}\PY{+w}{ }\PY{n}{bj1}\PY{+w}{ }\PY{o}{\PYZlt{}}\PY{+w}{ }\PY{n}{tol}
+\PY{+w}{      }\PY{k}{break}
+\PY{+w}{    }\PY{k}{else}
+\PY{+w}{      }\PY{n}{push!}\PY{p}{(}\PY{n}{β}\PY{p}{,}\PY{+w}{ }\PY{n}{bj1}\PY{p}{)}\PY{+w}{ }\PY{c}{\PYZsh{} atualiza b\PYZus{}\PYZob{}j+1\PYZcb{}}
+\PY{+w}{      }\PY{n}{uj1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{pj1}\PY{o}{/}\PY{n}{bj1}
+\PY{+w}{      }\PY{k}{if}\PY{+w}{ }\PY{n}{ortog}\PY{+w}{ }\PY{o}{==}\PY{+w}{ }\PY{n+nb}{true}
+\PY{+w}{        }\PY{n}{uj1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{ortogonalizar}\PY{p}{(}\PY{n}{U}\PY{p}{,}\PY{n}{uj1}\PY{p}{)}
+\PY{+w}{      }\PY{k}{end}
+\PY{+w}{      }\PY{n}{push!}\PY{p}{(}\PY{n}{U}\PY{p}{,}\PY{+w}{ }\PY{n}{uj1}\PY{p}{)}\PY{+w}{ }\PY{c}{\PYZsh{} atualiza u\PYZus{}\PYZob{}j+1\PYZcb{}}
+\PY{+w}{      }\PY{n}{rj1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{A}\PY{o}{\PYZsq{}}\PY{n}{uj1}\PY{+w}{ }\PY{o}{\PYZhy{}}\PY{+w}{ }\PY{n}{bj1}\PY{o}{*}\PY{n}{V}\PY{p}{[}\PY{n}{j}\PY{p}{]}
+\PY{+w}{      }\PY{n}{aj1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{norm}\PY{p}{(}\PY{n}{rj1}\PY{p}{)}
+\PY{+w}{      }\PY{k}{if}\PY{+w}{ }\PY{n}{aj1}\PY{+w}{ }\PY{o}{\PYZlt{}}\PY{+w}{ }\PY{n}{tol}
+\PY{+w}{        }\PY{k}{break}
+\PY{+w}{      }\PY{k}{else}
+\PY{+w}{        }\PY{n}{push!}\PY{p}{(}\PY{n}{α}\PY{p}{,}\PY{+w}{ }\PY{n}{aj1}\PY{p}{)}\PY{+w}{ }\PY{c}{\PYZsh{} atualiza a\PYZus{}\PYZob{}j+1\PYZcb{}}
+\PY{+w}{        }\PY{n}{vj1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{rj1}\PY{o}{/}\PY{n}{aj1}
+\PY{+w}{        }\PY{k}{if}\PY{+w}{ }\PY{n}{ortog}\PY{+w}{ }\PY{o}{==}\PY{+w}{ }\PY{n+nb}{true}
+\PY{+w}{          }\PY{n}{vj}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{ortogonalizar}\PY{p}{(}\PY{n}{V}\PY{p}{,}\PY{n}{vj1}\PY{p}{)}
+\PY{+w}{        }\PY{k}{end}
+\PY{+w}{        }\PY{n}{push!}\PY{p}{(}\PY{n}{V}\PY{p}{,}\PY{n}{vj1}\PY{p}{)}\PY{+w}{ }\PY{c}{\PYZsh{} atualiza v\PYZus{}\PYZob{}j+1\PYZcb{}}
+\PY{+w}{      }\PY{k}{end}
+\PY{+w}{    }\PY{k}{end}
+
+\PY{+w}{  }\PY{k}{end}
+\PY{+w}{  }\PY{c}{\PYZsh{} retorna vetores alfa e beta e matrizes U e V}
+\PY{+w}{  }\PY{k}{return}\PY{+w}{ }\PY{n}{α}\PY{p}{,}\PY{+w}{ }\PY{n}{β}\PY{p}{,}\PY{+w}{ }\PY{n}{hcat}\PY{p}{(}\PY{n}{U}\PY{o}{...}\PY{p}{)}\PY{p}{,}\PY{+w}{ }\PY{n}{hcat}\PY{p}{(}\PY{n}{V}\PY{o}{...}\PY{p}{)}
+\PY{k}{end}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+GKB2 (generic function with 1 method)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{function}\PY{+w}{ }\PY{n}{Bidiag}\PY{p}{(}\PY{n}{α}\PY{p}{,}\PY{+w}{ }\PY{n}{β}\PY{p}{)}
+\PY{+w}{  }\PY{c}{\PYZsh{} retorna uma bidiagonal k+1 x k com alfa e beta}
+\PY{+w}{  }\PY{n}{k}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{length}\PY{p}{(}\PY{n}{α}\PY{p}{)}
+\PY{+w}{  }\PY{k}{return}\PY{+w}{ }\PY{p}{[}\PY{n}{Diagonal}\PY{p}{(}\PY{n}{α}\PY{p}{)}\PY{p}{;}\PY{+w}{ }\PY{n}{zeros}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{k}\PY{p}{)}\PY{p}{]}\PY{+w}{ }\PY{o}{+}\PY{+w}{ }\PY{p}{[}\PY{n}{zeros}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{k}\PY{p}{)}\PY{p}{;}\PY{+w}{ }\PY{n}{Diagonal}\PY{p}{(}\PY{n}{β}\PY{p}{)}\PY{p}{]}
+\PY{k}{end}
+
+\PY{k}{function}\PY{+w}{ }\PY{n}{Bidiag2}\PY{p}{(}\PY{n}{α}\PY{p}{,}\PY{+w}{ }\PY{n}{β}\PY{p}{)}
+\PY{+w}{  }\PY{c}{\PYZsh{} retorna uma bidiagonal com alfa e beta}
+\PY{+w}{  }\PY{n}{k}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{length}\PY{p}{(}\PY{n}{α}\PY{p}{)}
+\PY{+w}{  }\PY{n}{B}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{k+kt}{Matrix}\PY{p}{(}\PY{n}{Diagonal}\PY{p}{(}\PY{n}{α}\PY{p}{)}\PY{p}{)}
+\PY{+w}{  }\PY{k}{for}\PY{+w}{ }\PY{n}{j}\PY{o}{=}\PY{l+m+mi}{1}\PY{o}{:}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+\PY{+w}{    }\PY{n}{B}\PY{p}{[}\PY{n}{j}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{j}\PY{p}{]}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{β}\PY{p}{[}\PY{n}{j}\PY{p}{]}
+\PY{+w}{  }\PY{k}{end}
+\PY{+w}{  }\PY{k}{return}\PY{+w}{ }\PY{n}{B}
+\PY{k}{end}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Bidiag2 (generic function with 1 method)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \hypertarget{rotauxe7uxf5es-de-givens}{%
+\subsection*{Rotações de Givens}\label{rotauxe7uxf5es-de-givens}}
+
+Para resolver de maneira eficiente o problema
+
+\[\arg\min_{y\in S_k} \|B_ky - \beta_1e_1\|_2 \]
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{function}\PY{+w}{ }\PY{n}{QRGivens}\PY{p}{(}\PY{n}{B}\PY{p}{)}
+\PY{+w}{  }\PY{n}{m}\PY{p}{,}\PY{+w}{ }\PY{n}{n}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{size}\PY{p}{(}\PY{n}{B}\PY{p}{)}
+\PY{+w}{  }\PY{n}{Givs}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{p}{[}\PY{p}{]}
+\PY{+w}{  }\PY{n}{GB}\PY{+w}{  }\PY{o}{=}\PY{+w}{ }\PY{n}{copy}\PY{p}{(}\PY{n}{B}\PY{p}{)}
+\PY{+w}{  }\PY{k}{for}\PY{+w}{ }\PY{n}{j}\PY{o}{=}\PY{l+m+mi}{1}\PY{o}{:}\PY{n}{min}\PY{p}{(}\PY{n}{m}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{n}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{+w}{    }\PY{n}{G}\PY{p}{,}\PY{+w}{ }\PY{n}{r}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{givens}\PY{p}{(}\PY{n}{GB}\PY{p}{,}\PY{+w}{ }\PY{n}{j}\PY{p}{,}\PY{+w}{ }\PY{n}{j}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{+w}{ }\PY{n}{j}\PY{p}{)}
+\PY{+w}{    }\PY{n}{push!}\PY{p}{(}\PY{n}{Givs}\PY{p}{,}\PY{+w}{ }\PY{n}{G}\PY{p}{)}
+\PY{+w}{    }\PY{n}{GB}\PY{+w}{ }\PY{o}{.=}\PY{+w}{ }\PY{n}{G}\PY{o}{*}\PY{n}{GB}
+\PY{+w}{  }\PY{k}{end}
+\PY{+w}{  }\PY{n}{Givs}
+\PY{k}{end}
+
+\PY{k}{function}\PY{+w}{ }\PY{n}{montarQ}\PY{p}{(}\PY{n}{givens}\PY{p}{,}\PY{+w}{ }\PY{n}{n}\PY{p}{)}
+\PY{+w}{  }\PY{n}{k}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{length}\PY{p}{(}\PY{n}{givens}\PY{p}{)}
+\PY{+w}{  }\PY{n}{Q}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{k+kt}{Matrix}\PY{p}{(}\PY{n}{Diagonal}\PY{p}{(}\PY{n}{ones}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\PY{+w}{  }\PY{k}{for}\PY{+w}{ }\PY{n}{j}\PY{o}{=}\PY{l+m+mi}{1}\PY{o}{:}\PY{n}{k}
+\PY{+w}{    }\PY{n}{Q}\PY{+w}{ }\PY{o}{.=}\PY{+w}{ }\PY{n}{givens}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{o}{*}\PY{n}{Q}
+\PY{+w}{  }\PY{k}{end}
+\PY{+w}{  }\PY{n}{Q}
+\PY{k}{end}
+
+\PY{k}{function}\PY{+w}{ }\PY{n}{resolverGivens}\PY{p}{(}\PY{n}{A}\PY{p}{,}\PY{n}{b}\PY{p}{)}
+\PY{+w}{  }\PY{l+s}{\PYZdq{}\PYZdq{}\PYZdq{}}\PY{l+s}{Resolve o sistema Ax=b com A bidiagonal}\PY{l+s}{\PYZdq{}\PYZdq{}\PYZdq{}}
+\PY{+w}{  }\PY{n}{m}\PY{p}{,}\PY{n}{n}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{size}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+\PY{+w}{  }\PY{n}{Q}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{montarQ}\PY{p}{(}\PY{n}{QRGivens}\PY{p}{(}\PY{n}{A}\PY{p}{)}\PY{p}{,}\PY{+w}{ }\PY{n}{m}\PY{p}{)}
+\PY{+w}{  }\PY{n}{R}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{Q}\PY{o}{\PYZsq{}}\PY{n}{A}
+\PY{+w}{  }\PY{k}{return}\PY{+w}{ }\PY{n}{R}\PY{o}{\PYZbs{}}\PY{p}{(}\PY{n}{Q}\PY{o}{\PYZsq{}}\PY{n}{b}\PY{p}{)}
+\PY{k}{end}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+resolverGivens (generic function with 1 method)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \hypertarget{algoritmo-lsqr}{%
+\subsection*{Algoritmo LSQR}\label{algoritmo-lsqr}}
+
+Vamos usar a bidiagonalização de Golub-Kahan para obter incrementalmente
+matrizes \(V_k, B_k\) e \(U_k\) de modo que \[AV_k = U_{k+1}B_k\] de
+modo que podemos reformular o problema
+
+\[\arg\min_{x\in S_k} \|Ax-b\| = \arg\min_{y\in\mathbb{R}^n}\|AV_ky-b\| = \arg\min_{y\in\mathbb{R}^n} \|B_ky-\beta_1e_1\| \tag{$\star$}\]
+
+Como \(B_k\) é bidiagonal inferior, podemos usar rotações de Givens para
+fazer a fatoração \(QR = B_k\) e resolvemos o problema acima resolvendo
+o sistema triangular\\
+\[Rx = Q^\top\beta_1e_1 \tag{G}\]
+
+Esse problema \((G)\) é resolvido pela função
+\texttt{resolverGivens(Bk,\ β1e1)}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{function}\PY{+w}{ }\PY{n}{ReconstrucaoLSQR}\PY{p}{(}\PY{n}{A}\PY{p}{,}\PY{+w}{ }\PY{n}{b}\PY{+w}{ }\PY{o}{::}\PY{+w}{ }\PY{k+kt}{Vector}\PY{p}{,}\PY{+w}{ }\PY{n}{δ}\PY{+w}{ }\PY{o}{::}\PY{+w}{ }\PY{k+kt}{Number}\PY{p}{,}\PY{+w}{ }\PY{n}{k}\PY{+w}{ }\PY{o}{::}\PY{+w}{ }\PY{k+kt}{Number}\PY{p}{,}\PY{+w}{ }\PY{n}{τ}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{l+m+mf}{1.1}\PY{p}{;}\PY{+w}{ }\PY{n}{ortog}\PY{o}{=}\PY{n+nb}{false}\PY{p}{)}
+\PY{+w}{  }\PY{c}{\PYZsh{} Realiza a reconstrução da imagem usando o algoritmo GKB2}
+\PY{+w}{  }\PY{n}{tol}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{l+m+mf}{1e\PYZhy{}14}
+\PY{+w}{  }\PY{n}{m}\PY{p}{,}\PY{+w}{ }\PY{n}{n}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{size}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+\PY{+w}{  }\PY{n}{β1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{norm}\PY{p}{(}\PY{n}{b}\PY{p}{)}
+\PY{+w}{  }\PY{n}{u1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{b}\PY{o}{/}\PY{n}{β1}
+\PY{+w}{  }\PY{n}{r1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{A}\PY{o}{\PYZsq{}}\PY{n}{u1}
+\PY{+w}{  }\PY{n}{α1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{norm}\PY{p}{(}\PY{n}{r1}\PY{p}{)}
+\PY{+w}{  }\PY{n}{v1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{r1}\PY{o}{/}\PY{n}{α1}
+
+\PY{+w}{  }\PY{n}{α}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{p}{[}\PY{+w}{ }\PY{n}{α1}\PY{+w}{ }\PY{p}{]}
+\PY{+w}{  }\PY{n}{β}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{p}{[}\PY{+w}{ }\PY{n}{β1}\PY{+w}{ }\PY{p}{]}
+\PY{+w}{  }\PY{n}{U}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{p}{[}\PY{+w}{ }\PY{n}{u1}\PY{+w}{ }\PY{p}{]}
+\PY{+w}{  }\PY{n}{V}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{p}{[}\PY{+w}{ }\PY{n}{v1}\PY{+w}{ }\PY{p}{]}
+
+\PY{+w}{  }\PY{n}{Xizes}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{p}{[}\PY{p}{]}
+\PY{+w}{  }\PY{n}{Erros}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{p}{[}\PY{p}{]}
+\PY{+w}{  }\PY{k}{for}\PY{+w}{ }\PY{n}{j}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{l+m+mi}{1}\PY{o}{:}\PY{n}{k}
+\PY{+w}{    }\PY{n}{pj1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{A}\PY{o}{*}\PY{n}{V}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{+w}{ }\PY{o}{\PYZhy{}}\PY{+w}{ }\PY{n}{α}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{o}{*}\PY{n}{U}\PY{p}{[}\PY{n}{j}\PY{p}{]}
+\PY{+w}{    }\PY{n}{bj1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{norm}\PY{p}{(}\PY{n}{pj1}\PY{p}{)}
+\PY{+w}{    }\PY{k}{if}\PY{+w}{ }\PY{n}{bj1}\PY{+w}{ }\PY{o}{\PYZlt{}}\PY{+w}{ }\PY{n}{tol}\PY{+w}{ }\PY{c}{\PYZsh{} b\PYZus{}\PYZob{}j+1\PYZcb{} = 0}
+\PY{+w}{      }\PY{k}{break}
+\PY{+w}{    }\PY{k}{else}
+\PY{+w}{      }\PY{n}{push!}\PY{p}{(}\PY{n}{β}\PY{p}{,}\PY{+w}{ }\PY{n}{bj1}\PY{p}{)}\PY{+w}{ }\PY{c}{\PYZsh{} atualiza b\PYZus{}\PYZob{}j+1\PYZcb{}}
+\PY{+w}{      }\PY{n}{uj1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{pj1}\PY{o}{/}\PY{n}{bj1}
+\PY{+w}{      }\PY{k}{if}\PY{+w}{ }\PY{n}{ortog}\PY{+w}{ }\PY{o}{==}\PY{+w}{ }\PY{n+nb}{true}
+\PY{+w}{        }\PY{n}{uj1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{ortogonalizar}\PY{p}{(}\PY{n}{U}\PY{p}{,}\PY{n}{uj1}\PY{p}{)}
+\PY{+w}{      }\PY{k}{end}
+\PY{+w}{      }\PY{n}{push!}\PY{p}{(}\PY{n}{U}\PY{p}{,}\PY{+w}{ }\PY{n}{uj1}\PY{p}{)}\PY{+w}{ }\PY{c}{\PYZsh{} atualiza u\PYZus{}\PYZob{}j+1\PYZcb{}}
+\PY{+w}{      }\PY{n}{rj1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{A}\PY{o}{\PYZsq{}}\PY{n}{uj1}\PY{+w}{ }\PY{o}{\PYZhy{}}\PY{+w}{ }\PY{n}{bj1}\PY{o}{*}\PY{n}{V}\PY{p}{[}\PY{n}{j}\PY{p}{]}
+\PY{+w}{      }\PY{n}{aj1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{norm}\PY{p}{(}\PY{n}{rj1}\PY{p}{)}
+\PY{+w}{      }\PY{k}{if}\PY{+w}{ }\PY{n}{aj1}\PY{+w}{ }\PY{o}{\PYZlt{}}\PY{+w}{ }\PY{n}{tol}\PY{+w}{ }\PY{c}{\PYZsh{} a\PYZus{}\PYZob{}j+1\PYZcb{} = 0}
+\PY{+w}{        }\PY{k}{break}
+\PY{+w}{      }\PY{k}{else}
+\PY{+w}{        }\PY{n}{push!}\PY{p}{(}\PY{n}{α}\PY{p}{,}\PY{+w}{ }\PY{n}{aj1}\PY{p}{)}\PY{+w}{ }\PY{c}{\PYZsh{} atualiza a\PYZus{}\PYZob{}j+1\PYZcb{}}
+\PY{+w}{        }\PY{n}{vj1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{rj1}\PY{o}{/}\PY{n}{aj1}
+\PY{+w}{        }\PY{k}{if}\PY{+w}{ }\PY{n}{ortog}\PY{+w}{ }\PY{o}{==}\PY{+w}{ }\PY{n+nb}{true}
+\PY{+w}{          }\PY{n}{vj1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{ortogonalizar}\PY{p}{(}\PY{n}{V}\PY{p}{,}\PY{n}{vj1}\PY{p}{)}
+\PY{+w}{        }\PY{k}{end}
+\PY{+w}{        }\PY{n}{push!}\PY{p}{(}\PY{n}{V}\PY{p}{,}\PY{n}{vj1}\PY{p}{)}\PY{+w}{ }\PY{c}{\PYZsh{} atualiza v\PYZus{}\PYZob{}j+1\PYZcb{}}
+\PY{+w}{      }\PY{k}{end}
+\PY{+w}{    }\PY{k}{end}
+
+\PY{+w}{    }\PY{n}{Vk}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{hcat}\PY{p}{(}\PY{n}{V}\PY{p}{[}\PY{l+m+mi}{1}\PY{o}{:}\PY{n}{j}\PY{p}{]}\PY{o}{...}\PY{p}{)}
+\PY{+w}{    }\PY{n}{Bk}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{Bidiag}\PY{p}{(}\PY{n}{α}\PY{p}{[}\PY{l+m+mi}{1}\PY{o}{:}\PY{n}{j}\PY{p}{]}\PY{p}{,}\PY{+w}{ }\PY{n}{β}\PY{p}{[}\PY{l+m+mi}{2}\PY{o}{:}\PY{n}{j}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+\PY{+w}{    }\PY{n}{β1e1}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{zeros}\PY{p}{(}\PY{n}{j}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{+w}{    }\PY{n}{β1e1}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{β1}
+\PY{+w}{    }\PY{n}{yk}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{resolverGivens}\PY{p}{(}\PY{n}{Bk}\PY{p}{,}\PY{n}{β1e1}\PY{p}{)}
+\PY{+w}{    }\PY{n}{xk}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{Vk}\PY{o}{*}\PY{n}{yk}
+\PY{+w}{    }\PY{n}{erro}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{norm}\PY{p}{(}\PY{n}{A}\PY{o}{*}\PY{n}{xk}\PY{o}{\PYZhy{}}\PY{n}{b}\PY{p}{)}
+\PY{+w}{    }\PY{n}{push!}\PY{p}{(}\PY{n}{Xizes}\PY{p}{,}\PY{+w}{ }\PY{n}{xk}\PY{p}{)}
+\PY{+w}{    }\PY{n}{push!}\PY{p}{(}\PY{n}{Erros}\PY{p}{,}\PY{+w}{ }\PY{n}{erro}\PY{p}{)}
+\PY{+w}{    }\PY{k}{if}\PY{+w}{ }\PY{n}{erro}\PY{+w}{ }\PY{o}{<=}\PY{+w}{ }\PY{n}{τ}\PY{o}{*}\PY{n}{δ}
+\PY{+w}{      }\PY{n+nd}{@info}\PY{+w}{ }\PY{l+s}{\PYZdq{}}\PY{l+s}{Critério de discrepância aceito com k=}\PY{l+s+si}{\PYZdl{}j}\PY{l+s}{\PYZdq{}}
+\PY{+w}{      }\PY{k}{return}\PY{+w}{ }\PY{n}{α}\PY{p}{,}\PY{+w}{ }\PY{n}{β}\PY{p}{,}\PY{+w}{ }\PY{n}{hcat}\PY{p}{(}\PY{n}{U}\PY{o}{...}\PY{p}{)}\PY{p}{,}\PY{+w}{ }\PY{n}{hcat}\PY{p}{(}\PY{n}{V}\PY{o}{...}\PY{p}{)}\PY{p}{,}\PY{+w}{ }\PY{n}{Xizes}\PY{p}{,}\PY{+w}{ }\PY{n}{Erros}
+\PY{+w}{    }\PY{k}{end}
+
+\PY{+w}{  }\PY{k}{end}
+\PY{+w}{  }\PY{c}{\PYZsh{} retorna vetores alfa e beta e matrizes U e V}
+\PY{+w}{     }\PY{n+nd}{@info}\PY{+w}{ }\PY{l+s}{\PYZdq{}}\PY{l+s}{Critério de discrepância não foi atingido}\PY{l+s}{\PYZdq{}}
+\PY{+w}{  }\PY{k}{return}\PY{+w}{ }\PY{n}{α}\PY{p}{,}\PY{+w}{ }\PY{n}{β}\PY{p}{,}\PY{+w}{ }\PY{n}{hcat}\PY{p}{(}\PY{n}{U}\PY{o}{...}\PY{p}{)}\PY{p}{,}\PY{+w}{ }\PY{n}{hcat}\PY{p}{(}\PY{n}{V}\PY{o}{...}\PY{p}{)}\PY{p}{,}\PY{+w}{ }\PY{n}{Xizes}\PY{p}{,}\PY{+w}{ }\PY{n}{Erros}
+\PY{k}{end}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+ReconstrucaoLSQR (generic function with 2 methods)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ReconstrucaoLSQR}\NormalTok{(A, b, δ, k, τ }\OperatorTok{=} \FloatTok{1.1}\NormalTok{; ortog}\OperatorTok{=}\ConstantTok{false}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Função que implementa o algoritmo LSQR para reconstrução de imagem,
+utilizando a bidiagonalização de Golub-Kahan. Busca uma solução
+aproximada \(x_k\) para o sistema linear \(Ax = b\), minimizando
+\(||Ax - b||_2\), sujeita a um critério de discrepância, onde \(b\) é a
+imagem borrada e \(A\) é a matriz de desfoque.
+
+\textbf{Argumentos}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{A}: Matriz de desfoque esparsa (Sparse Matrix), geralmente
+  gerada pela função \texttt{blur}.
+\item
+  \texttt{b}: Vetor da imagem borrada e com ruído.
+\item
+  \texttt{δ}: Nível de ruído conhecido em \texttt{b}, usado no critério
+  de discrepância (\(\|Ax_k - b\| \le \tau\delta\)).
+\item
+  \texttt{k}: Número máximo de iterações para a bidiagonalização.
+\item
+  \texttt{τ}: Parâmetro de tolerância para o critério de discrepância
+  (padrão: 1.1).
+\item
+  \texttt{ortog}: Booleano que indica se deve ser aplicada
+  ortogonalização explícita (padrão: \texttt{false}).
+\end{itemize}
+
+\textbf{Retorna}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{α}: Vetor dos elementos diagonais da matriz bidiagonal
+  \(B_k\).
+\item
+  \texttt{β}: Vetor dos elementos subdiagonais da matriz bidiagonal
+  \(B_k\).
+\item
+  \texttt{U}: Matriz ortogonal \(U_k\).
+\item
+  \texttt{V}: Matriz ortogonal \(V_k\).
+\item
+  \texttt{Xizes}: Lista de soluções aproximadas \(x_k\) em cada
+  iteração.
+\item
+  \texttt{Erros}: Lista dos resíduos \(\|Ax_k - b\|\) em cada iteração.
+\end{itemize}
+
+O algoritmo para quando o critério de discrepância é atendido ou o
+número máximo de iterações \texttt{k} é atingido.
+
+    \hypertarget{testes}{%
+\subsection*{Testes}\label{testes}}
+
+    \hypertarget{erro-5-tau1.1-com-ortogonalizauxe7uxe3o}{%
+\subsubsection*{\texorpdfstring{Erro 5\%, \(\tau=1.1\), com
+ortogonalização}{Erro 5\%, \textbackslash tau=1.1, com ortogonalização}}\label{erro-5-tau1.1-com-ortogonalizauxe7uxe3o}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{A}\PY{+w}{ }\PY{o}{=}\PY{+w}{  }\PY{n}{blur}\PY{p}{(}\PY{n}{N}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{)}\PY{p}{;}
+\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{A}\PY{o}{*}\PY{n}{lena\PYZus{}vec}\PY{p}{;}
+
+\PY{n}{erro}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{randn}\PY{p}{(}\PY{n}{N}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}\PY{p}{)}
+\PY{n}{erro}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{erro}\PY{o}{/}\PY{n}{norm}\PY{p}{(}\PY{n}{erro}\PY{p}{)}
+
+\PY{n}{e}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{l+m+mf}{0.05}
+\PY{n}{τ}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{l+m+mf}{1.1}
+
+\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{+w}{ }\PY{o}{+}\PY{+w}{ }\PY{n}{e}\PY{o}{*}\PY{n}{erro}\PY{o}{*}\PY{n}{norm}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{p}{)}
+\PY{n}{lena\PYZus{}img\PYZus{}bn}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_31_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    Critério de discrepância.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{δ}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{norm}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{+w}{ }\PY{o}{\PYZhy{}}\PY{+w}{ }\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+4.21554656170367
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nd}{@time}\PY{+w}{ }\PY{n}{α}\PY{p}{,}\PY{+w}{ }\PY{n}{β}\PY{p}{,}\PY{+w}{ }\PY{n}{U}\PY{p}{,}\PY{+w}{ }\PY{n}{V}\PY{p}{,}\PY{+w}{ }\PY{n}{X}\PY{p}{,}\PY{+w}{ }\PY{n}{E}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{ReconstrucaoLSQR}\PY{p}{(}\PY{n}{A}\PY{p}{,}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{,}\PY{+w}{ }\PY{n}{δ}\PY{p}{,}\PY{+w}{ }\PY{l+m+mi}{10}\PY{p}{,}\PY{+w}{ }\PY{n}{τ}\PY{p}{,}\PY{+w}{ }\PY{n}{ortog}\PY{o}{=}\PY{n+nb}{true}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\textcolor{ansi-cyan-intense}{\textbf{[ }}\textcolor{ansi-cyan-intense}{\textbf{Info: }}Critério de discrepância aceito
+com k=3
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  2.643614 seconds (2.02 M allocations: 145.847 MiB, 28.64\% gc time, 70.70\%
+compilation time)
+    \end{Verbatim}
+
+    Evolução da solução
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{mosaicview}\PY{p}{(}\PY{n}{vetor2imagem}\PY{o}{.}\PY{p}{(}\PY{n}{X}\PY{p}{)}\PY{o}{...}\PY{p}{;}\PY{+w}{ }\PY{n}{nrow}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{+w}{ }\PY{n}{npad}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_36_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    Comparando lado a lado: Solução, imagem borrada e a imagem original
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{lena\PYZus{}rec\PYZus{}5\PYZus{}CO\PYZus{}11}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{k}{end}\PY{p}{]}\PY{p}{)}
+
+\PY{n}{mosaicview}\PY{p}{(}\PY{n}{lena\PYZus{}rec\PYZus{}5\PYZus{}CO\PYZus{}11}\PY{p}{,}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{)}\PY{p}{,}\PY{+w}{ }\PY{n}{lena\PYZus{}img}\PY{p}{;}\PY{+w}{ }\PY{n}{nrow}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{+w}{ }\PY{n}{npad}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_38_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    \hypertarget{erro-5-tau1.1-sem-ortogonalizauxe7uxe3o}{%
+\subsubsection*{\texorpdfstring{Erro 5\%, \(\tau=1.1\), sem
+ortogonalização}{Erro 5\%, \textbackslash tau=1.1, sem ortogonalização}}\label{erro-5-tau1.1-sem-ortogonalizauxe7uxe3o}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{α}\PY{p}{,}\PY{+w}{ }\PY{n}{β}\PY{p}{,}\PY{+w}{ }\PY{n}{U}\PY{p}{,}\PY{+w}{ }\PY{n}{V}\PY{p}{,}\PY{+w}{ }\PY{n}{X}\PY{p}{,}\PY{+w}{ }\PY{n}{E}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{ReconstrucaoLSQR}\PY{p}{(}\PY{n}{A}\PY{p}{,}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{,}\PY{+w}{ }\PY{n}{δ}\PY{p}{,}\PY{+w}{ }\PY{l+m+mi}{10}\PY{p}{,}\PY{+w}{ }\PY{n}{τ}\PY{p}{,}\PY{+w}{ }\PY{n}{ortog}\PY{o}{=}\PY{n+nb}{false}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\textcolor{ansi-cyan-intense}{\textbf{[ }}\textcolor{ansi-cyan-intense}{\textbf{Info: }}Critério de discrepância aceito
+com k=3
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{mosaicview}\PY{p}{(}\PY{n}{vetor2imagem}\PY{o}{.}\PY{p}{(}\PY{n}{X}\PY{p}{)}\PY{o}{...}\PY{p}{;}\PY{+w}{ }\PY{n}{nrow}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{+w}{ }\PY{n}{npad}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_41_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    Comparando lado a lado: Solução, imagem borrada e a imagem original
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{lena\PYZus{}rec\PYZus{}5\PYZus{}SO\PYZus{}11}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{k}{end}\PY{p}{]}\PY{p}{)}
+\PY{n}{mosaicview}\PY{p}{(}\PY{n}{lena\PYZus{}rec\PYZus{}5\PYZus{}SO\PYZus{}11}\PY{p}{,}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{)}\PY{p}{,}\PY{+w}{ }\PY{n}{lena\PYZus{}img}\PY{p}{;}\PY{+w}{ }\PY{n}{nrow}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{+w}{ }\PY{n}{npad}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_43_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    \hypertarget{erro-5-tau1.05-com-ortogonalizauxe7uxe3o}{%
+\subsubsection*{\texorpdfstring{Erro 5\%, \(\tau=1.05\), com
+ortogonalização}{Erro 5\%, \textbackslash tau=1.05, com ortogonalização}}\label{erro-5-tau1.05-com-ortogonalizauxe7uxe3o}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{A}\PY{+w}{ }\PY{o}{=}\PY{+w}{  }\PY{n}{blur}\PY{p}{(}\PY{n}{N}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{)}\PY{p}{;}
+\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{A}\PY{o}{*}\PY{n}{lena\PYZus{}vec}\PY{p}{;}
+
+\PY{n}{erro}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{randn}\PY{p}{(}\PY{n}{N}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}\PY{p}{)}
+\PY{n}{erro}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{erro}\PY{o}{/}\PY{n}{norm}\PY{p}{(}\PY{n}{erro}\PY{p}{)}
+
+\PY{n}{e}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{l+m+mf}{0.05}
+\PY{n}{τ}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{l+m+mf}{1.05}
+
+\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{+w}{ }\PY{o}{+}\PY{+w}{ }\PY{n}{e}\PY{o}{*}\PY{n}{erro}\PY{o}{*}\PY{n}{norm}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{p}{)}
+\PY{n}{lena\PYZus{}img\PYZus{}bn}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_45_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    Critério de discrepância.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{δ}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{norm}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{+w}{ }\PY{o}{\PYZhy{}}\PY{+w}{ }\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+4.21554656170367
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{α}\PY{p}{,}\PY{+w}{ }\PY{n}{β}\PY{p}{,}\PY{+w}{ }\PY{n}{U}\PY{p}{,}\PY{+w}{ }\PY{n}{V}\PY{p}{,}\PY{+w}{ }\PY{n}{X}\PY{p}{,}\PY{+w}{ }\PY{n}{E}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{ReconstrucaoLSQR}\PY{p}{(}\PY{n}{A}\PY{p}{,}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{,}\PY{+w}{ }\PY{n}{δ}\PY{p}{,}\PY{+w}{ }\PY{l+m+mi}{10}\PY{p}{,}\PY{+w}{ }\PY{n}{τ}\PY{p}{,}\PY{+w}{ }\PY{n}{ortog}\PY{o}{=}\PY{n+nb}{true}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\textcolor{ansi-cyan-intense}{\textbf{[ }}\textcolor{ansi-cyan-intense}{\textbf{Info: }}Critério de discrepância aceito
+com k=4
+    \end{Verbatim}
+
+    Evolução da solução
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{mosaicview}\PY{p}{(}\PY{n}{vetor2imagem}\PY{o}{.}\PY{p}{(}\PY{n}{X}\PY{p}{)}\PY{o}{...}\PY{p}{;}\PY{+w}{ }\PY{n}{nrow}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{+w}{ }\PY{n}{npad}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_50_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    Comparando lado a lado: Solução, imagem borrada e a imagem original
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{lena\PYZus{}rec\PYZus{}5\PYZus{}CO\PYZus{}105}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{k}{end}\PY{p}{]}\PY{p}{)}
+
+\PY{n}{mosaicview}\PY{p}{(}\PY{n}{lena\PYZus{}rec\PYZus{}5\PYZus{}CO\PYZus{}105}\PY{p}{,}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{)}\PY{p}{,}\PY{+w}{ }\PY{n}{lena\PYZus{}img}\PY{p}{;}\PY{+w}{ }\PY{n}{nrow}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{+w}{ }\PY{n}{npad}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_52_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    \hypertarget{erro-5-tau1.05-sem-ortogonalizauxe7uxe3o}{%
+\subsubsection*{\texorpdfstring{Erro 5\%, \(\tau=1.05\), sem
+ortogonalização}{Erro 5\%, \textbackslash tau=1.05, sem ortogonalização}}\label{erro-5-tau1.05-sem-ortogonalizauxe7uxe3o}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{α}\PY{p}{,}\PY{+w}{ }\PY{n}{β}\PY{p}{,}\PY{+w}{ }\PY{n}{U}\PY{p}{,}\PY{+w}{ }\PY{n}{V}\PY{p}{,}\PY{+w}{ }\PY{n}{X}\PY{p}{,}\PY{+w}{ }\PY{n}{E}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{ReconstrucaoLSQR}\PY{p}{(}\PY{n}{A}\PY{p}{,}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{,}\PY{+w}{ }\PY{n}{δ}\PY{p}{,}\PY{+w}{ }\PY{l+m+mi}{10}\PY{p}{,}\PY{+w}{ }\PY{n}{τ}\PY{p}{,}\PY{+w}{ }\PY{n}{ortog}\PY{o}{=}\PY{n+nb}{false}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\textcolor{ansi-cyan-intense}{\textbf{[ }}\textcolor{ansi-cyan-intense}{\textbf{Info: }}Critério de discrepância aceito
+com k=4
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{mosaicview}\PY{p}{(}\PY{n}{vetor2imagem}\PY{o}{.}\PY{p}{(}\PY{n}{X}\PY{p}{)}\PY{o}{...}\PY{p}{;}\PY{+w}{ }\PY{n}{nrow}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{+w}{ }\PY{n}{npad}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_55_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    Comparando lado a lado: Solução, imagem borrada e a imagem original
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{lena\PYZus{}rec\PYZus{}5\PYZus{}SO\PYZus{}105}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{k}{end}\PY{p}{]}\PY{p}{)}
+\PY{n}{mosaicview}\PY{p}{(}\PY{n}{lena\PYZus{}rec\PYZus{}5\PYZus{}SO\PYZus{}105}\PY{p}{,}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{)}\PY{p}{,}\PY{+w}{ }\PY{n}{lena\PYZus{}img}\PY{p}{;}\PY{+w}{ }\PY{n}{nrow}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{+w}{ }\PY{n}{npad}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_57_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    \hypertarget{erro-5-tau1.01-com-ortogonalizauxe7uxe3o}{%
+\subsubsection*{\texorpdfstring{Erro 5\%, \(\tau=1.01\), com
+ortogonalização}{Erro 5\%, \textbackslash tau=1.01, com ortogonalização}}\label{erro-5-tau1.01-com-ortogonalizauxe7uxe3o}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{A}\PY{+w}{ }\PY{o}{=}\PY{+w}{  }\PY{n}{blur}\PY{p}{(}\PY{n}{N}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{)}\PY{p}{;}
+\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{A}\PY{o}{*}\PY{n}{lena\PYZus{}vec}\PY{p}{;}
+
+\PY{n}{erro}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{randn}\PY{p}{(}\PY{n}{N}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}\PY{p}{)}
+\PY{n}{erro}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{erro}\PY{o}{/}\PY{n}{norm}\PY{p}{(}\PY{n}{erro}\PY{p}{)}
+
+\PY{n}{e}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{l+m+mf}{0.05}
+\PY{n}{τ}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{l+m+mf}{1.01}
+
+\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{+w}{ }\PY{o}{+}\PY{+w}{ }\PY{n}{e}\PY{o}{*}\PY{n}{erro}\PY{o}{*}\PY{n}{norm}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{p}{)}
+\PY{n}{lena\PYZus{}img\PYZus{}bn}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_59_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    Critério de discrepância.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{δ}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{norm}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{+w}{ }\PY{o}{\PYZhy{}}\PY{+w}{ }\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+4.21554656170367
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{α}\PY{p}{,}\PY{+w}{ }\PY{n}{β}\PY{p}{,}\PY{+w}{ }\PY{n}{U}\PY{p}{,}\PY{+w}{ }\PY{n}{V}\PY{p}{,}\PY{+w}{ }\PY{n}{X}\PY{p}{,}\PY{+w}{ }\PY{n}{E}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{ReconstrucaoLSQR}\PY{p}{(}\PY{n}{A}\PY{p}{,}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{,}\PY{+w}{ }\PY{n}{δ}\PY{p}{,}\PY{+w}{ }\PY{l+m+mi}{10}\PY{p}{,}\PY{+w}{ }\PY{n}{τ}\PY{p}{,}\PY{+w}{ }\PY{n}{ortog}\PY{o}{=}\PY{n+nb}{true}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\textcolor{ansi-cyan-intense}{\textbf{[ }}\textcolor{ansi-cyan-intense}{\textbf{Info: }}Critério de discrepância aceito
+com k=5
+    \end{Verbatim}
+
+    Evolução da solução
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{mosaicview}\PY{p}{(}\PY{n}{vetor2imagem}\PY{o}{.}\PY{p}{(}\PY{n}{X}\PY{p}{)}\PY{o}{...}\PY{p}{;}\PY{+w}{ }\PY{n}{nrow}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{+w}{ }\PY{n}{npad}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_64_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    Comparando lado a lado: Solução, imagem borrada e a imagem original
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{lena\PYZus{}rec\PYZus{}5\PYZus{}CO\PYZus{}101}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{k}{end}\PY{p}{]}\PY{p}{)}
+
+\PY{n}{mosaicview}\PY{p}{(}\PY{n}{lena\PYZus{}rec\PYZus{}5\PYZus{}CO\PYZus{}101}\PY{p}{,}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{)}\PY{p}{,}\PY{+w}{ }\PY{n}{lena\PYZus{}img}\PY{p}{;}\PY{+w}{ }\PY{n}{nrow}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{+w}{ }\PY{n}{npad}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_66_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    \hypertarget{erro-10-tau1.1-com-ortogonalizauxe7uxe3o}{%
+\subsubsection*{\texorpdfstring{Erro 10\%, \(\tau=1.1\), com
+ortogonalização}{Erro 10\%, \textbackslash tau=1.1, com ortogonalização}}\label{erro-10-tau1.1-com-ortogonalizauxe7uxe3o}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{A}\PY{+w}{ }\PY{o}{=}\PY{+w}{  }\PY{n}{blur}\PY{p}{(}\PY{n}{N}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{)}\PY{p}{;}
+\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{A}\PY{o}{*}\PY{n}{lena\PYZus{}vec}\PY{p}{;}
+
+\PY{n}{erro}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{randn}\PY{p}{(}\PY{n}{N}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}\PY{p}{)}
+\PY{n}{erro}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{erro}\PY{o}{/}\PY{n}{norm}\PY{p}{(}\PY{n}{erro}\PY{p}{)}
+
+\PY{n}{e}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{l+m+mf}{0.10}
+\PY{n}{τ}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{l+m+mf}{1.1}
+
+\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{+w}{ }\PY{o}{+}\PY{+w}{ }\PY{n}{e}\PY{o}{*}\PY{n}{erro}\PY{o}{*}\PY{n}{norm}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{p}{)}
+\PY{n}{lena\PYZus{}img\PYZus{}bn}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_68_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    Critério de discrepância.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{δ}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{norm}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{+w}{ }\PY{o}{\PYZhy{}}\PY{+w}{ }\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+8.43109312340734
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nd}{@time}\PY{+w}{ }\PY{n}{α}\PY{p}{,}\PY{+w}{ }\PY{n}{β}\PY{p}{,}\PY{+w}{ }\PY{n}{U}\PY{p}{,}\PY{+w}{ }\PY{n}{V}\PY{p}{,}\PY{+w}{ }\PY{n}{X}\PY{p}{,}\PY{+w}{ }\PY{n}{E}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{ReconstrucaoLSQR}\PY{p}{(}\PY{n}{A}\PY{p}{,}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{,}\PY{+w}{ }\PY{n}{δ}\PY{p}{,}\PY{+w}{ }\PY{l+m+mi}{10}\PY{p}{,}\PY{+w}{ }\PY{n}{τ}\PY{p}{,}\PY{+w}{ }\PY{n}{ortog}\PY{o}{=}\PY{n+nb}{true}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\textcolor{ansi-cyan-intense}{\textbf{[ }}\textcolor{ansi-cyan-intense}{\textbf{Info: }}Critério de discrepância aceito
+com k=2
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  0.079342 seconds (411 allocations: 27.081 MiB, 4.25\% gc time)
+    \end{Verbatim}
+
+    Evolução da solução
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{mosaicview}\PY{p}{(}\PY{n}{vetor2imagem}\PY{o}{.}\PY{p}{(}\PY{n}{X}\PY{p}{)}\PY{o}{...}\PY{p}{;}\PY{+w}{ }\PY{n}{nrow}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{+w}{ }\PY{n}{npad}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_73_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    Comparando lado a lado: Solução, imagem borrada e a imagem original
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{lena\PYZus{}rec\PYZus{}10\PYZus{}CO\PYZus{}11}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{k}{end}\PY{p}{]}\PY{p}{)}
+
+\PY{n}{mosaicview}\PY{p}{(}\PY{n}{lena\PYZus{}rec\PYZus{}10\PYZus{}CO\PYZus{}11}\PY{p}{,}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{)}\PY{p}{,}\PY{+w}{ }\PY{n}{lena\PYZus{}img}\PY{p}{;}\PY{+w}{ }\PY{n}{nrow}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{+w}{ }\PY{n}{npad}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_75_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    \hypertarget{erro-10-tau1.1-sem-ortogonalizauxe7uxe3o}{%
+\subsubsection*{\texorpdfstring{Erro 10\%, \(\tau=1.1\), sem
+ortogonalização}{Erro 10\%, \textbackslash tau=1.1, sem ortogonalização}}\label{erro-10-tau1.1-sem-ortogonalizauxe7uxe3o}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nd}{@time}\PY{+w}{ }\PY{n}{α}\PY{p}{,}\PY{+w}{ }\PY{n}{β}\PY{p}{,}\PY{+w}{ }\PY{n}{U}\PY{p}{,}\PY{+w}{ }\PY{n}{V}\PY{p}{,}\PY{+w}{ }\PY{n}{X}\PY{p}{,}\PY{+w}{ }\PY{n}{E}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{ReconstrucaoLSQR}\PY{p}{(}\PY{n}{A}\PY{p}{,}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{,}\PY{+w}{ }\PY{n}{δ}\PY{p}{,}\PY{+w}{ }\PY{l+m+mi}{10}\PY{p}{,}\PY{+w}{ }\PY{n}{τ}\PY{p}{,}\PY{+w}{ }\PY{n}{ortog}\PY{o}{=}\PY{n+nb}{false}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\textcolor{ansi-cyan-intense}{\textbf{[ }}\textcolor{ansi-cyan-intense}{\textbf{Info: }}Critério de discrepância aceito
+com k=2
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  0.073843 seconds (351 allocations: 17.080 MiB)
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{mosaicview}\PY{p}{(}\PY{n}{vetor2imagem}\PY{o}{.}\PY{p}{(}\PY{n}{X}\PY{p}{)}\PY{o}{...}\PY{p}{;}\PY{+w}{ }\PY{n}{nrow}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{+w}{ }\PY{n}{npad}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_78_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    Comparando lado a lado: Solução, imagem borrada e a imagem original
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{lena\PYZus{}rec\PYZus{}10\PYZus{}SO\PYZus{}11}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{k}{end}\PY{p}{]}\PY{p}{)}
+\PY{n}{mosaicview}\PY{p}{(}\PY{n}{lena\PYZus{}rec\PYZus{}10\PYZus{}CO\PYZus{}11}\PY{p}{,}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{)}\PY{p}{,}\PY{+w}{ }\PY{n}{lena\PYZus{}img}\PY{p}{;}\PY{+w}{ }\PY{n}{nrow}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{+w}{ }\PY{n}{npad}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_80_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    \hypertarget{erro-15-tau1.05-com-ortogonalizauxe7uxe3o}{%
+\subsubsection*{\texorpdfstring{Erro 15\%, \(\tau=1.05\), com
+ortogonalização}{Erro 15\%, \textbackslash tau=1.05, com ortogonalização}}\label{erro-15-tau1.05-com-ortogonalizauxe7uxe3o}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{A}\PY{+w}{ }\PY{o}{=}\PY{+w}{  }\PY{n}{blur}\PY{p}{(}\PY{n}{N}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{)}\PY{p}{;}
+\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{A}\PY{o}{*}\PY{n}{lena\PYZus{}vec}\PY{p}{;}
+
+\PY{n}{erro}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{randn}\PY{p}{(}\PY{n}{N}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}\PY{p}{)}
+\PY{n}{erro}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{erro}\PY{o}{/}\PY{n}{norm}\PY{p}{(}\PY{n}{erro}\PY{p}{)}
+
+\PY{n}{e}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{l+m+mf}{0.15}
+\PY{n}{τ}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{l+m+mf}{1.05}
+
+\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{+w}{ }\PY{o}{+}\PY{+w}{ }\PY{n}{e}\PY{o}{*}\PY{n}{erro}\PY{o}{*}\PY{n}{norm}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{p}{)}
+\PY{n}{lena\PYZus{}img\PYZus{}bn}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_82_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    Critério de discrepância.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{δ}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{norm}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{+w}{ }\PY{o}{\PYZhy{}}\PY{+w}{ }\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+12.646639685111008
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nd}{@time}\PY{+w}{ }\PY{n}{α}\PY{p}{,}\PY{+w}{ }\PY{n}{β}\PY{p}{,}\PY{+w}{ }\PY{n}{U}\PY{p}{,}\PY{+w}{ }\PY{n}{V}\PY{p}{,}\PY{+w}{ }\PY{n}{X}\PY{p}{,}\PY{+w}{ }\PY{n}{E}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{ReconstrucaoLSQR}\PY{p}{(}\PY{n}{A}\PY{p}{,}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{,}\PY{+w}{ }\PY{n}{δ}\PY{p}{,}\PY{+w}{ }\PY{l+m+mi}{10}\PY{p}{,}\PY{+w}{ }\PY{n}{τ}\PY{p}{,}\PY{+w}{ }\PY{n}{ortog}\PY{o}{=}\PY{n+nb}{true}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\textcolor{ansi-cyan-intense}{\textbf{[ }}\textcolor{ansi-cyan-intense}{\textbf{Info: }}Critério de discrepância aceito
+com k=2
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  0.078629 seconds (411 allocations: 27.081 MiB)
+    \end{Verbatim}
+
+    Evolução da solução
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{mosaicview}\PY{p}{(}\PY{n}{vetor2imagem}\PY{o}{.}\PY{p}{(}\PY{n}{X}\PY{p}{)}\PY{o}{...}\PY{p}{;}\PY{+w}{ }\PY{n}{nrow}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{+w}{ }\PY{n}{npad}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_87_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    Comparando lado a lado: Solução, imagem borrada e a imagem original
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{lena\PYZus{}rec\PYZus{}15\PYZus{}CO\PYZus{}105}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{k}{end}\PY{p}{]}\PY{p}{)}
+
+\PY{n}{mosaicview}\PY{p}{(}\PY{n}{lena\PYZus{}rec\PYZus{}15\PYZus{}CO\PYZus{}105}\PY{p}{,}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{)}\PY{p}{,}\PY{+w}{ }\PY{n}{lena\PYZus{}img}\PY{p}{;}\PY{+w}{ }\PY{n}{nrow}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{+w}{ }\PY{n}{npad}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_89_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{A}\PY{+w}{ }\PY{o}{=}\PY{+w}{  }\PY{n}{blur}\PY{p}{(}\PY{n}{N}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{)}\PY{p}{;}
+\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{A}\PY{o}{*}\PY{n}{lena\PYZus{}vec}\PY{p}{;}
+
+\PY{n}{erro}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{randn}\PY{p}{(}\PY{n}{N}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}\PY{p}{)}
+\PY{n}{erro}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{erro}\PY{o}{/}\PY{n}{norm}\PY{p}{(}\PY{n}{erro}\PY{p}{)}
+
+\PY{n}{e}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{l+m+mf}{0.05}
+\PY{n}{τ}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{l+m+mf}{1.05}
+
+\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{+w}{ }\PY{o}{+}\PY{+w}{ }\PY{n}{e}\PY{o}{*}\PY{n}{erro}\PY{o}{*}\PY{n}{norm}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{p}{)}
+\PY{n}{lena\PYZus{}img\PYZus{}bn}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_90_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    Critério de discrepância.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{δ}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{norm}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{+w}{ }\PY{o}{\PYZhy{}}\PY{+w}{ }\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+4.21554656170367
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nd}{@time}\PY{+w}{  }\PY{n}{α}\PY{p}{,}\PY{+w}{ }\PY{n}{β}\PY{p}{,}\PY{+w}{ }\PY{n}{U}\PY{p}{,}\PY{+w}{ }\PY{n}{V}\PY{p}{,}\PY{+w}{ }\PY{n}{X}\PY{p}{,}\PY{+w}{ }\PY{n}{E}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{ReconstrucaoLSQR}\PY{p}{(}\PY{n}{A}\PY{p}{,}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{,}\PY{+w}{ }\PY{n}{δ}\PY{p}{,}\PY{+w}{ }\PY{l+m+mi}{10}\PY{p}{,}\PY{+w}{ }\PY{n}{τ}\PY{p}{,}\PY{+w}{ }\PY{n}{ortog}\PY{o}{=}\PY{n+nb}{true}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\textcolor{ansi-cyan-intense}{\textbf{[ }}\textcolor{ansi-cyan-intense}{\textbf{Info: }}Critério de discrepância aceito
+com k=4
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  0.176432 seconds (749 allocations: 61.661 MiB, 6.16\% gc time)
+    \end{Verbatim}
+
+    Evolução da solução
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{mosaicview}\PY{p}{(}\PY{n}{vetor2imagem}\PY{o}{.}\PY{p}{(}\PY{n}{X}\PY{p}{)}\PY{o}{...}\PY{p}{;}\PY{+w}{ }\PY{n}{nrow}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{+w}{ }\PY{n}{npad}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_95_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    Comparando lado a lado: Solução, imagem borrada e a imagem original
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{lena\PYZus{}rec\PYZus{}5\PYZus{}CO\PYZus{}105}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{k}{end}\PY{p}{]}\PY{p}{)}
+
+\PY{n}{mosaicview}\PY{p}{(}\PY{n}{lena\PYZus{}rec\PYZus{}5\PYZus{}CO\PYZus{}105}\PY{p}{,}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{)}\PY{p}{,}\PY{+w}{ }\PY{n}{lena\PYZus{}img}\PY{p}{;}\PY{+w}{ }\PY{n}{nrow}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{+w}{ }\PY{n}{npad}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_97_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    \hypertarget{erro-10-tau0-com-ortogonalizauxe7uxe3o}{%
+\subsubsection*{\texorpdfstring{Erro 10\%, \(\tau=0\), com
+ortogonalização}{Erro 10\%, \textbackslash tau=0, com ortogonalização}}\label{erro-10-tau0-com-ortogonalizauxe7uxe3o}}
+
+    Vamos calcular um exemplo sem o critério de parada, colocando
+\(\tau=0\).
+
+Nesse caso, após algumas iterações, o método começa a acumular muito
+erro.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{A}\PY{+w}{ }\PY{o}{=}\PY{+w}{  }\PY{n}{blur}\PY{p}{(}\PY{n}{N}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{)}\PY{p}{;}
+\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{A}\PY{o}{*}\PY{n}{lena\PYZus{}vec}\PY{p}{;}
+
+\PY{n}{erro}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{randn}\PY{p}{(}\PY{n}{N}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}\PY{p}{)}
+\PY{n}{erro}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{erro}\PY{o}{/}\PY{n}{norm}\PY{p}{(}\PY{n}{erro}\PY{p}{)}
+
+\PY{n}{e}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{l+m+mf}{0.10}
+\PY{n}{τ}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{l+m+mi}{0}
+
+\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{+w}{ }\PY{o}{+}\PY{+w}{ }\PY{n}{e}\PY{o}{*}\PY{n}{erro}\PY{o}{*}\PY{n}{norm}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}b}\PY{p}{)}
+\PY{n}{lena\PYZus{}img\PYZus{}bn}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_100_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nd}{@time}\PY{+w}{ }\PY{n}{α}\PY{p}{,}\PY{+w}{ }\PY{n}{β}\PY{p}{,}\PY{+w}{ }\PY{n}{U}\PY{p}{,}\PY{+w}{ }\PY{n}{V}\PY{p}{,}\PY{+w}{ }\PY{n}{X}\PY{p}{,}\PY{+w}{ }\PY{n}{E}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{ReconstrucaoLSQR}\PY{p}{(}\PY{n}{A}\PY{p}{,}\PY{n}{lena\PYZus{}vec\PYZus{}bn}\PY{p}{,}\PY{+w}{ }\PY{n}{δ}\PY{p}{,}\PY{+w}{ }\PY{l+m+mi}{10}\PY{p}{,}\PY{+w}{ }\PY{n}{τ}\PY{p}{,}\PY{+w}{ }\PY{n}{ortog}\PY{o}{=}\PY{n+nb}{false}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\textcolor{ansi-cyan-intense}{\textbf{[ }}\textcolor{ansi-cyan-intense}{\textbf{Info: }}Critério de discrepância não foi
+atingido
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  0.922215 seconds (395.98 k allocations: 116.481 MiB, 60.98\% compilation time)
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{mosaicview}\PY{p}{(}\PY{n}{vetor2imagem}\PY{o}{.}\PY{p}{(}\PY{n}{X}\PY{p}{)}\PY{o}{...}\PY{p}{;}\PY{+w}{ }\PY{n}{nrow}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,}\PY{+w}{ }\PY{n}{npad}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+\PY{c}{\PYZsh{} X1  X3  X5  X7  X9}
+\PY{c}{\PYZsh{} X2  X4  X6  X8  X10}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_102_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    \hypertarget{comparando-com-um-muxe9todo-burrinho-inguxeanuo}{%
+\subsubsection*{\texorpdfstring{Comparando com um método
+\sout{burrinho}
+ingênuo}{Comparando com um método burrinho ingênuo}}\label{comparando-com-um-muxe9todo-burrinho-inguxeanuo}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nd}{@time}\PY{+w}{ }\PY{n}{x\PYZus{}burro}\PY{+w}{ }\PY{o}{=}\PY{+w}{ }\PY{n}{A}\PY{o}{\PYZbs{}}\PY{n}{lena\PYZus{}vec\PYZus{}bn}
+\PY{n}{vetor2imagem}\PY{p}{(}\PY{n}{x\PYZus{}burro}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+118.938738 seconds (4.30 M allocations: 4.619 GiB, 0.73\% gc time, 2.83\%
+compilation time)
+    \end{Verbatim}
+ 
+            
+\prompt{Out}{outcolor}{ }{}
+    
+    \begin{center}
+    \adjustimage{max size={0.5\linewidth}{0.5\paperheight}}{Trabalho_final_ALC2_files/Trabalho_final_ALC2_104_1.png}
+    \end{center} 
+    
+    Vemos que de fato, resolver o sistema linear além de ser uma estratégia
+ruim em tempo de computação, ainda gera uma solução que é puro ruído.
+
+
+    % Add a bibliography block to the postdoc
+    
+\section*{Conclusões}
+
+    Neste trabalho, implementamos o método LSQR para a resolução de
+problemas lineares mal postos, aplicando-o na reconstrução de imagens
+borradas e ruidosas. Observamos que o método é eficaz na recuperação de
+imagens originais, especialmente quando o critério de discrepância é
+utilizado para determinar o ponto de parada adequado.
+
+Veja que o método LSQR utilizou poucas iterações, e o tempo computacional foi da ordem de 0.08s, enquanto uma resolução direta do sistema linear levou mais de 118s, uma piora de mais de 1400 vezes no tempo de computação, além de gerar uma imagem que é puro ruído.
+
+A inversão de problemas mal postos é um desafio significativo em muitas áreas da ciência e engenharia. A utilização de uma base sólida da teoria de álgebra linear é essencial para tratar esses problemas de maneira eficaz e robusta, produzindo soluções que tenham significado físico e utilidade prática.
+
+\subsection*{Versão online}
+
+Esse documento está disponível online em \href{https://colab.research.google.com/drive/1yi3uQLi2Yvgg8fH2dJRRlqH82SuueUYv}{Trabalho final - ALC2.ipynb}. 
+Esse relatório \LaTeX~foi gerado a partir de um notebook Jupyter usando o pacote \texttt{nbconvert}.
+    
+    
+\end{document}
