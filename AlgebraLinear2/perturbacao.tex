@@ -1,0 +1,120 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+
+\begin{document}
+
+% --- PAGE 1 ---
+
+% \section*{Condição de autovetor simples}
+% Seja $A \in \mathbb{C}^{n \times n}$, $\lambda \in \lambda(A)$ com autovetores à direita e esquerda $x$ e $y$, respectivamente, isto é
+% \[ Ax = \lambda x \quad\text{e}\quad y^* A = \lambda y^* \]
+% Defina
+% \[ s = \frac{y^*x}{\|x\|_2 \|y\|_2} \]
+% Mostraremos que $1/s$ fornece uma medida de sensibilidade do autovalor.
+
+% De fato, sejam $\hat\lambda = \lambda + \delta\lambda$ um autovalor de $A + \delta A$ e $\hat{x} = x + \delta x$ um autovetor associado, ou seja
+% \[ (A + \delta A)(x + \delta x) = (\lambda + \delta\lambda)(x + \delta x) \]
+% Então
+% \[ Ax + A\delta x + \delta A x + \delta A \delta x = \lambda x + \lambda\delta x + \delta\lambda x + \delta\lambda\delta x \]
+% Multiplicando por $y^*$ à esquerda:
+% \[ y^*Ax + y^*A\delta x + y^*\delta Ax + y^*\delta A\delta x = \lambda y^*x + \lambda y^*\delta x + \delta\lambda y^*x + \delta\lambda y^*\delta x \]
+% \[ \implies \lambda y^*x + \lambda y^*\delta x + y^*\delta Ax + y^*\delta A\delta x = \lambda y^*x + \lambda y^*\delta x + \delta\lambda y^*x + \delta\lambda y^*\delta x \]
+% \[ \implies y^*\delta Ax + y^*\delta A\delta x = \delta\lambda y^*x + \delta\lambda y^*\delta x \]
+% Desprezando as perturbações de segunda ordem,
+% \[ \delta\lambda y^*x \approx y^*\delta Ax \]
+% \[ |\delta\lambda| |y^*x| \approx |y^*\delta Ax| \le \|y\|_2 \|\delta A\|_2 \|x\|_2 \]
+% \[ |\delta\lambda| \le \frac{\|y\|_2 \|\delta A\|_2 \|x\|_2}{|y^*x|} \implies |\delta\lambda| \le \frac{1}{|s|} \|\delta A\|_2 \]
+% A desigualdade acima justifica denominar $1/|s|$ como número de condição para o autovalor simples $\lambda$. Usualmente $ 1/|s| \ll K_p(X)$.
+
+% \medskip
+
+% \textbf{Observação.} Se $A \in \mathbb{C}^{n \times n}$ é normal e $\hat{A} = A+\delta A$ também é normal, dado $\hat\lambda \in \lambda(\hat{A})$, existe ${\lambda} \in \lambda(A)$ tal que $|\lambda - \tilde{\lambda}| \le \|E\|$. Além disso, $|y^*x| = \|y\|_2 \|x\|_2$, uma vez que $x$ e $y$ são autovetores (direita/esquerda).
+
+% \medskip
+
+% \textbf{Teorema (Alternativa para Bauer-Fike)}
+% Seja A não diagonalizável com $x_i, y_i$ autovetores à direita e esquerda associados ao autovalor $\lambda_i$. Se $\|x_i\|_2 = 1$, os autovalores de $A+E$ estão localizados em discos $D_i$ definidos por
+% \[ D_i = \left\{ z \in \mathbb{C} \ \middle| \ |z - \lambda_i| \le \sqrt{n} \frac{\|E\|_2}{|y_i^*x_i|} \right\} \]
+% com $x_i, y_i$ autovetores à direita e esquerda associados a $\lambda_i$.
+
+% % --- PAGE 3 ---
+
+% Para mostrar o teorema acima, precisamos de dois resultados preliminares.
+
+% \textbf{R1:} Seja A diagonalizável com autovetores à direita $x_i$ e à esquerda $y_i$. Então,
+% \[ X = [x_1 \dots x_n] \implies X^{-1} = \begin{bmatrix} y_1^* / (y_1^*x_1) \\ \vdots \\ y_n^* / (y_n^*x_n) \end{bmatrix} \]
+% \textbf{Prova:} Temos $X^{-1}AX = \Lambda = \text{diag}(\lambda_1, \dots, \lambda_n)$, o que significa
+% \[ X^{-1}A = \Lambda X^{-1} \implies e_i^T X^{-1} A = e_i^T \Lambda X^{-1} = \lambda_i e_i^T X^{-1} \]
+% Isso implica que $e_i^T X^{-1}$ (a i-ésima linha de $X^{-1}$) é um autovetor à esquerda de A associado a $\lambda_i$.
+% Podemos assumir que $e_i^T X^{-1} = c_i y_i^*$ para constantes $c_i$.
+% Usando a identidade $X^{-1}X = I$, podemos calcular os $c_i$.
+% \[ e_i^T X^{-1} x_j = c_i y_i^* x_j = \delta_{ij} \]
+% Para $i=j$: $c_i y_i^* x_i = 1 \implies c_i = \frac{1}{y_i^*x_i}$, e o resultado segue.
+
+% \textbf{R2:} Se as colunas de $X = [x_1 \dots x_n]$ têm norma-2 igual a 1, então $\|X\|_2 \le \sqrt{n}$.
+
+% % --- PAGE 4 ---
+
+% \textbf{Dem.:} $\|X\|_2 = \max_{\|\alpha\|_2=1} \|X\alpha\|_2$.
+% Mas $X\alpha = \sum_{i=1}^n \alpha_i x_i$.
+% $\|X\alpha\|_2 = \|\sum \alpha_i x_i\|_2 \le \sum |\alpha_i| \|x_i\|_2 = \sum |\alpha_i| \cdot 1$.
+% $\le \langle (1, \dots, 1), (|\alpha_1|, \dots, |\alpha_n|) \rangle \le \|(1, \dots, 1)\|_2 \| (|\alpha_1|, \dots, |\alpha_n|) \|_2 = \sqrt{n} \cdot 1$.
+
+% \textbf{Prova do Teorema}
+% Como $X^{-1}AX = \Lambda$, então $X^{-1}(A+E)X = \Lambda + F$, com $F = X^{-1}EX$.
+% Assim, $\lambda(A+E) = \lambda(\Lambda+F)$. Aplicando o Teorema dos discos de Gershgorin à matriz $\Lambda+F$, os autovalores de $\Lambda+F$ estão contidos na união dos discos $\tilde{D}_i$.
+% \[ \tilde{D}_i = \{ z \in \mathbb{C} | |z - (\lambda_i + F_{ii})| \le \sum_{j \ne i} |F_{ij}| \} \]
+% Mas $|z - \lambda_i| = |z - (\lambda_i + F_{ii}) + F_{ii}| \le |z - (\lambda_i + F_{ii})| + |F_{ii}|$.
+% Se $z \in \tilde{D}_i$ então $|z - \lambda_i - F_{ii}| \le \sum_{j \ne i} |F_{ij}|$.
+% Usando a desigualdade triangular reversa $|z - \lambda_i| - |F_{ii}| \le |z - \lambda_i - F_{ii}|$.
+% Então $|z - \lambda_i| \le |F_{ii}| + \sum_{j \ne i} |F_{ij}| = \sum_{j=1}^n |F_{ij}|$.
+% $\sum_j |F_{ij}| = \|e_i^T F\|_1 \le \sqrt{n} \|e_i^T F\|_2$.
+% $\le \sqrt{n} \|e_i^T X^{-1} E X \|_2$ (prop. submultiplicativa)
+% $\le \sqrt{n} \|e_i^T X^{-1}\|_2 \|E\|_2 \|X\|_2 = \sqrt{n} \frac{\|y_i^*\|_2}{|y_i^*x_i|} \|E\|_2 \|X\|_2$.
+% Logo $z \in D_i$.
+
+% % --- PAGE 5 ---
+
+Conforme visto em sala, temos um teorema que dá uma estimativa de quão grande deve ser uma perturbação em A para que um autovalor simples se torne múltiplo.
+
+\textbf{Teorema} Seja $\lambda$ um autovalor simples de A com autovetores $x$ e $y$ (direita e esquerda) normalizados $\|x\|_2 = \|y\|_2 = 1$. Então existe uma matriz $E$ tal que $A+E$ tem um autovalor múltiplo em $\lambda$ e
+\[ \frac{\|E\|_2}{\|A\|_2} \le \frac{1}{\sqrt{c^2-1}} \quad \text{com } c = \frac{1}{|y^*x|} \quad \text{(número de condição)} \]
+
+\medskip 
+
+\textbf{Dem.:} Aplicando a fatoração de Schur se necessário, suponha que A está na forma
+\[ A = \begin{pmatrix} \lambda & A_{12} \\ 0 & A_{22} \end{pmatrix} \]
+com $A_{22} \in \mathbb{C}^{(n-1) \times (n-1)}$.
+Como $\lambda$ é autovalor simples, $\lambda \notin \lambda(A_{22})$.
+Segue então que $x=e_1$ é o autovetor à direita. 
+
+O autovetor à esquerda precisa ser construído. Com efeito, seja $y = (a, b)^*$, com $a \in \mathbb{C}$ e $b \in \mathbb{C}^{n-1}$.
+Da equação de autovetor $y^*A = \lambda y^*$:
+\[ (a^* \ b^*) \begin{pmatrix} \lambda & A_{12} \\ 0 & A_{22} \end{pmatrix} = \lambda (a^* \ b^*) \]
+\[ (\lambda a^* \quad a^*A_{12} + b^*A_{22}) = (\lambda a^* \quad \lambda b^*) \]
+Igualando as segundas componentes:
+\[ a^*A_{12} + b^*A_{22} = \lambda b^* \implies a^*A_{12} + b^*(A_{22} - \lambda I) = 0 \]
+$A_{22} - \lambda I$ é inversível pois $\lambda \notin \lambda(A_{22})$.
+Escolhemos então $a=1$ e temos
+\[ b^* = -A_{12}(A_{22} - \lambda I)^{-1} \]
+e construímos $\hat{y} = \begin{pmatrix} 1 \\ b \end{pmatrix}$ e $y = \frac{\hat{y}}{\|\hat{y}\|_2}$.
+
+% --- PAGE 6 ---
+
+Agora $$y^*x = \frac{\begin{pmatrix} 1 & b^* \end{pmatrix}}{\|\hat{y}\|_2} \begin{pmatrix} 1 \\ 0 \end{pmatrix} = \frac1{\|\hat{y}\|_2} $$ e portanto $$c = \frac{1}{|y^*x|} = {\|\hat{y}\|_2}$$
+ Assim
+\[ c^2 - 1 = \|b\|_2^2 = \|A_{12}(A_{22} - \lambda I)^{-1}\|_2^2 \le \|A_{12}\|_2^2 \|(A_{22} - \lambda I)^{-1}\|_2^2 = \frac{\|A_{12}\|_2^2}{\sigma_{\min}(A_{22}-\lambda I)^2} \]
+e seque que 
+\[ \sigma_{\min}(A_{22}-\lambda I) \le \frac{\|A_{12}\|_2}{\sqrt{c^2-1}} \quad \tag{*}\]
+Como $A_{22}-\lambda I$ não é singular, usamos a SVD para afirmar que existe uma matriz $\delta A_{22}$ tal que $(A_{22}-\lambda I) + \delta A_{22}$ é singular e $\|\delta A_{22}\|_2 = \sigma_{\min}(A_{22}-\lambda I)$.
+Assim $\lambda$ é autovalor de $A_{22} + \delta A_{22}$.
+Agora defina
+\[ E = \begin{pmatrix} 0 & 0 \\ 0 & \delta A_{22} \end{pmatrix} \implies A+E = \begin{pmatrix} \lambda & A_{12} \\ 0 & A_{22} + \delta A_{22} \end{pmatrix} \]
+Logo $\lambda$ é autovalor duplo de $A+E$. Agora, usando (*)
+\[ \|E\|_2 = \|\delta A_{22}\|_2 = \sigma_{\min}(A_{22}-\lambda I) \le \frac{\|A_{12}\|_2}{\sqrt{c^2-1}} \le \frac{\|A\|_2}{\sqrt{c^2-1}} \]
+ 
+
+\end{document}

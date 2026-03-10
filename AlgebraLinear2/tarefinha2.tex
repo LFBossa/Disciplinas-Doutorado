@@ -1,0 +1,242 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage[margin=1in]{geometry}
+\newcommand{\vecea}{\begin{pmatrix} 1 & \frac{c}{a-b} \end{pmatrix}}
+\newcommand{\vecda}{\begin{pmatrix} 1 \\ 0 \end{pmatrix}}
+\newcommand{\vecdb}{\begin{pmatrix} \frac{-c}{a-b} \\ 1 \end{pmatrix}}
+\newcommand{\veceb}{\begin{pmatrix} 0 & 1 \end{pmatrix}}
+\begin{document}
+
+% --- PAGE 4 ---
+\section*{Tarefinha}
+\begin{center}
+    Luiz Fernando Bossa\\ Outubro 2025
+\end{center}
+
+\begin{enumerate}
+    \item[\textcircled{1}] Defina $E = -rx^*$. Veja que
+    \[
+    (A - E)x = Ax - r\frac{x^*x}{\|x\|_2^2} = Ax - r = \mu x
+    \]
+    de modo que $(\mu, x)$ é autopar de $A - E$. 
+    Existe um resultado que garante que 
+    $$\|uv^*\|_F = \|u\|_2 \|v\|_2.$$ Assim,
+    
+    \[
+    \|E\|_F^2 = \|r\|_2^2 \|x\|_2^2 = \|r\|_2^2
+    \]
+
+    \item[\textcircled{2}] 
+Conforme visto em sala, temos um teorema que dá uma estimativa de quão grande deve ser uma perturbação em A para que um autovalor simples se torne múltiplo.
+
+\textbf{Teorema} Seja $\lambda$ um autovalor simples de A com autovetores $x$ e $y$ (direita e esquerda) normalizados $\|x\|_2 = \|y\|_2 = 1$. Então existe uma matriz $E$ tal que $A+E$ tem um autovalor múltiplo em $\lambda$ e
+\[ \frac{\|E\|_2}{\|A\|_2} \le \frac{1}{\sqrt{c^2-1}} \quad \text{com } c = \frac{1}{|y^*x|} \quad \text{(número de condição)} \]
+
+\medskip 
+
+\textbf{Demonstração.} Aplicando a fatoração de Schur se necessário, suponha que A está na forma
+\[ A = \begin{pmatrix} \lambda & A_{12} \\ 0 & A_{22} \end{pmatrix} \]
+com $A_{22} \in \mathbb{C}^{(n-1) \times (n-1)}$.
+Como $\lambda$ é autovalor simples, $\lambda \notin \lambda(A_{22})$.
+Segue então que $x=e_1$ é o autovetor à direita. 
+
+O autovetor à esquerda precisa ser construído. Com efeito, seja $y = (a, b)^*$, com $a \in \mathbb{C}$ e $b \in \mathbb{C}^{n-1}$.
+Da equação de autovetor $y^*A = \lambda y^*$:
+\[ (a^* \ b^*) \begin{pmatrix} \lambda & A_{12} \\ 0 & A_{22} \end{pmatrix} = \lambda (a^* \ b^*) \]
+\[ (\lambda a^* \quad a^*A_{12} + b^*A_{22}) = (\lambda a^* \quad \lambda b^*) \]
+Igualando as segundas componentes:
+\[ a^*A_{12} + b^*A_{22} = \lambda b^* \implies a^*A_{12} + b^*(A_{22} - \lambda I) = 0 \]
+$A_{22} - \lambda I$ é inversível pois $\lambda \notin \lambda(A_{22})$.
+Escolhemos então $a=1$ e temos
+\[ b^* = -A_{12}(A_{22} - \lambda I)^{-1} \]
+e construímos $\hat{y} = \begin{pmatrix} 1 \\ b \end{pmatrix}$ e $y = \frac{\hat{y}}{\|\hat{y}\|_2}$.
+
+% --- PAGE 6 ---
+
+Agora $$y^*x = \frac{\begin{pmatrix} 1 & b^* \end{pmatrix}}{\|\hat{y}\|_2} \begin{pmatrix} 1 \\ 0 \end{pmatrix} = \frac1{\|\hat{y}\|_2} $$ e portanto $$c = \frac{1}{|y^*x|} = {\|\hat{y}\|_2}$$
+ Assim
+\[ c^2 - 1 = \|b\|_2^2 = \|A_{12}(A_{22} - \lambda I)^{-1}\|_2^2 \le \|A_{12}\|_2^2 \|(A_{22} - \lambda I)^{-1}\|_2^2 = \frac{\|A_{12}\|_2^2}{\sigma_{\min}(A_{22}-\lambda I)^2} \]
+e seque que 
+\[ \sigma_{\min}(A_{22}-\lambda I) \le \frac{\|A_{12}\|_2}{\sqrt{c^2-1}} \quad \tag{*}\]
+Como $A_{22}-\lambda I$ não é singular, usamos a SVD para afirmar que existe uma matriz $\delta A_{22}$ tal que $(A_{22}-\lambda I) + \delta A_{22}$ é singular e $\|\delta A_{22}\|_2 = \sigma_{\min}(A_{22}-\lambda I)$.
+Assim $\lambda$ é autovalor de $A_{22} + \delta A_{22}$.
+Agora defina
+\[ E = \begin{pmatrix} 0 & 0 \\ 0 & \delta A_{22} \end{pmatrix} \implies A+E = \begin{pmatrix} \lambda & A_{12} \\ 0 & A_{22} + \delta A_{22} \end{pmatrix} \]
+Logo $\lambda$ é autovalor duplo de $A+E$. Agora, usando (*)
+\[ \|E\|_2 = \|\delta A_{22}\|_2 = \sigma_{\min}(A_{22}-\lambda I) \le \frac{\|A_{12}\|_2}{\sqrt{c^2-1}} \le \frac{\|A\|_2}{\sqrt{c^2-1}} \]
+ 
+    \item[\textcircled{3}] %Quociente de Rayleigh. $\lambda_{\min} \le \frac{x^*Ax}{x^*x} \le \lambda_{\max}$. Seja então $\beta = \frac{x^*Ax}{x^*x}$. 
+    Usando \textcircled{1}, construímos $E$ tal que $(\beta, x)$ é autopar de $A-E$ com $\|E\|_F = \|Ax - \beta x\|_2$.
+
+    Se A é simétrica, sua matriz de autovetores X é ortogonal, de modo que $K_2(X) = 1$. Logo, por Bauer-Fike,
+    \[
+    \min_{i \in \{1, \dots, n\}} |\lambda_i - \beta| \le K_2(X)\|E\|_2 \le 1 \cdot \|E\|_F = \|Ax - \beta x\|_2
+    \]
+    O valor que minimiza $$\|Ax - \beta x\|_2^2 = \langle Ax - \beta x, Ax - \beta x \rangle = \langle Ax, Ax \rangle - 2\beta \langle Ax, x \rangle + \beta^2 \langle x, x \rangle$$ é dado pelo vértice da quadrática.
+    \[
+    \beta^* = -\frac{-2\langle Ax, x \rangle}{2\langle x, x \rangle} = \frac{\langle Ax, x \rangle}{\langle x, x \rangle}
+    \]
+\end{enumerate}
+
+
+\begin{enumerate}
+    \item[\textcircled{4}] Primeiro vamos deduzir uma fórmula\footnote{Essa solução foi um lapso de algebrista que ainda existe em mim.} para $\det(A - \lambda I)$. Seja $v = (v_1, \dots, v_{n-1})$. Vamos provar por indução que
+    \[\tag{$\dagger$}
+    \det(A - \lambda I) = \prod_{i=1}^{n} (d_i - \lambda) - \sum_{i=1}^{n-1} v_i^2 \left( \prod_{j = 1 \neq i }^{n-1} (d_j - \lambda) \right)
+    \]
+    A fórmula vale para $n=2$:
+    \[
+    \begin{vmatrix} d_1 - \lambda & v_1 \\ v_1 & d_2 - \lambda \end{vmatrix} = (d_1 - \lambda)(d_2 - \lambda) - v_1^2
+    \]
+    e para $n=3$:
+    \[
+    \begin{vmatrix} 
+        d_1 - \lambda &  & v_1 \\
+          & d_2 - \lambda &  v_2 \\ 
+          v_1 & v_2 & d_3 - \lambda 
+        \end{vmatrix} = (d_1 - \lambda)(d_2 - \lambda)(d_3 - \lambda) - v_1^2(d_2 - \lambda) - v_2^2(d_1 - \lambda)
+    \]
+    Supondo que a fórmula vale para $n$, vamos provar que vale para $n+1$. Abrindo o determinante por cofatores na primeira coluna temos:
+    \begin{multline*}
+        \begin{vmatrix}  
+        d_1 - \lambda &  & v_1 \\
+            & \ddots &  \vdots \\ 
+        v_1 & \ldots & d_{n+1} - \lambda  
+    \end{vmatrix} = \\ =
+    (d_1 - \lambda) \begin{vmatrix}  
+        d_2 - \lambda &  & v_2 \\
+            & \ddots &  \vdots \\ 
+        v_2 & \ldots & d_{n+1} - \lambda  
+    \end{vmatrix} + (-1)^{1+n+1} v_1 \begin{vmatrix} 0 & \ldots & \ldots & v_1 \\ d_2 - \lambda &  &  & v_2 \\  & \ddots &  & \vdots \\ v_n & \ldots & d_n - \lambda & v_n \end{vmatrix}    = \\ =:  (d_1 - \lambda)X + (-1)^{1+n+1} v_1 Y
+    \end{multline*}
+
+    Veja que a estrutura de $X$ é a mesma de $A - \lambda I$ com dimensão $n$, porém com os índices aumentados em 1. Assim, por hipótese de indução, podemos usar a fórmula para $X$:
+    \[
+    X = \prod_{i=2}^{n+1} (d_i - \lambda) - \sum_{i=2}^{n+1} v_i^2 \left( \prod_{j=2\neq i}^{n+1} (d_j - \lambda) \right)
+    \]
+    Para $Y$, expandimos por cofatores na primeira linha:
+    \[
+    Y = (-1)^{1+n+1} v_1  \begin{vmatrix} d_2 - \lambda &  \\  & \ddots &  \\  &  & d_n - \lambda \end{vmatrix} = (-1)^{1+n+1} v_1  \prod_{j=2}^{n} (d_j - \lambda)
+    \]
+
+    Juntando tudo temos 
+    \begin{multline*}
+        \det(A- \lambda I) = \\=(d_1 - \lambda) \left[ \prod_{i=2}^{n+1} (d_i - \lambda) - \sum_{i=2}^{n+1} v_i^2 \left( \prod_{j=2\neq i}^{n+1} (d_j - \lambda) \right) \right] +  (-1)^{2n+4} v_1^2  \left( \prod_{j=2}^{n} (d_j - \lambda) \right) = \\
+        = \prod_{i=1}^{n+1} (d_i - \lambda) - \sum_{i=2}^{n+1} v_i^2 (d_1 - \lambda) \left( \prod_{j=2\neq i}^{n+1} (d_j - \lambda) \right) + v_1^2  \left( \prod_{j=2}^{n} (d_j - \lambda) \right) = \\ =  \prod_{i=1}^{n+1} (d_i - \lambda) - \sum_{i=1}^{n+1} v_i^2 \left( \prod_{j = 1 \neq i }^{n} (d_j - \lambda) \right)
+    \end{multline*}
+    provando a indução.
+\end{enumerate}
+
+
+% --- PAGE 7 --- 
+Multiplicando e dividindo os termos dentro do somatório por $(d_n - \lambda)(d_i - \lambda)$, podemos colocar o somatório em evidência. Depois disso, tiramos o ultimo termo do produtório e multiplicamos pra dentro dos colchetes:
+\begin{align*}
+\det(A - \lambda I) &= \prod_{i=1}^{n} (d_i - \lambda) - \sum_{i=1}^{n-1} v_i^2 \left( \prod_{j \neq i}^{n-1} (d_j - \lambda) \right)   \\
+&= \prod_{i=1}^{n} (d_i - \lambda) - \sum_{i=1}^{n-1} \frac{v_i^2}{(d_i - \lambda)(d_n - \lambda)} \left( \prod_{j=1}^{n} (d_j - \lambda) \right) \\
+&= \left( \prod_{j=1}^{n} (d_j - \lambda) \right) \left[ 1 - \sum_{i=1}^{n-1} \frac{v_i^2}{(d_i - \lambda)(d_n - \lambda)} \right] \\
+&= \left( \prod_{j=1}^{n-1} (d_j - \lambda) \right) (d_n-\lambda) \left[ 1 - \sum_{i=1}^{n-1} \frac{v_i^2}{(d_i - \lambda)(d_n - \lambda)} \right] \\
+&= \det(D - \lambda I) \left( d_n - \lambda - \sum_{i=1}^{n-1} \frac{v_i^2}{d_i - \lambda} \right) = \det(D - \lambda I) f(\lambda)\tag{$\ddagger$}
+\end{align*}
+Agora, ao provar o item (a), garantimos o item (b). 
+
+Vamos separar os casos, começando por analisar $(\dagger)$. 
+
+Se $\lambda = d_k$ para algum $k \in \{1, \dots, n-1\}$, então o primeiro produtório é nulo.
+\[\det(A - d_k I) = -\sum_{i=1}^{n-1}v_i^2 \underbrace{\prod_{j=1 \neq i}^{n-1} (d_j - d_k)}_{k=j\implies 0} = -v_k^2\prod_{j=1 \neq k}^{n-1} (d_j - d_k) \neq 0 \] 
+    pois os $d_i$ são distintos e $v_k \neq 0$.
+Se $\lambda = d_n$, então então o primeiro produtório  também é nulo e o somatório não se anula. 
+
+Logo nenhum dos $d_i$ é autovalor de A. Logo se $\lambda$ é autovalor de A, então $\lambda \neq d_j$ e logo $\det(D - \lambda I) \neq 0$.  Assim, por ($\ddagger$), $\det(A - \lambda I) = 0$ se e somente se $f(\lambda) = 0$.
+
+% --- PAGE 5 --- 
+
+\begin{enumerate}
+    \item[\textcircled{5}] Autovalores: $a, b$. \\
+    Autovetores associados a $a$: $\vecda$, $\vecea$ \\
+    Autovetores associados a $b$: $\vecdb$, $\veceb$
+
+    Números de condição:
+    \[ 
+    \frac{ \vecea \vecda }{\left\|\vecea\right\| \left\|\vecda \right\|} = \frac{1}{\sqrt{\frac{(a-b)^2+c^2}{(a-b)^2}}} = \frac{|a-b|}{\sqrt{(a-b)^2+c^2}} \implies s_a = \frac{\sqrt{(a-b)^2+c^2}}{|a-b|}
+    \]
+    \[ \frac{\veceb \vecdb}{\left\|\veceb\right\| \left\|\vecdb \right\|}= \frac{1}{\frac{\sqrt{(b-a)^2+c^2}}{|b-a|}} = \frac{|b-a|}{\sqrt{(b-a)^2+c^2}} \implies s_b = \frac{\sqrt{(b-a)^2+c^2}}{|b-a|}
+    \]
+    Se $c=0$, os números de condição são 1.
+    Se $a \approx b$, esse número explode.
+
+    \item[\textcircled{6}] Se $Ax = \lambda x$ e $y^*A = \mu y^*$ então
+    \[
+    \mu y^*x = y^*Ax = y^*\lambda x = \lambda y^*x
+    \]
+    Logo $(\mu - \lambda)y^*x = 0$. Como $\mu \neq \lambda$, então $y^*x = 0$.
+\end{enumerate}
+
+% --- PAGE 6 --- 
+
+
+% --- PAGE 8 --- 
+% \begin{enumerate}
+%     \item[5)] Autovalores: $a, b$. \\
+%     Autovetores associados a $a$: $\vecda$, $\vecea$ \\
+%     Autovetores associados a $b$: $\begin{pmatrix} \frac{c}{b-a} \\ 1 \end{pmatrix}$, $\veceb$
+
+%     \item[] Números de condição:
+%     \[
+%     s_a^{-1}: \frac{\left| \vecea \vecda \right|}{\|\dots\| \|\dots\|} = \frac{1}{\sqrt{\frac{(a-b)^2+c^2}{(a-b)^2}}} = \frac{a-b}{\sqrt{(a-b)^2+c^2}} \implies s_a = \frac{\sqrt{(a-b)^2+c^2}}{a-b}
+%     \]
+%     \[
+%     s_b^{-1}: \frac{\left| \veceb \begin{pmatrix} \frac{c}{b-a} \\ 1 \end{pmatrix} \right|}{\sqrt{1} \sqrt{1 + \frac{c^2}{(b-a)^2}}} = \frac{1}{\frac{\sqrt{(b-a)^2+c^2}}{|b-a|}} = \frac{|b-a|}{\sqrt{(b-a)^2+c^2}} \implies s_b = \frac{\sqrt{(b-a)^2+c^2}}{|b-a|}
+%     \]
+%     Se $c=0$, os números de condição são 1. Se $a \approx b$, esse número explode.
+
+%     \item[6)] Se $Ax = \lambda x$ e $y^*A = \mu y^*$ então
+%     \[
+%     \mu y^*x = y^*Ax = y^*\lambda x = \lambda y^*x
+%     \]
+%     Logo $(\mu - \lambda)y^*x = 0$. Como $\mu \neq \lambda$, então $y^*x = 0$.
+% \end{enumerate}
+
+% --- PAGE 9 --- 
+
+\begin{enumerate}
+    \item[\textcircled{7}] 
+    \begin{enumerate}[(a)]
+        \item Veja que  $$H = \frac{A+A^*}{2}, \qquad S = \frac{A-A^*}{2}$$
+        são as matrizes buscadas.
+        \item Se $Q^*AQ = T$ é a fatoração de Schur de $A$, então $Q^*A^*Q = T^*$.
+        Assim,
+    $$Q^*HQ = \frac{T+T^*}{2}, \qquad Q^*SQ = \frac{T-T^*}{2}.$$
+    Como a norma de Frobenius é invariante por ortogonais,
+    \[
+    \|H\|_F^2 = \|Q^*HQ\|_F^2 = \left\|\frac{T+T^*}{2}\right\|_F^2 \ge \left\|\text{diag}(\frac{T+T^*}{2})\right\|_F^2 = \sum_{i=1}^{n} |\text{Re}(\lambda_i)|^2
+    \]
+    Da mesma forma,
+    \[
+    \|S\|_F^2 \ge \left\|\text{diag}(\frac{T-T^*}{2})\right\|_F^2 = \sum_{i=1}^{n} |\text{Im}(\lambda_i)|^2
+    \]
+    \item Se $A$ é normal, então $Q$ pode ser escolhido unitário e $T$ é diagonal.
+    Assim,
+    \[
+    \|A\|_F^2 = \|Q^*AQ\|_F^2 = \|T\|_F^2 = \sum_{i=1}^{n} |\lambda_i|^2
+    \]
+    \end{enumerate}
+ 
+
+    \item[\textcircled{8}] Escrevendo $X$ como colunas, $X = [x_1 \dots x_n]$ então $\|X\|_2 \ge \|x_i\|_2 = 1$.
+    Também temos 
+    $$X^{-1} = \begin{bmatrix} \frac{y_1^*}{y_1^*x_1} \\ \vdots \\ \frac{y_n^*}{y_n^*x_n}\end{bmatrix}.$$
+     Assim $\|X^{-1}\|_2 \ge \left\|\frac{y_i^*}{y_i^*x_i}\right\|_2 = \frac{1}{|y_i^*x_i|}$.
+    Logo, para todo $i$ vale
+    \[
+    K_2(X) = \|X\|_2 \|X^{-1}\|_2 \ge \frac{1}{|y_i^*x_i|}
+    \]
+    Assim, tomando o máximo sobre $i$, temos
+    \[
+    K_2(X) \ge \max_i \frac{1}{|y_i^*x_i|}
+    \]
+\end{enumerate}
+
+\end{document}
