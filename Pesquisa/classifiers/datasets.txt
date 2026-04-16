@@ -1,0 +1,17 @@
+datasets/ordinal-regression/automobile
+datasets/ordinal-regression/balance-scale
+datasets/ordinal-regression/bondrate
+datasets/ordinal-regression/car
+datasets/ordinal-regression/contact-lenses
+datasets/ordinal-regression/ERA
+datasets/ordinal-regression/ESL
+datasets/ordinal-regression/eucalyptus
+datasets/ordinal-regression/LEV
+datasets/ordinal-regression/newthyroid
+datasets/ordinal-regression/pasture
+datasets/ordinal-regression/squash-stored
+datasets/ordinal-regression/squash-unstored
+datasets/ordinal-regression/SWD
+datasets/ordinal-regression/tae
+datasets/ordinal-regression/toy
+datasets/ordinal-regression/winequality-red
