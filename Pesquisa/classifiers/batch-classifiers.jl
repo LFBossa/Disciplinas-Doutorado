@@ -9,7 +9,8 @@ using JSON
 
 DecisionTreeClassifier = @load DecisionTreeClassifier pkg = DecisionTree
 
-TRAIN_P = 0.01 
+TRAIN_PERCENTAGE = 1
+TRAIN_P = TRAIN_PERCENTAGE / 100
 T = 15
 version = "v3"
 RND_SEED = 651
@@ -34,13 +35,12 @@ end
 
 for data_path in DATASETS
 
-
+    dataset = split(data_path, "/")[end]
+    @info "Carregando dataset: $dataset"
     df = carregar_arff_pasta("$data_path/weka/")
     ultima_coluna = Symbol(names(df)[end])
     X = df[:, Not(ultima_coluna)]
-    y = df[:, ultima_coluna]
-    @info "Processando dataset: $data_path"
-    @info size(df)
+    y = df[:, ultima_coluna] 
 
     classes = levels(y)
     @info classes
@@ -69,6 +69,7 @@ for data_path in DATASETS
     train_indexes..., test_index = partition(eachindex(y),
         [TRAIN_P for _ in 1:T]...,
          shuffle=true, rng=RND_SEED)
+    # Vamos treinar o ensemble usando apenas os dados de treino, e depois avaliar no teste
     ensemble_index = vcat(train_indexes...)
     for i in 1:T
         @info "Treinando modelo $i..."
@@ -155,9 +156,8 @@ for data_path in DATASETS
         )
     )
  
-    # Salvando resultados em arquivo de log
-    SUFF = Int(round(100 * TRAIN_P))
-    log_file = "$data_path/testlog-$version-$SUFF-$RND_SEED-$T.json"
+    # Salvando resultados em arquivo de log 
+    log_file = "results/json/$dataset:$version:P$TRAIN_PERCENTAGE:S$RND_SEED:T$T.json"
     open(log_file, "w") do io
         JSON.print(io, dicionario_log, 2)
     end
