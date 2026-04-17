@@ -50,6 +50,10 @@ tbody tr td {
 
     // Destaca em negrito a coluna MAE2 quando seu valor é menor que MAE1
     const rows = document.querySelectorAll("tbody tr");
+    let weWin = 0;
+    let weTie = 0;
+    let weLose = 0;
+
     rows.forEach(function(row) {
         const cells = row.querySelectorAll("td");
         if (cells.length >= 7) {
@@ -72,11 +76,14 @@ tbody tr td {
                 } else if (mae2Value < mae1Value) {
                     mae2Cell.style.fontWeight = "bold";
                     mae2Cell.style.color = "#0d38af"; // Cor azul para destacar o melhor MAE
+                    weWin++;
                 } else if (mae1Value == mae2Value) {
                     mae2Cell.style.fontWeight = "bold";
                     mae1Cell.style.fontWeight = "bold";
+                    weTie++;
                 } else {
                     mae1Cell.style.fontWeight = "bold";
+                    weLose++;
                 }
             }
             if (!isNaN(time1Value) && !isNaN(time2Value)) {
@@ -87,5 +94,7 @@ tbody tr td {
             }
         }
     });
+    paragraph = document.getElementById("results");
+    paragraph.textContent = `We win in ${weWin} datasets, tie in ${weTie} datasets, and lose in ${weLose} datasets.`;
 </script>
 </html>
