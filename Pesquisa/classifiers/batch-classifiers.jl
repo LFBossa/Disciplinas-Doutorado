@@ -1,36 +1,27 @@
 using MLJ
 using Random
 using DataFrames
+using CategoricalArrays
 include("AuxFunctions.jl")
 include("ensemble.jl")
-using .AuxFunctions: carregar_arff_pasta
+using .AuxFunctions: carregar_arff_pasta, args2dict, load_datasets_from_txt
 using JSON
 # Carregando os modelos 
 
+ 
 DecisionTreeClassifier = @load DecisionTreeClassifier pkg = DecisionTree
 
-TRAIN_PERCENTAGE = 1
+PARAMS = args2dict(ARGS)
+
+TRAIN_PERCENTAGE = parse(Int, PARAMS["PERCENTAGE"])
 TRAIN_P = TRAIN_PERCENTAGE / 100
-T = 15
+T = parse(Int, PARAMS["T"])
 version = "v3"
-RND_SEED = 651
+RND_SEED = parse(Int, PARAMS["SEED"])
+
+DATASETS = load_datasets_from_txt("datasets.txt")
 
 
-# Ler arquivo datasets.txt e preencher array DATASETS
-DATASETS = []
-if isfile("datasets.txt")
-    open("datasets.txt", "r") do f
-        for line in eachline(f)
-            line = strip(line)
-            if !isempty(line) && !startswith(line, "#")
-                push!(DATASETS, line)
-            end
-        end
-    end
-else
-    # Se datasets.txt não existir, usar ARGS como fallback
-    DATASETS = [ARGS[1]]
-end
 
 
 for data_path in DATASETS
@@ -59,9 +50,6 @@ for data_path in DATASETS
 
 
 
-
-
-
     MACHINES = Array{Any}(undef, T)
     CONFUSIONS = Array{Any}(undef, T)
     MISCLASS_RATES = Array{Number}(undef, T)
@@ -83,7 +71,7 @@ for data_path in DATASETS
         cm = confusion_matrix(predict, y[test_index])
         misclass = misclassification_rate(predict, y[test_index])
         MAE[i] = mean(abs.(class_to_idx.(predict) .- class_to_idx.(y[test_index])))
-        CONFUSIONS[i] = cm
+        CONFUSIONS[i] = cm.mat
         MISCLASS_RATES[i] = misclass
     end
 
@@ -137,7 +125,7 @@ for data_path in DATASETS
             ) for i in 1:length(MACHINES)
         ],
         "ensemble_model_1" => Dict(
-            "confusion_matrix" => cm_ensemble1,
+            "confusion_matrix" => cm_ensemble1.mat,  # Usando a matriz interna do confusion_matrix
             "misclassification_rate" => misclass_ensemble1,
             "weights" => ω1,
             "func_val" => fun1,
@@ -146,7 +134,7 @@ for data_path in DATASETS
             "time" => MOI.get(model1, MOI.SolveTimeSec())
         ),
         "ensemble_model_2" => Dict(
-            "confusion_matrix" => cm_ensemble2,
+            "confusion_matrix" => cm_ensemble2.mat,  # Usando a matriz interna do confusion_matrix
             "misclassification_rate" => misclass_ensemble2,
             "weights" => ω2,
             "func_val" => fun2,
@@ -157,9 +145,7 @@ for data_path in DATASETS
     )
  
     # Salvando resultados em arquivo de log 
-    log_file = "results/json/$dataset:$version:P$TRAIN_PERCENTAGE:S$RND_SEED:T$T.json"
-    open(log_file, "w") do io
-        JSON.print(io, dicionario_log, 2)
-    end
+    log_file = "results/json/$dataset:$version:P$TRAIN_PERCENTAGE:S$RND_SEED:T$T.json" 
+    JSON.json(log_file, dicionario_log) 
     @info "Resultados salvos em: $log_file"
 end
