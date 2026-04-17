@@ -2,7 +2,22 @@ module AuxFunctions
 
 using DataFrames, ARFFFiles, Glob
 
-export carregar_arff_pasta
+export carregar_arff_pasta, args2dict, load_datasets_from_txt
+
+function load_datasets_from_txt(filename::String)
+    datasets = []
+    if isfile(filename)
+        open(filename, "r") do f
+            for line in eachline(f)
+                line = strip(line)
+                if !isempty(line) && !startswith(line, "#")
+                    push!(datasets, line)
+                end
+            end
+        end
+    end
+    return datasets
+end
 
 function carregar_arff_pasta(caminho_pasta::String)::DataFrame
     """
@@ -34,4 +49,20 @@ function carregar_arff_pasta(caminho_pasta::String)::DataFrame
     
     return df_consolidado
 end
-end # module
+
+
+function args2dict(args :: Vector{String}) :: Dict{String, Union{String, Nothing}}
+    """Converte um vetor de strings no formato "chave=valor" em um dicionário."""
+    dict = Dict()
+    for string in args
+        if occursin("=", string)
+            key, value = split(string, "=", limit=2)
+            dict[key] = value
+        else
+            dict[string] = nothing
+        end
+    end
+    return dict
+end
+
+end # module AuxFunctions
