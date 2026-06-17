@@ -76,8 +76,8 @@ function readresults(DATASETS, version, rnd_seed, P, T)
 
     grouped = groupby(aberto, :dataset)
 
-    resumen = combine(grouped, :value => (x -> mean(x)) => :mean_value,
-        :value => (x -> std(x)) => :std_value)
+    resumen = combine(grouped, :value => (x -> mean(x)) => :mean_models,
+        :value => (x -> std(x)) => :std_models, :value => (x -> minimum(x)) => :min_models)
 
     merged = leftjoin(resumen, df[!, Not([x[1] for x in IND_MODELS])], on=:dataset)
 
@@ -124,11 +124,11 @@ function readresults(DATASETS, version, rnd_seed, P, T)
 
     open(means_tex_path, "w") do io
         for row in eachrow(merged)
-            mean = row.mean_value
+            mean = row.mean_models
             mean1 = row.MAE1
             mean2 = row.MAE2
 
-            std = "\\small{$(fN(row.std_value))}"
+            std = "\\small{$(fN(row.std_models))}"
             std1 = "\\small{$(fN(row.STD1))}"
             std2 = "\\small{$(fN(row.STD2))}"
 
