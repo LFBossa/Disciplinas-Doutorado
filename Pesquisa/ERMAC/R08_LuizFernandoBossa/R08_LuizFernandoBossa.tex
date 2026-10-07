@@ -1,0 +1,117 @@
+%
+%  Modelo com instruções para preparação de resumo de trabalho (Categoria 1)
+%  para apresentação no  ERMAC 2019
+%
+%
+
+\documentclass[a4,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{epsfig}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{xcolor}
+
+\pagestyle{empty}
+
+\headheight 20mm      %
+\oddsidemargin 2.0mm  %
+\evensidemargin 2.0mm %
+\topmargin -40mm      %
+\textheight 250mm     %
+\textwidth 160mm      %
+
+
+
+\newcommand{\st}{\text{s.a.}}
+\newcommand{\classi}{\:\!\bar{\imath}}
+\newcommand{\define}{\mathrel{{\mathop:}{=}}}
+\newcommand{\enifed}{\mathrel{{=}{\mathop:}}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\begin{document}
+
+\title{ \Large{\bf  Classificação ordinal baseada em um conjunto de classificadores} \\
+}
+
+\author{ {\bf \underline{\large Luiz F. Bossa}}\thanks{ Bolsista FAPESC (Chamada 62/2024)} \hspace*{1cm} {\bf {\large
+ {Maria E. Pinheiro}\thanks{Pesquisadora Conhecimento Brasil do CNPq (314788/2025-5)
+}}}  \\
+ {\small Universidade Federal de Santa Catarina -- Departamento de Matemática} \\
+ {\small 88040-900,  Campus Trindade,  Florianópolis, SC} \\
+ {\small \{l.f.bossa, maria.eduarda.pinheiro\}@posgrad.ufsc.br,} \\ \\
+ {\bf {\large Luiz-Rafael Santos }\thanks{Bolsista de Produtividade em Pesquisa (CNPq 310571/2023-5, 407147/2023-3, FAPESC 2024TR002238)}}  \\
+ {\small Universidade Federal de Santa Catarina -- Departamento de Matemática} \\
+ {\small 89065-200,  Campus Blumenau,  Blumenau, SC} \\
+ {\small  l.r.santos@ufsc.br.} 
+ \\[1ex]
+\underbar{\bf RESUMO} }
+
+\thispagestyle{empty}
+\date{}
+
+\maketitle
+
+Em muitos problemas de classificação em pesquisa e na indústria, os rótulos possuem uma ordenação natural. 
+Os níveis de satisfação do cliente e as classificações \textit{score} de crédito são exemplos típicos. 
+Nesses casos, podemos falar em erros de previsão grandes e pequenos. 
+No entanto, os métodos de classificação multiclasse padrão tratam esses rótulos ordinais como nominais, ignorando a relação de ordem inerente nos dados. 
+Como consequência, o treinamento do modelo penaliza todas as classificações incorretas de forma igual, independentemente da sua gravidade. 
+%Por exemplo, considere uma pessoa cujo \textit{score} de crédito verdadeiro seja ruim. O erro em dar um \textit{score} de crédito excelente é mais grave do que se a pessoa tivesse sido classificada  como um \textit{score} mediano.
+%Mas os classificadores tradicionais não distinguem entre esses casos, atribuindo a ambos os erros o mesmo peso. 
+Para superar esta limitação, propomos um método de classificação multiclasse que tem explicitamente em conta a natureza ordinal da variável-objetivo, permitindo que o modelo aprenda não apenas a classificar corretamente, mas também a minimizar a gravidade dos seus erros, incorporando a ``distância'' entre os rótulos previstos e os verdadeiros no processo de treinamento. 
+%Na nossa abordagem, criamos um conjunto de classificadores e tornamos a penalização pela classificação incorreta proporcional à ``distância'' entre o rótulo verdadeiro e o previsto.
+
+
+\noindent {\bf Palavras-chave}: {\it Classificação ordinal, Aprendizado de máquina, Conjunto de classificadores.}
+
+\vspace{0.1cm}
+
+Problemas de classificação ordinal são problemas de aprendizado de máquina nos quais o objetivo é classificar dados usando uma escala categórica, a qual possui uma ordem natural entre os rótulos \cite{gutierrez_etal_survey_2016}. Por exemplo, em um sistema de recomendação de filmes, as avaliações podem variar de 1 a 5 estrelas, classificação de risco de crédito podem ir do nível A até o nível H, conforme a capacidade de pagamento do cliente. Em ambos os casos, existe uma ordem natural entre as categorias, o que significa que uma classificação incorreta pode ter diferentes níveis de gravidade dependendo da distância entre o rótulo previsto e o verdadeiro \cite{frank_hall_simple_2001}.
+
+Os algoritmos tradicionais de classificação multiclasse tratam os rótulos como categorias nominais, ignorando a ordem inerente entre eles. Isso pode levar a resultados subótimos, pois todos os erros de classificação são penalizados igualmente, independentemente da sua gravidade. Por exemplo, dar um rating de crédito A para um cliente D é um erro mais grave do que classificá-lo como C, mas os classificadores tradicionais não fazem essa distinção.
+
+Um algoritmo de classificação ordinal deve ser capaz de reconhecer e explorar essa ordem natural entre os rótulos para melhorar a precisão das previsões. Além disso, deve ser capaz de minimizar a gravidade dos erros de classificação, penalizando mais severamente os erros que envolvem uma maior distância entre o rótulo previsto e o verdadeiro \cite{herbrich_etal_sv_1999}.
+
+Considere a tarefa de classificação ordinal com $K$ classes ordenadas $\{1,\ldots, K\} =: [1,K]$ e um conjunto de $T$ classificadores. Seja $X = [x^1, \dotsc, x^n] \subset \mathbb{R}^{p\times n}$ o conjunto de dados rotulados e $\classi \in [1,K]$ a classificação do ponto $x^i$.
+
+Cada classificador $t \in [1,T]$ atribui cada ponto $x^i \in X$ a uma classe. Com base nisso, para cada ponto $x^i$ e classe $k$, definimos o vetor $y_k (x^i) \in \{0,1\}^T$. A $t$-ésima entrada de $y_k (x^i)$ é igual a \(1\) se o classificador $t$ atribui \(x^i \) como \(k\) e \(0\) caso contrário.
+
+O objetivo é encontrar uma combinação linear dos classificadores, ou seja, encontrar \( \omega^* \in \mathbb{R}^{T}\) e $\xi^* \in \mathbb{R}^n$ que resolva o problema de otimização
+    \begin{align*}
+      \min_{\omega,\xi} \quad
+      &  \sum_{i=1}^n \xi_i 
+      \\
+      \st \quad
+      & \omega^\top y_{\classi}(x^i) \geq  \displaystyle \omega^\top y_{j}(x^i) -  \xi_i + \epsilon,   &\forall  j \in [1,K]\backslash \{\classi\},\ i \in [1,n],\\
+      &  \omega_t \in [0,1] & t \in [1,T], \\
+      &   \xi_i \geq 0, & i \in [1,n].
+    \end{align*}
+em que $\epsilon > 0$.
+Dado um novo ponto $x$ com uma classe desconhecida, sua classificação é determinada por
+$$\argmax_{k\in [1,K]} \omega^\top y_{k}(x).$$
+Note que para cada $i \in [1,n]$, $\xi_i$ denota a penalidade por classificação errônea para o ponto  $x^i$. Além disso, considere $\classi > 2$, e os casos em que o ponto $x^i$ é classificado errôneamente como $\classi -1 $ ou $\classi -2$, com a mesma penalidade $\xi_i$. Ou seja,
+ $$\omega^\top y_{\classi -1 }(x^i) - \omega^\top y_{\classi  }(x^i) = \xi_i \text{ ou }\omega^\top y_{\classi -2 }(x^i) - \omega^\top y_{\classi  }(x^i) = \xi_i.$$
+ 
+O modelo acima não leva em conta o fato de que classificar erroneamente $x^i$ como $\classi -2$ é pior do que classificá-lo como $\classi -1$. 
+
+No modelo que propomos, a ideia é impor uma penalidade maior de classificação errônea à medida que a classificação prevista se desvia mais da classificação verdadeira:
+\begin{align*}
+    \min_{\omega,\xi} \quad
+    &  \sum_{i=1}^n \xi_i 
+    \\
+    \st \quad
+    & \omega^\top y_{\classi}(x^i) \geq  \displaystyle \omega^\top y_{j}(x^i) -  \dfrac{\xi_i}{\vert j- \classi \vert} + \epsilon,   &\forall  j \in [1,K]\backslash \{\classi\},\ i \in [1,n],\\
+    &  \omega_t \in [0,1] & t \in [1,T], \\
+    &   \xi_i \geq 0, & i \in [1,n].
+\end{align*}
+
+Nese novo modelo, se tivermos os casos
+ $$\omega^\top y_{\classi-1 }(x^i) - \omega^\top y_{\classi  }(x^i) = A \text{ ou }\omega^\top y_{\classi -2 }(x^i) - \omega^\top y_{\classi  }(x^i) = A.$$
+com $A>0$, no primeiro caso obtemos $\xi_i = A $ e no segundo $\xi_i = 2A$. Ou seja, o modelo penaliza mais quando o ponto é atribuído a uma classe mais distante da verdadeira. 
+
+ 
+
+\bibliographystyle{plain}
+\bibliography{ref}
+
+\end{document}
