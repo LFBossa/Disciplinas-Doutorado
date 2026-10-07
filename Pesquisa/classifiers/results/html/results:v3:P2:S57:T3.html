@@ -1,0 +1,445 @@
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Summary of Results</title>
+<style type="text/css">
+tr td:nth-child(1) {
+  font-weight: 700;
+}
+table {
+    border-collapse: collapse;
+
+}
+thead tr td {
+    border-bottom: 1px solid black;
+}
+
+tbody tr td {
+    border-bottom: 1px solid gray;
+}
+.minimum {
+    font-style: italic;
+    text-decoration: underline;
+    color:#0d38af;
+}
+.ensemble2 {
+    background-color: #DDD;
+}
+.nomes {
+    background-color: #f0f0f0;
+    text-align: right;
+}
+.odd {
+    background-color: #f9f9f9;
+}
+.even {
+    background-color: #ffffff;
+}
+</style>
+</head>
+<body>  
+<h1 id="summary-of-results">Summary of Results</h1>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 7%" />
+<col style="width: 4%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 7%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th
+style="text-align: right;"><strong>dataset</strong><br><code>SubString{String}</code></th>
+<th
+style="text-align: right;"><strong>size</strong><br><code>Vector{Any}</code></th>
+<th
+style="text-align: right;"><strong>K</strong><br><code>Int64</code></th>
+<th
+style="text-align: right;"><strong>model1</strong><br><code>Float64</code></th>
+<th
+style="text-align: right;"><strong>model2</strong><br><code>Float64</code></th>
+<th
+style="text-align: right;"><strong>model3</strong><br><code>Float64</code></th>
+<th
+style="text-align: right;"><strong>MAE1</strong><br><code>Float64</code></th>
+<th
+style="text-align: right;"><strong>MAE2</strong><br><code>Float64</code></th>
+<th
+style="text-align: right;"><strong>STD1</strong><br><code>Float64</code></th>
+<th
+style="text-align: right;"><strong>STD2</strong><br><code>Float64</code></th>
+<th
+style="text-align: right;"><strong>ω1</strong><br><code>Vector{Any}</code></th>
+<th
+style="text-align: right;"><strong>ω2</strong><br><code>Vector{Any}</code></th>
+<th
+style="text-align: right;"><strong>time1</strong><br><code>Float64</code></th>
+<th
+style="text-align: right;"><strong>time2</strong><br><code>Float64</code></th>
+<th
+style="text-align: right;"><strong>T_statistic</strong><br><code>Real</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">automobile</td>
+<td style="text-align: right;">6150 x 26</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">0.2334</td>
+<td style="text-align: right;">0.2423</td>
+<td style="text-align: right;">0.2885</td>
+<td style="text-align: right;">0.1462</td>
+<td style="text-align: right;">0.1462</td>
+<td style="text-align: right;">0.5154</td>
+<td style="text-align: right;">0.5154</td>
+<td style="text-align: right;">[0.45, 0.1, 0.45]</td>
+<td style="text-align: right;">[0.4, 0.3, 0.3]</td>
+<td style="text-align: right;">0.0482</td>
+<td style="text-align: right;">0.0422</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">balance-scale</td>
+<td style="text-align: right;">18750 x 5</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">0.4207</td>
+<td style="text-align: right;">0.4866</td>
+<td style="text-align: right;">0.4511</td>
+<td style="text-align: right;">0.3812</td>
+<td style="text-align: right;">0.3812</td>
+<td style="text-align: right;">0.734</td>
+<td style="text-align: right;">0.734</td>
+<td style="text-align: right;">[0.1, 0.45, 0.45]</td>
+<td style="text-align: right;">[0.1, 0.45, 0.45]</td>
+<td style="text-align: right;">0.0654</td>
+<td style="text-align: right;">0.0632</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">bondrate</td>
+<td style="text-align: right;">1710 x 11</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">0.3539</td>
+<td style="text-align: right;">0.375</td>
+<td style="text-align: right;">0.5019</td>
+<td style="text-align: right;">0.2002</td>
+<td style="text-align: right;">0.2002</td>
+<td style="text-align: right;">0.4821</td>
+<td style="text-align: right;">0.4821</td>
+<td style="text-align: right;">[0.333, 0.333, 0.333]</td>
+<td style="text-align: right;">[0.38, 0.32, 0.3]</td>
+<td style="text-align: right;">0.0137</td>
+<td style="text-align: right;">0.0193</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">car</td>
+<td style="text-align: right;">51840 x 7</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">0.2169</td>
+<td style="text-align: right;">0.2321</td>
+<td style="text-align: right;">0.2509</td>
+<td style="text-align: right;">0.2322</td>
+<td style="text-align: right;">0.2322</td>
+<td style="text-align: right;">0.5035</td>
+<td style="text-align: right;">0.5035</td>
+<td style="text-align: right;">[0.1, 0.45, 0.45]</td>
+<td style="text-align: right;">[0.3, 0.4, 0.3]</td>
+<td style="text-align: right;">0.2269</td>
+<td style="text-align: right;">0.201</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">contact-lenses</td>
+<td style="text-align: right;">720 x 5</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">0.2168</td>
+<td style="text-align: right;">0.472</td>
+<td style="text-align: right;">0.2935</td>
+<td style="text-align: right;">0.2183</td>
+<td style="text-align: right;">0.2183</td>
+<td style="text-align: right;">0.5875</td>
+<td style="text-align: right;">0.5875</td>
+<td style="text-align: right;">[0.326, 0.224, 0.45]</td>
+<td style="text-align: right;">[0.327, 0.223, 0.45]</td>
+<td style="text-align: right;">0.0093</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">ERA</td>
+<td style="text-align: right;">30000 x 5</td>
+<td style="text-align: right;">9.0</td>
+<td style="text-align: right;">1.347</td>
+<td style="text-align: right;">1.4017</td>
+<td style="text-align: right;">1.3531</td>
+<td style="text-align: right;">1.2913</td>
+<td style="text-align: right;">1.2913</td>
+<td style="text-align: right;">1.2471</td>
+<td style="text-align: right;">1.2471</td>
+<td style="text-align: right;">[0.1, 0.45, 0.45]</td>
+<td style="text-align: right;">[0.3, 0.4, 0.3]</td>
+<td style="text-align: right;">0.3855</td>
+<td style="text-align: right;">0.5671</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">ESL</td>
+<td style="text-align: right;">14640 x 5</td>
+<td style="text-align: right;">9.0</td>
+<td style="text-align: right;">0.2917</td>
+<td style="text-align: right;">0.3238</td>
+<td style="text-align: right;">0.3028</td>
+<td style="text-align: right;">0.2666</td>
+<td style="text-align: right;">0.2666</td>
+<td style="text-align: right;">0.4832</td>
+<td style="text-align: right;">0.4832</td>
+<td style="text-align: right;">[0.45, 0.45, 0.1]</td>
+<td style="text-align: right;">[0.45, 0.45, 0.1]</td>
+<td style="text-align: right;">0.1182</td>
+<td style="text-align: right;">0.1755</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">eucalyptus</td>
+<td style="text-align: right;">22080 x 20</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">0.4358</td>
+<td style="text-align: right;">0.388</td>
+<td style="text-align: right;">0.3483</td>
+<td style="text-align: right;">0.3357</td>
+<td style="text-align: right;">0.3357</td>
+<td style="text-align: right;">0.5654</td>
+<td style="text-align: right;">0.5654</td>
+<td style="text-align: right;">[0.45, 0.1, 0.45]</td>
+<td style="text-align: right;">[0.45, 0.1, 0.45]</td>
+<td style="text-align: right;">0.1389</td>
+<td style="text-align: right;">0.176</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">LEV</td>
+<td style="text-align: right;">30000 x 5</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">0.4841</td>
+<td style="text-align: right;">0.4603</td>
+<td style="text-align: right;">0.4271</td>
+<td style="text-align: right;">0.4138</td>
+<td style="text-align: right;">0.4138</td>
+<td style="text-align: right;">0.5612</td>
+<td style="text-align: right;">0.5612</td>
+<td style="text-align: right;">[0.45, 0.45, 0.1]</td>
+<td style="text-align: right;">[0.45, 0.45, 0.1]</td>
+<td style="text-align: right;">0.1356</td>
+<td style="text-align: right;">0.2097</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">newthyroid</td>
+<td style="text-align: right;">6450 x 6</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">0.0755</td>
+<td style="text-align: right;">0.047</td>
+<td style="text-align: right;">0.0381</td>
+<td style="text-align: right;">0.0381</td>
+<td style="text-align: right;">0.0381</td>
+<td style="text-align: right;">0.1915</td>
+<td style="text-align: right;">0.1915</td>
+<td style="text-align: right;">[-0.0, 0.45, 0.55]</td>
+<td style="text-align: right;">[-0.0, 0.45, 0.55]</td>
+<td style="text-align: right;">0.0229</td>
+<td style="text-align: right;">0.0209</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">pasture</td>
+<td style="text-align: right;">1080 x 23</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">0.1154</td>
+<td style="text-align: right;">0.0562</td>
+<td style="text-align: right;">0.3343</td>
+<td style="text-align: right;">0.0582</td>
+<td style="text-align: right;">0.0582</td>
+<td style="text-align: right;">0.2342</td>
+<td style="text-align: right;">0.2342</td>
+<td style="text-align: right;">[0.441, 0.305, 0.255]</td>
+<td style="text-align: right;">[0.44, 0.325, 0.235]</td>
+<td style="text-align: right;">0.0066</td>
+<td style="text-align: right;">0.0076</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">squash-stored</td>
+<td style="text-align: right;">1560 x 25</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">0.2331</td>
+<td style="text-align: right;">0.3327</td>
+<td style="text-align: right;">0.2345</td>
+<td style="text-align: right;">0.1772</td>
+<td style="text-align: right;">0.1575</td>
+<td style="text-align: right;">0.4307</td>
+<td style="text-align: right;">0.3644</td>
+<td style="text-align: right;">[0.1, 0.45, 0.45]</td>
+<td style="text-align: right;">[0.1, 0.45, 0.45]</td>
+<td style="text-align: right;">0.0092</td>
+<td style="text-align: right;">0.0087</td>
+<td style="text-align: right;">5.4373</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">squash-unstored</td>
+<td style="text-align: right;">1560 x 24</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">0.195</td>
+<td style="text-align: right;">0.12</td>
+<td style="text-align: right;">0.2365</td>
+<td style="text-align: right;">0.1016</td>
+<td style="text-align: right;">0.1016</td>
+<td style="text-align: right;">0.3022</td>
+<td style="text-align: right;">0.3022</td>
+<td style="text-align: right;">[0.271, 0.45, 0.279]</td>
+<td style="text-align: right;">[0.27, 0.45, 0.28]</td>
+<td style="text-align: right;">0.0073</td>
+<td style="text-align: right;">0.0095</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">SWD</td>
+<td style="text-align: right;">30000 x 11</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">0.471</td>
+<td style="text-align: right;">0.4465</td>
+<td style="text-align: right;">0.4807</td>
+<td style="text-align: right;">0.4378</td>
+<td style="text-align: right;">0.4378</td>
+<td style="text-align: right;">0.5539</td>
+<td style="text-align: right;">0.5539</td>
+<td style="text-align: right;">[0.45, 0.1, 0.45]</td>
+<td style="text-align: right;">[0.45, 0.1, 0.45]</td>
+<td style="text-align: right;">0.1158</td>
+<td style="text-align: right;">0.1307</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">tae</td>
+<td style="text-align: right;">4530 x 6</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">0.771</td>
+<td style="text-align: right;">0.5563</td>
+<td style="text-align: right;">0.6171</td>
+<td style="text-align: right;">0.6054</td>
+<td style="text-align: right;">0.5563</td>
+<td style="text-align: right;">0.7204</td>
+<td style="text-align: right;">0.5473</td>
+<td style="text-align: right;">[0.45, 0.45, 0.1]</td>
+<td style="text-align: right;">[0.45, 0.55, 0.0]</td>
+<td style="text-align: right;">0.0173</td>
+<td style="text-align: right;">0.0222</td>
+<td style="text-align: right;">5.0348</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">toy</td>
+<td style="text-align: right;">9000 x 3</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">0.1688</td>
+<td style="text-align: right;">0.1583</td>
+<td style="text-align: right;">0.206</td>
+<td style="text-align: right;">0.115</td>
+<td style="text-align: right;">0.115</td>
+<td style="text-align: right;">0.3191</td>
+<td style="text-align: right;">0.3191</td>
+<td style="text-align: right;">[0.303, 0.295, 0.403]</td>
+<td style="text-align: right;">[0.305, 0.289, 0.405]</td>
+<td style="text-align: right;">0.0663</td>
+<td style="text-align: right;">0.0584</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">winequality-red</td>
+<td style="text-align: right;">47970 x 12</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">0.4268</td>
+<td style="text-align: right;">0.4278</td>
+<td style="text-align: right;">0.4248</td>
+<td style="text-align: right;">0.3705</td>
+<td style="text-align: right;">0.3705</td>
+<td style="text-align: right;">0.5665</td>
+<td style="text-align: right;">0.5665</td>
+<td style="text-align: right;">[0.45, 0.1, 0.45]</td>
+<td style="text-align: right;">[0.35, 0.3, 0.35]</td>
+<td style="text-align: right;">0.437</td>
+<td style="text-align: right;">0.5242</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+
+<script type="text/javascript">
+    document.querySelectorAll("td").forEach(function(td) {
+        if (td.textContent.endsWith("*")) {
+            td.className = "minimum";
+        }
+    });
+
+    // Destaca em negrito a coluna MAE2 quando seu valor é menor que MAE1
+    const rows = document.querySelectorAll("tbody tr");
+    let weWin = 0;
+    let weTie = 0;
+    let weLose = 0;
+
+    rows.forEach(function(row) {
+        const cells = row.querySelectorAll("td");
+        if (cells.length >= 7) {
+            // Coluna MAE1 é a 6ª (índice 5) e MAE2 é a 7ª (índice 6)
+            const meanCell = cells[1];
+            const mae1Cell = cells[6];
+            const mae2Cell = cells[7];
+            const time1Cell = cells[12];
+            const time2Cell = cells[13];
+            
+            const meanValue = parseFloat(meanCell.textContent.trim());
+            const mae1Value = parseFloat(mae1Cell.textContent.trim());
+            const mae2Value = parseFloat(mae2Cell.textContent.trim());
+            const time1Value = parseFloat(time1Cell.textContent.trim());
+            const time2Value = parseFloat(time2Cell.textContent.trim());
+            
+            if (!isNaN(mae1Value) && !isNaN(mae2Value) && !isNaN(meanValue)) {
+                if (meanValue < Math.min(mae1Value, mae2Value)) {
+                    meanCell.style.fontWeight = "bold";
+                } else if (mae2Value < mae1Value) {
+                    mae2Cell.style.fontWeight = "bold";
+                    mae2Cell.style.color = "#0d38af"; // Cor azul para destacar o melhor MAE
+                    weWin++;
+                } else if (mae1Value == mae2Value) {
+                    mae2Cell.style.fontWeight = "bold";
+                    mae1Cell.style.fontWeight = "bold";
+                    weTie++;
+                } else {
+                    mae1Cell.style.fontWeight = "bold";
+                    weLose++;
+                }
+            }
+            if (!isNaN(time1Value) && !isNaN(time2Value)) {
+                if (time2Value < time1Value) {
+                    time2Cell.style.fontWeight = "bold";
+                    time2Cell.style.color = "#0d38af"; // Cor azul para destacar o melhor tempo
+                }  
+            }
+        }
+    });
+    paragraph = document.getElementById("results");
+    paragraph.textContent = `We win in ${weWin} datasets, tie in ${weTie} datasets, and lose in ${weLose} datasets.`;
+</script>
+</html>
