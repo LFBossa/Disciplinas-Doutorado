@@ -32,16 +32,15 @@ function readresults(DATASETS, version, rnd_seed, P, T)
         "K" => [dict_log["num_classes"] for dict_log in DICT_LOGS],
         IND_MODELS...,
         "MAE1" => [dict_log["ensemble_model_1"]["mae"] for dict_log in DICT_LOGS],
-        "MAE2" => [dict_log["ensemble_model_2"]["mae"] for dict_log in DICT_LOGS],
+        "MAE2" => [dict_log["ensemble_model_2"]["mae"] for dict_log in DICT_LOGS], 
         "STD1" => [dict_log["ensemble_model_1"]["std"] for dict_log in DICT_LOGS],
         "STD2" => [dict_log["ensemble_model_2"]["std"] for dict_log in DICT_LOGS],
         "ω1" => [dict_log["ensemble_model_1"]["weights"] for dict_log in DICT_LOGS],
         "ω2" => [dict_log["ensemble_model_2"]["weights"] for dict_log in DICT_LOGS],
         "time1" => [dict_log["ensemble_model_1"]["time"] for dict_log in DICT_LOGS],
-        "time2" => [dict_log["ensemble_model_2"]["time"] for dict_log in DICT_LOGS]
+        "time2" => [dict_log["ensemble_model_2"]["time"] for dict_log in DICT_LOGS], 
+        "T_statistic" => [dict_log["tstatistic"] for dict_log in DICT_LOGS]
     ])
-
-
     function row_formatter(val, i, j)
         # Placeholder for formatting rows if needed
         if typeof(val) <: Number
