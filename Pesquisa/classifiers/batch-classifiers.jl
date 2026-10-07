@@ -101,11 +101,22 @@ function batchclassifiers(DATASETS, version, RND_SEED, P, T)
         MAE2 = mean(AE2)
         SD2 = std(AE2)
 
+        N_test = length(test_index)
+
+        # paired t test for two means
+        D = AE1 .- AE2
+        sd_d = std(D)
+        if sd_d == 0 
+            t_statistic = 0
+        else
+            t_statistic = mean(D) / (sd_d / sqrt(N_test))
+        end  
 
         dicionario_log = Dict(
             "data_size" => size(df),
             "num_classes" => K,
             "dataset" => data_path,
+            "N_test" => N_test,
             "individual_models" => [
                 Dict(
                     "model_index" => i,
@@ -121,7 +132,7 @@ function batchclassifiers(DATASETS, version, RND_SEED, P, T)
                 "weights" => ω1,
                 "func_val" => fun1,
                 "mae" => MAE1,
-                "std" => SD1,
+                "std" => SD1, 
                 "time" => MOI.get(model1, MOI.SolveTimeSec())
             ),
             "ensemble_model_2" => Dict(
@@ -130,9 +141,10 @@ function batchclassifiers(DATASETS, version, RND_SEED, P, T)
                 "weights" => ω2,
                 "func_val" => fun2,
                 "mae" => MAE2,
-                "std" => SD2,
+                "std" => SD2, 
                 "time" => MOI.get(model2, MOI.SolveTimeSec())
-            )
+            ),
+            "tstatistic" => t_statistic
         )
 
         # Salvando resultados em arquivo de log 
