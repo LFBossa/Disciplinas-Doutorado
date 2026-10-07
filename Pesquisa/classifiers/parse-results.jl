@@ -4,7 +4,7 @@ include("AuxFunctions.jl")
 
 #using .AuxFunctions: args2dict, load_datasets_from_txt
 
-versions = glob("results/json/automobile*.json")
+versions = glob("results/json/automobile:v5*.json")
 
 
 CONFIGS_ARRAY = []
@@ -19,7 +19,7 @@ for version in versions
 end
 
 for config in CONFIGS_ARRAY 
-    @info "Reading results for version=$config.version, P=$config.P, rnd_seed=$config.SEED, T=$config.T"
+    @info "Reading results for version=$(config.version), P=$(config.P), rnd_seed=$(config.SEED), T=$(config.T)"
     readresults(DATASETS,  config.version, config.SEED, config.P, config.T)
 end
 
