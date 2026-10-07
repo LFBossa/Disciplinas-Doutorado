@@ -1,6 +1,5 @@
 using Glob
-include("reading-results.jl")
-include("AuxFunctions.jl")
+include("reading-results.jl") # já inclui o AuxFunctions.jl
 
 #using .AuxFunctions: args2dict, load_datasets_from_txt
 
